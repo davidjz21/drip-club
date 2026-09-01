@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda de Ropa</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Link a la hoja de estilos propia -->
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Mi Tienda</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Catálogo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sobre nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contacto</a>
+          </li>
+        </ul>
+        <button class="btn btn-outline-light ms-lg-3" type="button">
+          Carrito
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== CARRUSEL (banner principal) ===== -->
+  <!-- data-bs-ride="carousel" hace que empiece a moverse solo, automáticamente -->
+  <div id="carruselPrincipal" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+ 
+    <!-- Los puntitos (indicadores). Cada botón apunta a un slide distinto
+         mediante data-bs-slide-to (0, 1, 2...) -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carruselPrincipal" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carruselPrincipal" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carruselPrincipal" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+ 
+    <!-- Las diapositivas -->
+    <div class="carousel-inner">
+ 
+      <div class="carousel-item active">
+        <img src="imagenes/nuevaColeccion.png" class="d-block w-100 imagen-carrousel" alt="Nueva colección">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Nueva Colección</h5>
+          <p>Descubre las prendas de esta temporada</p>
+        </div>
+      </div>
+ 
+      <div class="carousel-item">
+        <img src="imagenes/descuento.png" class="d-block w-100 imagen-carrousel" alt="Descuento">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>20% de descuento</h5>
+          <p>En toda la colección de invierno</p>
+        </div>
+      </div>
+ 
+      <div class="carousel-item">
+        <img src="imagenes/envioGratis.png" class="d-block w-100 imagen-carrousel" alt="Envío gratis">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Envío gratis</h5>
+          <p>En compras mayores a S/ 150</p>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <!-- Las flechas (controles) para pasar de slide manualmente -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carruselPrincipal" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carruselPrincipal" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+ 
+  </div>
+
+  <!-- ===== CONTENIDO PRINCIPAL ===== -->
+  <main class="container my-5">
+ 
+    <div class="text-center mb-5">
+      <h1 class="fw-bold">Nueva Colección</h1>
+      <p class="text-muted">Encuentra las últimas prendas para esta temporada</p>
+    </div>
+ 
+    <!-- ===== CATÁLOGO DE PRODUCTOS ===== -->
+    <!-- "row" empieza una fila del grid. Cada "col-*" adentro es una columna.
+         Bootstrap divide el ancho en 12 partes. col-md-4 = 4 columnas de ancho
+         (12 / 4 = 3 productos por fila) a partir del tamaño "md" (pantallas medianas en adelante).
+         col-sm-6 = 6 de ancho (2 por fila) en pantallas chicas.
+         col-12 = ocupa todo el ancho (1 por fila) en celulares. -->
+     <div class="row g-4">
+ 
+      <!-- ---- Producto 1 ---- -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="imagenes/polonegro2.jpg" class="card-img-top imagen-producto" alt="Polo básico">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Polo Básico</h5>
+            <p class="card-text text-muted mb-1">Algodón 100%, varios colores</p>
+            <p class="fw-bold mb-3">S/ 39.90</p>
+            <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- ---- Producto 2 ---- -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="imagenes/casacadenim.jpg" class="card-img-top imagen-producto" alt="Casaca">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Casaca Denim</h5>
+            <p class="card-text text-muted mb-1">Ajuste regular, azul</p>
+            <p class="fw-bold mb-3">S/ 129.90</p>
+            <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- ---- Producto 3 ---- -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="imagenes/pantalonjogger2.jpg" class="card-img-top imagen-producto" alt="Pantalón">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Pantalón Jogger</h5>
+            <p class="card-text text-muted mb-1">Negro, tallas S a XL</p>
+            <p class="fw-bold mb-3">S/ 79.90</p>
+            <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- Producto 4 ---- -->
+<div class="col-12 col-sm-6 col-md-4">
+    <div class="card h-100 shadow-sm">
+        <img src="imagenes/zapatillas.png"
+             class="card-img-top imagen-producto"
+             alt="Zapatillas urbanas">
+
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Zapatillas Urbanas</h5>
+            <p class="card-text text-muted mb-1">
+                Cómodas y modernas, varios colores
+            </p>
+            <p class="fw-bold mb-3">S/ 149.90</p>
+
+            <button class="btn btn-dark mt-auto"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalCuenta">
+                Agregar al carrito
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ---- Producto 5 ---- -->
+<div class="col-12 col-sm-6 col-md-4">
+    <div class="card h-100 shadow-sm">
+        <img src="imagenes/POLERAOVERSIZE.png"
+             class="card-img-top imagen-producto"
+             alt="Polera oversize">
+
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Polera Oversize</h5>
+            <p class="card-text text-muted mb-1">
+                Algodón, diseño urbano
+            </p>
+            <p class="fw-bold mb-3">S/ 89.90</p>
+
+            <button class="btn btn-dark mt-auto"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalCuenta">
+                Agregar al carrito
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ---- Producto 6 ---- -->
+<div class="col-12 col-sm-6 col-md-4">
+    <div class="card h-100 shadow-sm">
+        <img src="imagenes/pantalon.png"
+             class="card-img-top imagen-producto"
+             alt="Jean clásico">
+
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Jean Clásico</h5>
+            <p class="card-text text-muted mb-1">
+                Denim azul, tallas 28 a 36
+            </p>
+            <p class="fw-bold mb-3">S/ 99.90</p>
+
+            <button class="btn btn-dark mt-auto"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalCuenta">
+                Agregar al carrito
+            </button>
+        </div>
+    </div>
+</div>
+
+
+ 
+    </div>
+ 
+  </main>
+
+  <!-- ===== MODAL DE CUENTA (login / registro) ===== -->
+  <!-- Un solo modal con dos "vistas" (loginView y registroView).
+       Alternamos cuál se ve con la clase d-none (display: none) usando JS simple. -->
+  <div class="modal fade" id="modalCuenta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+ 
+        <div class="modal-header">
+          <h5 class="modal-title" id="tituloModalCuenta">Inicia sesión para continuar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+ 
+        <div class="modal-body">
+ 
+          <!-- ---- Vista: LOGIN ---- -->
+          <div id="loginView">
+            <form>
+              <div class="mb-3">
+                <label for="loginEmail" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="loginEmail" placeholder="nombre@correo.com">
+              </div>
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="loginPassword" placeholder="Tu contraseña">
+              </div>
+              <button type="submit" class="btn btn-dark w-100">Iniciar sesión</button>
+            </form>
+            <p class="text-center text-muted mt-3 mb-0">
+              ¿No tienes cuenta?
+              <a href="#" id="irARegistro">Regístrate aquí</a>
+            </p>
+          </div>
+ 
+          <!-- ---- Vista: REGISTRO (oculta al inicio) ---- -->
+          <div id="registroView" class="d-none">
+            <form>
+              <div class="mb-3">
+                <label for="registroNombre" class="form-label">Nombre completo</label>
+                <input type="text" class="form-control" id="registroNombre" placeholder="Tu nombre">
+              </div>
+              <div class="mb-3">
+                <label for="registroEmail" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="registroEmail" placeholder="nombre@correo.com">
+              </div>
+              <div class="mb-3">
+                <label for="registroPassword" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="registroPassword" placeholder="Crea una contraseña">
+              </div>
+              <button type="submit" class="btn btn-dark w-100">Crear cuenta</button>
+            </form>
+            <p class="text-center text-muted mt-3 mb-0">
+              ¿Ya tienes cuenta?
+              <a href="#" id="irALogin">Inicia sesión aquí</a>
+            </p>
+          </div>
+ 
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+      <p class="mb-0">&copy; 2026 Mi Tienda. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS  -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script propio: alterna entre la vista de login y la de registro dentro del modal -->
+  <script>
+    const loginView = document.getElementById('loginView');
+    const registroView = document.getElementById('registroView');
+    const tituloModal = document.getElementById('tituloModalCuenta');
+ 
+    document.getElementById('irARegistro').addEventListener('click', function (e) {
+      e.preventDefault();
+      loginView.classList.add('d-none');
+      registroView.classList.remove('d-none');
+      tituloModal.textContent = 'Crea tu cuenta';
+    });
+ 
+    document.getElementById('irALogin').addEventListener('click', function (e) {
+      e.preventDefault();
+      registroView.classList.add('d-none');
+      loginView.classList.remove('d-none');
+      tituloModal.textContent = 'Inicia sesión para continuar';
+    });
+  </script>
+
+</body>
+</html>
