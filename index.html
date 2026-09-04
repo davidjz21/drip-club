@@ -97,6 +97,34 @@
 
   </div>
 
+      <!-- CATEGORIAS BOTONES -->
+<div class="container my-4">
+
+  <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+    <button class="btn btn-dark boton-categoria" onclick="mostrarCategorias('hombres')">
+      Hombres
+    </button>
+
+    <button class="btn btn-dark boton-categoria" onclick="mostrarCategorias('mujeres')">
+      Mujeres
+    </button>
+
+    <button class="btn btn-dark boton-categoria" onclick="mostrarCategorias('niños')">
+      Niños
+    </button>
+
+  </div>
+
+
+  <!-- AQUÍ APARECERÁN LAS SUBCATEGORÍAS -->
+  <div id="subcategorias" class="d-flex justify-content-center gap-2 flex-wrap mt-3">
+
+  </div>
+
+</div>
+
+
   <!-- ===== CONTENIDO PRINCIPAL ===== -->
   <main class="container my-5">
 
@@ -290,6 +318,9 @@
 
   <!-- Bootstrap JS  -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Java Script -->
+   <script src="assets/scripts/script.js"></script>
 
   <!-- Script propio: alterna entre la vista de login y la de registro dentro del modal -->
   <script>
