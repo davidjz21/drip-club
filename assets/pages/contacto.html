@@ -31,11 +31,146 @@
                     </li>
                 </ul>
                 <button class="btn btn-outline-light ms-lg-3" type="button">
+                    <i class="fa-solid fa-cart-shopping"></i>
                     Carrito
                 </button>
             </div>
         </div>
     </nav>
+
+        <!-- ===== BANNER ===== -->
+    <section class="bg-dark text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">Contáctanos</h1>
+            <p class="lead mb-0">¿Tienes dudas o sugerencias? Escríbenos, estamos para ayudarte.</p>
+        </div>
+    </section>
+
+    <!-- ===== TARJETAS DE CONTACTO RÁPIDO ===== -->
+    <section class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm text-center p-4">
+                    <div class="mb-3">
+                        <i class="fa-solid fa-phone fa-2x text-dark"></i>
+                    </div>
+                    <h5 class="fw-bold">Teléfono</h5>
+                    <p class="text-muted mb-0">+51 987 654 321</p>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm text-center p-4">
+                    <div class="mb-3">
+                        <i class="fa-solid fa-envelope fa-2x text-dark"></i>
+                    </div>
+                    <h5 class="fw-bold">Correo</h5>
+                    <p class="text-muted mb-0">contacto@dripclub.com</p>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm text-center p-4">
+                    <div class="mb-3">
+                        <i class="fa-solid fa-location-dot fa-2x text-dark"></i>
+                    </div>
+                    <h5 class="fw-bold">Dirección</h5>
+                    <p class="text-muted mb-0">Av. Principal 123, Lima, Perú</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== HORARIO DE ATENCIÓN ===== -->
+    <section class="bg-light py-5">
+        <div class="container" style="max-width: 500px;">
+            <h2 class="fw-bold text-center mb-4">Horario de atención</h2>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Lunes a Viernes</span>
+                    <span class="fw-bold">10:00 am - 8:00 pm</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Sábados</span>
+                    <span class="fw-bold">10:00 am - 6:00 pm</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Domingos</span>
+                    <span class="fw-bold">Cerrado</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ===== MAPA Y FORMULARIO ===== -->
+    <section class="container my-5">
+        <div class="row g-4">
+
+            <!-- Mapa embebido de Google Maps -->
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-3">Encuéntranos</h2>
+                <div class="ratio ratio-4x3 rounded shadow-sm overflow-hidden">
+                    <iframe
+                        src="https://www.google.com/maps?q=Lima,Peru&output=embed"
+                        style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <!-- Formulario de contacto -->
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-3">Envíanos un mensaje</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="contactoNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="contactoNombre" placeholder="Tu nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactoEmail" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="contactoEmail" placeholder="nombre@correo.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactoMensaje" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="contactoMensaje" rows="4" placeholder="Escribe tu mensaje aquí"></textarea>
+                    </div>
+
+                    <!-- Captcha de apariencia (sin funcionalidad real todavía) -->
+                    <div class="form-check mb-3 border rounded p-3">
+                        <input class="form-check-input" type="checkbox" id="captchaCheck">
+                        <label class="form-check-label" for="captchaCheck">
+                            No soy un robot
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100">Enviar mensaje</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== REDES SOCIALES ===== -->
+    <section class="text-center py-4">
+        <h2 class="fw-bold mb-3">Síguenos</h2>
+        <div class="d-flex justify-content-center gap-4">
+            <a href="https://www.instagram.com/" class="text-dark fs-3"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/es/" class="text-dark fs-3"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://web.whatsapp.com/" class="text-dark fs-3"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <p class="mb-0">&copy; 2026 Drip Club. Todos los derechos reservados.</p>
+      <div class="d-flex gap-3">
+        <a href="https://www.instagram.com/" class="text-white fs-3"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/es/" class="text-white fs-3"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://web.whatsapp.com/" class="text-white fs-3"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
 
     <!-- Bootstrap JS  -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
