@@ -33,14 +33,26 @@ body {
   display: block;
 }
 
-/* Estilos de la pagina de contacto */
-.card-contacto {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Estilos de la pagina de contacto y beneficios */
+.card-contacto,
+.card-beneficio {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-contacto:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+.card-contacto:hover,
+.card-beneficio:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.icon-box {
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  font-size: 1.6rem;
 }
 
 .btn-social {
