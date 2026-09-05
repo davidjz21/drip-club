@@ -5,11 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drip Club</title>
-
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Link a la hoja de estilos propia -->
   <link href="assets/styles.css" rel="stylesheet">
 
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -17,7 +13,6 @@
 
 <body>
 
-  <!-- ===== NAVBAR ===== -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">
@@ -102,32 +97,9 @@
 
   </div>
 
-      <!-- CATEGORIAS BOTONES -->
-<div class="container my-4">
-
-  <div class="d-flex justify-content-center gap-3 flex-wrap">
-
-    <button class="btn btn-dark boton-categoria" onclick="mostrarCategorias('hombres')">
-      Hombres
-    </button>
-
-    <button class="btn btn-dark boton-categoria" onclick="mostrarCategorias('mujeres')">
-      Mujeres
-    </button>
-
-    <button class="btn btn-dark boton-categoria" onclick="mostrarCategorias('niños')">
-      Niños
-    </button>
-
-  </div>
 
 
-  <!-- AQUÍ APARECERÁN LAS SUBCATEGORÍAS -->
-  <div id="subcategorias" class="d-flex justify-content-center gap-2 flex-wrap mt-3">
 
-  </div>
-
-</div>
 
 
   <!-- ===== CONTENIDO PRINCIPAL ===== -->
@@ -149,7 +121,7 @@
       <!-- ---- Producto 1 ---- -->
       <div class="col-12 col-sm-6 col-md-4">
         <div class="card h-100 shadow-sm">
-          <img src="assets/image/polonegro2.jpg" class="card-img-top imagen-producto" alt="Polo básico">
+          <img src="assets/image/POLOHOMBRE_NEGRO2.jpg" class="card-img-top imagen-producto" alt="Polo básico">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Polo Básico</h5>
             <p class="card-text text-muted mb-1">Algodón 100%, varios colores</p>
@@ -163,7 +135,7 @@
       <!-- ---- Producto 2 ---- -->
       <div class="col-12 col-sm-6 col-md-4">
         <div class="card h-100 shadow-sm">
-          <img src="assets/image/casacadenim.jpg" class="card-img-top imagen-producto" alt="Casaca">
+          <img src="assets/image/CASACAHOMBRE_DENIM.jpg" class="card-img-top imagen-producto" alt="Casaca">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Casaca Denim</h5>
             <p class="card-text text-muted mb-1">Ajuste regular, azul</p>
@@ -177,7 +149,7 @@
       <!-- ---- Producto 3 ---- -->
       <div class="col-12 col-sm-6 col-md-4">
         <div class="card h-100 shadow-sm">
-          <img src="assets/image/pantalonjogger2.jpg" class="card-img-top imagen-producto" alt="Pantalón">
+          <img src="assets/image/PANTALONHOMBRE_JOGGER.jpg" class="card-img-top imagen-producto" alt="Pantalón">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Pantalón Jogger</h5>
             <p class="card-text text-muted mb-1">Negro, tallas S a XL</p>
@@ -191,7 +163,8 @@
       <!-- ---- Producto 4 ---- -->
       <div class="col-12 col-sm-6 col-md-4">
         <div class="card h-100 shadow-sm">
-          <img src="assets/image/zapatillas.png" class="card-img-top imagen-producto" alt="Zapatillas urbanas">
+          <img src="assets/image/ZAPATILLAHOMBRE_CASUAL.png" class="card-img-top imagen-producto"
+            alt="Zapatillas urbanas">
 
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Zapatillas Urbanas</h5>
@@ -231,7 +204,7 @@
       <!-- ---- Producto 6 ---- -->
       <div class="col-12 col-sm-6 col-md-4">
         <div class="card h-100 shadow-sm">
-          <img src="assets/image/pantalon.png" class="card-img-top imagen-producto" alt="Jean clásico">
+          <img src="assets/image/PANTALONMUJER_JEAN.png" class="card-img-top imagen-producto" alt="Jean clásico">
 
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Jean Clásico</h5>
@@ -247,9 +220,1286 @@
         </div>
       </div>
 
+    </div>
+    <!-- FIN DE BLOQUE REDUCIDO -->
+
+    <!-- ===== CATÁLOGO POR CATEGORÍAS ===== -->
+
+    <div class="text-center mt-5 mb-4">
+      <h2 class="fw-bold">Catálogo</h2>
+      <p class="text-muted">Explora nuestros productos por categoría</p>
+    </div>
+
+    <!-- ===== CATEGORÍAS PRINCIPALES ===== -->
+
+    <div class="container my-4">
+
+      <div class="nav nav-pills justify-content-center gap-3" id="categorias" role="tablist">
+
+        <button class="btn btn-dark active" data-bs-toggle="pill" data-bs-target="#hombres" type="button">
+          Hombres
+        </button>
+
+        <button class="btn btn-dark" data-bs-toggle="pill" data-bs-target="#mujeres" type="button">
+          Mujeres
+        </button>
+
+        <button class="btn btn-dark" data-bs-toggle="pill" data-bs-target="#infantil" type="button">
+          Infantil
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+
+    <!-- ===== CONTENIDO DE CATEGORÍAS ===== -->
+
+    <div class="tab-content">
+
+
+      <!-- ================================================== -->
+      <!-- HOMBRES -->
+      <!-- ================================================== -->
+
+      <div class="tab-pane fade show active" id="hombres">
+
+        <!-- SUBCATEGORÍAS -->
+
+        <div class="nav nav-pills justify-content-center gap-2 flex-wrap mb-4">
+
+          <button class="btn btn-outline-dark active" data-bs-toggle="pill" data-bs-target="#hombre-polos"
+            type="button">
+            Polos
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#hombre-pantalones" type="button">
+            Pantalones
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#hombre-zapatos" type="button">
+            Zapatos
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#hombre-zapatillas" type="button">
+            Zapatillas
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#hombre-casacas" type="button">
+            Casacas
+          </button>
+
+        </div>
+
+
+        <div class="tab-content">
+
+
+          <!-- POLOS HOMBRE -->
+
+          <div class="tab-pane fade show active" id="hombre-polos">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/POLOHOMBRE_NEGRO.jpg" class="card-img-top imagen-producto" alt="Polo negro">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Polo Negro</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Polo básico para hombre
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 39.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/polo-negro-basico-unisex-1-600x750.png.webp" class="card-img-top imagen-producto" alt="Polo negro">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Polo Casual</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Algodón, corte regular
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 44.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- PANTALONES HOMBRE -->
+
+          <div class="tab-pane fade" id="hombre-pantalones">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONHOMBRE_STRAIGHT.jpg" class="card-img-top imagen-producto"
+                    alt="Pantalón straight">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Pantalón Straight</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Corte recto para hombre
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 89.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONHOMBRE_JOGGER.jpg" class="card-img-top imagen-producto"
+                    alt="Pantalón jogger">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Pantalón Jogger</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Cómodo y urbano
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 79.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONHOMBRE_JOGGER2.jpg" class="card-img-top imagen-producto"
+                    alt="Jogger negro">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Jogger Negro</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño urbano
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 84.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- ZAPATOS HOMBRE -->
+
+          <div class="tab-pane fade" id="hombre-zapatos">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATOHOMBRE_JAZZMARRON.jpg" class="card-img-top imagen-producto"
+                    alt="Zapato marrón">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapato Marrón</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño elegante
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 139.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATOHOMBRE_NEGRO.jpg" class="card-img-top imagen-producto"
+                    alt="Zapato negro">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapato Negro</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño formal
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 149.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- ZAPATILLAS HOMBRE -->
+
+          <div class="tab-pane fade" id="hombre-zapatillas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATILLAHOMBRE_RUNNING.jpg" class="card-img-top imagen-producto"
+                    alt="Zapatilla running">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapatilla Running</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Cómoda para uso diario
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 149.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATILLAHOMBRE_CASUAL.png" class="card-img-top imagen-producto"
+                    alt="Zapatilla casual">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapatilla Casual</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño urbano
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 139.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- CASACAS HOMBRE -->
+
+          <div class="tab-pane fade" id="hombre-casacas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/CASACAHOMBRE_DENIM.jpg" class="card-img-top imagen-producto"
+                    alt="Casaca denim">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Casaca Denim</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Denim oscuro
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 129.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/CASACAHOMBRE_PUFFER.jpg" class="card-img-top imagen-producto"
+                    alt="Casaca puffer">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Casaca Puffer</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Ideal para invierno
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 159.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================================================== -->
+      <!-- MUJERES -->
+      <!-- ================================================== -->
+
+      <div class="tab-pane fade" id="mujeres">
+
+        <div class="nav nav-pills justify-content-center gap-2 flex-wrap mb-4">
+
+          <button class="btn btn-outline-dark active" data-bs-toggle="pill" data-bs-target="#mujer-polos" type="button">
+            Polos
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#mujer-blusas" type="button">
+            Blusas
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#mujer-pantalones" type="button">
+            Pantalones
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#mujer-faldas" type="button">
+            Faldas
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#mujer-vestidos" type="button">
+            Vestidos
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#mujer-tacos" type="button">
+            Tacos
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#mujer-zapatillas" type="button">
+            Zapatillas
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#mujer-casacas" type="button">
+            Casacas
+          </button>
+
+        </div>
+
+
+        <div class="tab-content">
+
+
+          <!-- POLOS MUJER -->
+
+          <div class="tab-pane fade show active" id="mujer-polos">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/POLOMUJER_CAMISERO.jpg" class="card-img-top imagen-producto"
+                    alt="Polo camisero">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Polo Camisero</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Polo casual para mujer
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 49.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/POLOMUJER_MANGACORTA.jpg" class="card-img-top imagen-producto"
+                    alt="Polo manga corta">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Polo Manga Corta</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño casual
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 39.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- BLUSAS MUJER -->
+
+          <div class="tab-pane fade" id="mujer-blusas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/BLUSAMUJER_BOLERO.jpg" class="card-img-top imagen-producto" alt="Blusa bolero">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Blusa Bolero</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Blusa elegante y fresca
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 69.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/BLUSAMUJER_MANGALARGA.jpg" class="card-img-top imagen-producto"
+                    alt="Blusa manga larga">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Blusa Manga Larga</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño casual
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 74.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- PANTALONES MUJER -->
+
+          <div class="tab-pane fade" id="mujer-pantalones">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONMUJER_JEAN.png" class="card-img-top imagen-producto" alt="Jean mujer">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Jean Mujer</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Jean azul clásico
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 99.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONMUJER_LEGGIN.jpg" class="card-img-top imagen-producto"
+                    alt="Leggin mujer">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Leggin Negro</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Cómodo y flexible
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 59.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONMUJER_JOGGER.jpg" class="card-img-top imagen-producto"
+                    alt="Jogger mujer">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Jogger Mujer</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño casual
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 79.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- FALDAS MUJER -->
+
+          <div class="tab-pane fade" id="mujer-faldas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/FALDAMUJER_CORTA.jpg" class="card-img-top imagen-producto" alt="Falda corta">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Falda Corta</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño moderno
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 59.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/FALDAMUJER_LARGA.jpg" class="card-img-top imagen-producto" alt="Falda larga">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Falda Larga</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Falda elegante
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 79.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- VESTIDOS MUJER -->
+
+          <div class="tab-pane fade" id="mujer-vestidos">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/VESTIDOMUJER_ELEGANTE.jpg" class="card-img-top imagen-producto"
+                    alt="Vestido elegante">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Vestido Elegante</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Ideal para ocasiones especiales
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 139.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/VESTIDOMUJER_MANGACORTA.jpg" class="card-img-top imagen-producto"
+                    alt="Vestido manga corta">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Vestido Manga Corta</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño fresco y casual
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 109.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- TACOS MUJER -->
+
+          <div class="tab-pane fade" id="mujer-tacos">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/TACOSMUJER_REINA.jpg" class="card-img-top imagen-producto" alt="Tacos reina">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Tacos Reina</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Taco clásico
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 129.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/TACOSMUJER_ZAPATO.jpg" class="card-img-top imagen-producto"
+                    alt="Tacos con correa">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Tacos con Correa</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño elegante
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 119.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- ZAPATILLAS MUJER -->
+
+          <div class="tab-pane fade" id="mujer-zapatillas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATILLAMUJER_BLANCA.jpg" class="card-img-top imagen-producto"
+                    alt="Zapatilla blanca">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapatilla Blanca</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño minimalista
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 129.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATILLAMUJER_CASUAL.jpg" class="card-img-top imagen-producto"
+                    alt="Zapatilla casual">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapatilla Casual</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Cómoda para uso diario
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 119.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- CASACAS MUJER -->
+
+          <div class="tab-pane fade" id="mujer-casacas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/CASACAMUJER_PLUMAS.jpg" class="card-img-top imagen-producto"
+                    alt="Casaca plumas">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Casaca Plumas</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Abrigo ligero
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 159.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/CASACAMUJER_SUEDE.jpg" class="card-img-top imagen-producto" alt="Casaca suede">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Casaca Suede</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Diseño moderno
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 149.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================================================== -->
+      <!-- INFANTIL -->
+      <!-- ================================================== -->
+
+      <div class="tab-pane fade" id="infantil">
+
+        <!-- SUBCATEGORÍAS INFANTIL -->
+
+        <div class="nav nav-pills justify-content-center gap-2 flex-wrap mb-4">
+
+          <button class="btn btn-outline-dark active" data-bs-toggle="pill" data-bs-target="#infantil-polos"
+            type="button">
+            Polos
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#infantil-pantalones"
+            type="button">
+            Pantalones
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#infantil-shorts" type="button">
+            Shorts
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#infantil-zapatillas"
+            type="button">
+            Zapatillas
+          </button>
+
+          <button class="btn btn-outline-dark" data-bs-toggle="pill" data-bs-target="#infantil-casacas" type="button">
+            Casacas
+          </button>
+
+        </div>
+
+
+        <div class="tab-content">
+
+
+          <!-- POLOS INFANTIL -->
+
+          <div class="tab-pane fade show active" id="infantil-polos">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/POLONIÑO_CORTA.jpg" class="card-img-top imagen-producto" alt="Polo niño">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Polo Niño</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Polo manga corta
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 34.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/POLONIÑA_CORTA.jpg" class="card-img-top imagen-producto" alt="Polo niña">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Polo Niña</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Polo estampado
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 34.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- PANTALONES INFANTIL -->
+
+          <div class="tab-pane fade" id="infantil-pantalones">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONNIÑO_AZUL.jpg" class="card-img-top imagen-producto"
+                    alt="Pantalón niño">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Pantalón Niño</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Pantalón azul
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 59.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/PANTALONNIÑA_ROSA.jpg" class="card-img-top imagen-producto"
+                    alt="Pantalón niña">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Pantalón Niña</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Pantalón rosado
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 59.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- SHORTS INFANTIL -->
+
+          <div class="tab-pane fade" id="infantil-shorts">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/SHORTNIÑO_AZUL.jpg" class="card-img-top imagen-producto" alt="Short niño">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Short Niño</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Short deportivo
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 39.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- CONTINUACIÓN: SHORT NIÑA -->
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/SHORTNIÑA_DENIM.jpg" class="card-img-top imagen-producto" alt="Short niña">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Short Niña</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Short denim
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 44.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- ZAPATILLAS INFANTIL -->
+
+          <div class="tab-pane fade" id="infantil-zapatillas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATILLANIÑO_URBANO.jpg" class="card-img-top imagen-producto"
+                    alt="Zapatilla niño">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapatilla Niño</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Zapatilla urbana
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 89.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/ZAPATILLANIÑA_URBANO.jpg" class="card-img-top imagen-producto"
+                    alt="Zapatilla niña">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Zapatilla Niña</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Zapatilla casual
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 89.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- CASACAS INFANTIL -->
+
+          <div class="tab-pane fade" id="infantil-casacas">
+
+            <div class="row g-4">
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/CASACANIÑO_FRIO.jpg" class="card-img-top imagen-producto" alt="Casaca niño">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Casaca Niño</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Casaca para invierno
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 99.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 col-sm-6 col-md-4">
+                <div class="card h-100 shadow-sm">
+
+                  <img src="assets/image/CASACANIÑA_MANGALARGA.jpg" class="card-img-top imagen-producto"
+                    alt="Casaca niña">
+
+                  <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title">Casaca Niña</h5>
+
+                    <p class="card-text text-muted mb-1">
+                      Casaca manga larga
+                    </p>
+
+                    <p class="fw-bold mb-3">S/ 99.90</p>
+
+                    <button class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+                      Agregar al carrito
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+        <!-- FIN TAB-CONTENT SUBCATEGORÍAS INFANTIL -->
+
+      </div>
+      <!-- FIN INFANTIL -->
 
 
     </div>
+    <!-- FIN TAB-CONTENT CATEGORÍAS PRINCIPALES -->
+
+
+
+
 
   </main>
 
@@ -330,7 +1580,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Java Script -->
-   <script src="assets/scripts/script.js"></script>
+  <script src="assets/scripts/script.js"></script>
 
 
   <!-- Script propio: alterna entre la vista de login y la de registro dentro del modal -->
