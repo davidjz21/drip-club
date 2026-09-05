@@ -3,10 +3,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
 }
 
 .cursor-pointer {
