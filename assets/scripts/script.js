@@ -18,6 +18,8 @@ function irACategoria(categoriaId) {
     subcategoriaBoton = document.querySelector('button[data-bs-target="#mujer-polos"]');
   } else if (categoriaId === 'infantil') {
     subcategoriaBoton = document.querySelector('button[data-bs-target="#infantil-polos"]');
+  } else if (categoriaId === 'accesorios') {
+    subcategoriaBoton = document.querySelector('button[data-bs-target="#accesorios-gorras"]');
   }
 
   if (subcategoriaBoton) {
