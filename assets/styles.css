@@ -1,14 +1,57 @@
-/*Enlaze del CSS con la librería de iconos de font-awesome 6.7.2*/
+/* Enlace del CSS con la librería de iconos de font-awesome 6.7.2 */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css');
 
-html {
-  scroll-behavior: smooth;
+/* Google Fonts: Montserrat, Plus Jakarta Sans, Bebas Neue, Inter, Poppins, Open Sans */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+
+/* --- OPCIÓN 1: URBAN & BOLD  --- */
+/* :root {
+  --font-titulos: 'Montserrat', sans-serif;
+  --font-cuerpo: 'Plus Jakarta Sans', sans-serif;
+} */
+
+/* --- OPCIÓN 2: INDUSTRIAL & STREET  --- */
+
+:root {
+  --font-titulos: 'Bebas Neue', sans-serif;
+  --font-cuerpo: 'Inter', sans-serif;
+}
+
+
+/* --- OPCIÓN 3: CLEAN & MODERN  --- */
+
+/* :root {
+  --font-titulos: 'Poppins', sans-serif;
+  --font-cuerpo: 'Open Sans', sans-serif;
+} */
+
+
+/* Aplicación global de fuentes */
+body {
+  font-family: var(--font-cuerpo);
   overflow-x: hidden;
 }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  overflow-x: hidden;
+/* Encabezados, Logo de marca y Títulos de producto */
+h1, h2, h3, h4, h5, h6, .navbar-brand, .card-title {
+  font-family: var(--font-titulos);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Botones con carácter e impacto */
+.btn {
+  font-family: var(--font-titulos);
+  font-weight: 600;
+  letter-spacing: 0.8px;
+}
+
+/* Enlaces del Navbar con estilo de navegación */
+.navbar-nav .nav-link {
+  font-family: var(--font-titulos);
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .cursor-pointer {
@@ -31,7 +74,7 @@ body {
 
 .imagen-carrousel {
   width: 100%;
-  height: 450px;
+  height: 670px;
   display: block;
 }
 
