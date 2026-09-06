@@ -27,10 +27,75 @@
 } */
 
 
-/* Aplicación global de fuentes */
+/* ==========================================================================
+   PALETA DE COLORES ACID ORANGE (STREET & ENERGÍA)
+   ========================================================================== */
+:root {
+  --color-text: #0F0F11;
+  --color-bg: #F4F5F7;
+  --color-primary: #FF5500;       /* Naranja vibrante para llamados a la acción */
+  --color-primary-hover: #E04B00; /* Naranja más oscuro al pasar el mouse */
+  --color-secondary: #495057;
+  --color-dark: #0A0A0C;          /* Negro asfalto premium */
+  --color-white: #FFFFFF;
+}
+
+/* Aplicación global de fuentes y colores base */
 body {
   font-family: var(--font-cuerpo);
+  color: var(--color-text);
+  background-color: var(--color-bg);
   overflow-x: hidden;
+}
+
+/* ==========================================================================
+   SOBREESCRITURA DE BOOTSTRAP CON NUESTRA PALETA
+   ========================================================================== */
+
+/* Navbar y Footer con Negro Asfalto Profundo */
+.navbar-dark.bg-dark,
+footer.bg-dark,
+.bg-dark:not([class*="bg-opacity"]) {
+  background-color: var(--color-dark) !important;
+}
+
+/* Botones principales oscuros con transición */
+.btn-dark {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  color: var(--color-white);
+  transition: all 0.3s ease;
+}
+
+.btn-dark:hover,
+.btn-dark:focus {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-white) !important;
+}
+
+/* Botón activo en filtros y pestañas (Catálogo) */
+.btn-dark.active,
+.btn-outline-dark.active {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-white) !important;
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Acentos, insignias y textos de oferta */
+.text-warning,
+#cuentaDias, #cuentaHoras, #cuentaMinutos, #cuentaSegundos {
+  color: var(--color-primary) !important;
+}
+
+.badge.bg-warning {
+  background-color: var(--color-primary) !important;
+  color: var(--color-white) !important;
 }
 
 /* Encabezados, Logo de marca y Títulos de producto */
