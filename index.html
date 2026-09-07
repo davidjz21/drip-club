@@ -123,6 +123,33 @@
 
   </div>
 
+  <!-- ===== MENÚ DE CATEGORÍAS (DEBAJO DEL CARRUSEL) ===== -->
+  <section id="menu-categorias" class="container my-4">
+    <div class="card border-0 rounded-4 shadow-sm p-4 bg-white text-center">
+      <span class="badge bg-primary px-3 py-2 text-uppercase mb-2 rounded-pill mx-auto">Selecciona tu Estilo</span>
+      <h2 class="fw-bold h3 mb-1">Catálogo Drip Club</h2>
+      <p class="text-muted small mb-4">Elige una categoría para ver los productos</p>
+
+      <div class="nav nav-pills justify-content-center gap-2 gap-md-3" id="categorias" role="tablist">
+        <button class="btn btn-dark px-3 px-md-4 py-2" data-bs-toggle="pill" data-bs-target="#hombres" type="button">
+          <i class="fa-solid fa-person me-2"></i>Hombres
+        </button>
+
+        <button class="btn btn-dark px-3 px-md-4 py-2" data-bs-toggle="pill" data-bs-target="#mujeres" type="button">
+          <i class="fa-solid fa-person-dress me-2"></i>Mujeres
+        </button>
+
+        <button class="btn btn-dark px-3 px-md-4 py-2" data-bs-toggle="pill" data-bs-target="#infantil" type="button">
+          <i class="fa-solid fa-child me-2"></i>Infantil
+        </button>
+
+        <button class="btn btn-dark px-3 px-md-4 py-2" data-bs-toggle="pill" data-bs-target="#accesorios" type="button">
+          <i class="fa-solid fa-hat-cowboy me-2"></i>Accesorios
+        </button>
+      </div>
+    </div>
+  </section>
+
 
 
 
@@ -229,38 +256,8 @@
     </div>
   </section>
 
-    <!-- ===== CATÁLOGO POR CATEGORÍAS ===== -->
-
-   <div id="catalogo" class="text-center mt-5 mb-4">
-      <h2 class="fw-bold">Catálogo</h2>
-      <p class="text-muted">Explora nuestros productos por categoría</p>
-    </div>
-
-    <!-- ===== CATEGORÍAS PRINCIPALES ===== -->
-
- <div class="container my-4">
-
-      <div class="nav nav-pills justify-content-center gap-3" id="categorias" role="tablist">
-
-        <button class="btn btn-dark active" data-bs-toggle="pill" data-bs-target="#hombres" type="button">
-          Hombres
-        </button>
-
-        <button class="btn btn-dark" data-bs-toggle="pill" data-bs-target="#mujeres" type="button">
-          Mujeres
-        </button>
-
-        <button class="btn btn-dark" data-bs-toggle="pill" data-bs-target="#infantil" type="button">
-          Infantil
-        </button>
-
-        <button class="btn btn-dark" data-bs-toggle="pill" data-bs-target="#accesorios" type="button">
-          Accesorios
-        </button>
-
-      </div>
-
-    </div>
+  <!-- ===== CATÁLOGO DE PRODUCTOS (GRILLA) ===== -->
+  <div id="catalogo"></div>
 
 
 
@@ -310,6 +307,19 @@
           <!-- POLOS HOMBRE -->
 
           <div class="tab-pane fade show active" id="hombre-polos">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Polos para Hombres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -365,8 +375,20 @@
 
 
           <!-- PANTALONES HOMBRE -->
-
           <div class="tab-pane fade" id="hombre-pantalones">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Pantalones para Hombres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -449,8 +471,20 @@
 
 
           <!-- ZAPATOS HOMBRE -->
-
           <div class="tab-pane fade" id="hombre-zapatos">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Zapatos para Hombres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -508,8 +542,20 @@
 
 
           <!-- ZAPATILLAS HOMBRE -->
-
           <div class="tab-pane fade" id="hombre-zapatillas">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Zapatillas para Hombres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -567,8 +613,20 @@
 
 
           <!-- CASACAS HOMBRE -->
-
           <div class="tab-pane fade" id="hombre-casacas">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Casacas para Hombres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -678,6 +736,19 @@
 
           <div class="tab-pane fade show active" id="mujer-polos">
 
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Polos para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
+
             <div class="row g-4">
 
               <div class="col-12 col-sm-6 col-md-4">
@@ -737,6 +808,19 @@
 
           <div class="tab-pane fade" id="mujer-blusas">
 
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Blusas para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
+
             <div class="row g-4">
 
               <div class="col-12 col-sm-6 col-md-4">
@@ -791,8 +875,20 @@
           </div>
 
           <!-- PANTALONES MUJER -->
-
           <div class="tab-pane fade" id="mujer-pantalones">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Pantalones para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -874,8 +970,20 @@
 
 
           <!-- FALDAS MUJER -->
-
           <div class="tab-pane fade" id="mujer-faldas">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Faldas para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -931,8 +1039,20 @@
 
 
           <!-- VESTIDOS MUJER -->
-
           <div class="tab-pane fade" id="mujer-vestidos">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Vestidos para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -990,8 +1110,20 @@
 
 
           <!-- TACOS MUJER -->
-
           <div class="tab-pane fade" id="mujer-tacos">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Tacos para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -1048,8 +1180,20 @@
 
 
           <!-- ZAPATILLAS MUJER -->
-
           <div class="tab-pane fade" id="mujer-zapatillas">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Zapatillas para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -1107,8 +1251,20 @@
 
 
           <!-- CASACAS MUJER -->
-
           <div class="tab-pane fade" id="mujer-casacas">
+            
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Casacas para Mujeres</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -1210,6 +1366,19 @@
 
           <div class="tab-pane fade show active" id="infantil-polos">
 
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Polos para Niños</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
+
             <div class="row g-4">
 
               <div class="col-12 col-sm-6 col-md-4">
@@ -1266,6 +1435,19 @@
           <!-- PANTALONES INFANTIL -->
 
           <div class="tab-pane fade" id="infantil-pantalones">
+
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Pantalones para Niños</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -1326,6 +1508,19 @@
 
           <div class="tab-pane fade" id="infantil-shorts">
 
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Shorts para Niños</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
+
             <div class="row g-4">
 
               <div class="col-12 col-sm-6 col-md-4">
@@ -1383,6 +1578,19 @@
           <!-- ZAPATILLAS INFANTIL -->
 
           <div class="tab-pane fade" id="infantil-zapatillas">
+
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Zapatillas para Niños</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -1442,6 +1650,19 @@
           <!-- CASACAS INFANTIL -->
 
           <div class="tab-pane fade" id="infantil-casacas">
+
+            <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+            <div class="mb-4">
+              <div class="text-start mb-2">
+                <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                  <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                </a>
+              </div>
+              <div class="text-center">
+                <h2 class="fw-bold display-6 mb-1">Casacas para Niños</h2>
+                <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+              </div>
+            </div>
 
             <div class="row g-4">
 
@@ -1568,6 +1789,19 @@
     <!-- GORRAS -->
     <div class="tab-pane fade show active" id="accesorios-gorras">
 
+      <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+      <div class="mb-4">
+        <div class="text-start mb-2">
+          <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+          </a>
+        </div>
+        <div class="text-center">
+          <h2 class="fw-bold display-6 mb-1">Gorras</h2>
+          <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+        </div>
+      </div>
+
       <div class="row g-4">
 
         <div class="col-12 col-sm-6 col-md-4">
@@ -1603,6 +1837,19 @@
 
     <!-- MOCHILAS -->
     <div class="tab-pane fade" id="accesorios-mochilas">
+
+      <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+      <div class="mb-4">
+        <div class="text-start mb-2">
+          <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+          </a>
+        </div>
+        <div class="text-center">
+          <h2 class="fw-bold display-6 mb-1">Mochilas</h2>
+          <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+        </div>
+      </div>
 
       <div class="row g-4">
 
@@ -1640,6 +1887,19 @@
     <!-- CINTURONES -->
     <div class="tab-pane fade" id="accesorios-cinturones">
 
+      <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+      <div class="mb-4">
+        <div class="text-start mb-2">
+          <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+          </a>
+        </div>
+        <div class="text-center">
+          <h2 class="fw-bold display-6 mb-1">Cinturones</h2>
+          <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+        </div>
+      </div>
+
       <div class="row g-4">
 
         <div class="col-12 col-sm-6 col-md-4">
@@ -1675,6 +1935,19 @@
 
     <!-- LENTES -->
     <div class="tab-pane fade" id="accesorios-lentes">
+
+      <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+      <div class="mb-4">
+        <div class="text-start mb-2">
+          <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+          </a>
+        </div>
+        <div class="text-center">
+          <h2 class="fw-bold display-6 mb-1">Lentes</h2>
+          <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+        </div>
+      </div>
 
       <div class="row g-4">
 
@@ -1712,6 +1985,19 @@
     <!-- RELOJES -->
     <div class="tab-pane fade" id="accesorios-relojes">
 
+      <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+      <div class="mb-4">
+        <div class="text-start mb-2">
+          <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+          </a>
+        </div>
+        <div class="text-center">
+          <h2 class="fw-bold display-6 mb-1">Relojes</h2>
+          <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+        </div>
+      </div>
+
       <div class="row g-4">
 
         <div class="col-12 col-sm-6 col-md-4">
@@ -1748,6 +2034,19 @@
     <!-- COLLARES -->
     <div class="tab-pane fade" id="accesorios-collares">
 
+      <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+      <div class="mb-4">
+        <div class="text-start mb-2">
+          <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+          </a>
+        </div>
+        <div class="text-center">
+          <h2 class="fw-bold display-6 mb-1">Collares</h2>
+          <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+        </div>
+      </div>
+
       <div class="row g-4">
 
         <div class="col-12 col-sm-6 col-md-4">
@@ -1783,6 +2082,19 @@
 
     <!-- PULSERAS -->
     <div class="tab-pane fade" id="accesorios-pulseras">
+
+      <!-- Cabecera con botón volver a la izquierda y título en el centro -->
+      <div class="mb-4">
+        <div class="text-start mb-2">
+          <a href="#menu-categorias" class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+            <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+          </a>
+        </div>
+        <div class="text-center">
+          <h2 class="fw-bold display-6 mb-1">Pulseras</h2>
+          <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+        </div>
+      </div>
 
       <div class="row g-4">
 

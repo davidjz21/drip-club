@@ -36,8 +36,19 @@ function irACategoria(categoriaId) {
 
 /**
  * Temporizador de cuenta regresiva en vivo para el banner promocional
+ * y eventos de scroll solo para los botones de categorías principales
  */
 document.addEventListener('DOMContentLoaded', () => {
+  // Conectar SOLO los 4 botones de categorías principales (debajo del carrusel)
+  const botonesCategoriasPrincipales = document.querySelectorAll('#categorias button[data-bs-toggle="pill"]');
+  botonesCategoriasPrincipales.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const seccionCatalogo = document.getElementById('catalogo');
+      if (seccionCatalogo) {
+        seccionCatalogo.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
   // Fecha límite: 3 días a partir de hoy (para que siempre tenga tiempo)
   const fechaLimite = new Date();
   fechaLimite.setDate(fechaLimite.getDate() + 3);
