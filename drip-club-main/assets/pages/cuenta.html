@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta | Drip Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+
+    <!-- Guardia de acceso: si no hay sesión iniciada, regresa al inicio.
+         Va en el <head> (antes de pintar el body) para evitar el "flash"
+         de contenido a alguien que no inició sesión. -->
+    <script>
+        if (localStorage.getItem('dripclub_sesion_iniciada') !== 'true') {
+            window.location.href = '../../index.html';
+        }
+    </script>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-white">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="../../index.html">
+                <img src="../image/logo.png" alt="Logo Drip Club" height="45" class="d-inline-block">
+                Drip Club</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Catálogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobreNosotros.html">Sobre nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="navCuenta">
+                            <i class="fa-solid fa-user me-1"></i>
+                            Cuenta
+                        </a>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light ms-lg-3" type="button">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Carrito
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-5 bg-light border-bottom text-center">
+        <div class="container py-4">
+            <span class="badge bg-dark px-3 py-2 text-uppercase mb-3 rounded-pill">Área de Usuario</span>
+            <h1 class="fw-bold display-5 mb-3">Mi cuenta</h1>
+            <p class="text-muted lead mx-auto mb-0" style="max-width: 680px;">
+                Gestiona tu perfil, revisa tus pedidos y administra tus preferencias de compra.
+            </p>
+        </div>
+    </header>
+
+    <main class="flex-grow-1">
+        <section class="py-5">
+            <div class="container py-2">
+                <div class="row g-4">
+
+                    <!-- ===== Menú lateral de la cuenta ===== -->
+                    <div class="col-lg-4">
+                        <div class="list-group shadow-sm rounded-4 overflow-hidden" id="menuCuenta">
+                            <button type="button" class="list-group-item list-group-item-action active py-3" data-panel="panelPerfil">
+                                👤 Perfil
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action py-3" data-panel="panelPedidos">
+                                📦 Mis pedidos
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action py-3" data-panel="panelFavoritos">
+                                ❤️ Favoritos
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action py-3" data-panel="panelDirecciones">
+                                📍 Direcciones
+                            </button>
+                            <button type="button" class="list-group-item list-group-item-action py-3 text-danger fw-semibold" id="btnCerrarSesion">
+                                🚪 Cerrar sesión
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ===== Panel de contenido según la opción elegida ===== -->
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+
+                            <!-- ---- Panel: Perfil ---- -->
+                            <div id="panelPerfil" class="panelCuenta">
+                                <h4 class="fw-bold mb-4">👤 Mi perfil</h4>
+                                <form id="formPerfil">
+                                    <div class="mb-3">
+                                        <label for="perfilNombre" class="form-label">Nombre completo</label>
+                                        <input type="text" class="form-control" id="perfilNombre" placeholder="Tu nombre">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="perfilCorreo" class="form-label">Correo electrónico</label>
+                                        <input type="email" class="form-control" id="perfilCorreo" placeholder="nombre@correo.com">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="perfilTelefono" class="form-label">Teléfono</label>
+                                        <input type="tel" class="form-control" id="perfilTelefono" placeholder="+51 999 999 999">
+                                    </div>
+                                    <button type="submit" class="btn btn-dark px-4">Guardar cambios</button>
+                                    <div id="avisoPerfilGuardado" class="alert alert-success mt-3 d-none mb-0">
+                                        Tus datos se guardaron correctamente.
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- ---- Panel: Mis pedidos ---- -->
+                            <div id="panelPedidos" class="panelCuenta d-none">
+                                <h4 class="fw-bold mb-4">📦 Mis pedidos</h4>
+                                <div class="text-center text-muted py-4">
+                                    <i class="fa-solid fa-box-open fs-1 mb-3 d-block"></i>
+                                    Todavía no tienes pedidos registrados.<br>
+                                    ¡Explora el <a href="../../index.html">catálogo</a> y arma tu primer pedido!
+                                </div>
+                            </div>
+
+                            <!-- ---- Panel: Favoritos ---- -->
+                            <div id="panelFavoritos" class="panelCuenta d-none">
+                                <h4 class="fw-bold mb-4">❤️ Favoritos</h4>
+                                <div class="text-center text-muted py-4">
+                                    <i class="fa-solid fa-heart fs-1 mb-3 d-block"></i>
+                                    Aún no agregaste productos a tus favoritos.<br>
+                                    Marca los productos que más te gusten para verlos aquí.
+                                </div>
+                            </div>
+
+                            <!-- ---- Panel: Direcciones ---- -->
+                            <div id="panelDirecciones" class="panelCuenta d-none">
+                                <h4 class="fw-bold mb-4">📍 Mis direcciones</h4>
+
+                                <form id="formDireccion" class="d-flex gap-2 mb-4">
+                                    <input type="text" class="form-control" id="nuevaDireccion"
+                                        placeholder="Ej: Av. Siempre Viva 123, Lima">
+                                    <button type="submit" class="btn btn-dark px-4">Agregar</button>
+                                </form>
+
+                                <div id="listaDirecciones"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <p class="mb-0">&copy; 2026 Drip Club. Todos los derechos reservados.</p>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-white fs-3" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="text-white fs-3" title="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-white fs-3" title="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/51999999999" target="_blank" rel="noopener noreferrer" class="text-white fs-3" title="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- cuenta.js: maneja el link "Cuenta" del navbar y el botón "Cerrar sesión" -->
+    <script src="../scripts/cuenta.js"></script>
+
+    <!-- miCuenta.js: propio de esta página (cambio de paneles, guardar perfil y direcciones) -->
+    <script src="../scripts/miCuenta.js"></script>
+</body>
+
+</html>
