@@ -30,6 +30,13 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="contacto.html">Contacto</a>
                     </li>
+                    <!-- Nuevo item del navbar: abre el modal de login al hacer clic -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="navCuenta">
+                            <i class="fa-solid fa-user me-1"></i>
+                            Cuenta
+                        </a>
+                    </li>
                 </ul>
                 <button class="btn btn-outline-light ms-lg-3" type="button">
                     <i class="fa-solid fa-cart-shopping"></i>
@@ -371,6 +378,43 @@
 </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Modal de login del navbar: copia independiente de #modalCuenta, no la altera -->
+    <div class="modal fade" id="modalCuentaNav" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Inicia sesión para continuar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="loginEmailNav" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="loginEmailNav" placeholder="nombre@correo.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPasswordNav" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="loginPasswordNav" placeholder="Tu contraseña">
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Iniciar sesión</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Script propio: abre el modal de login al hacer clic en "Cuenta" del navbar -->
+    <script>
+        document.getElementById('navCuenta').addEventListener('click', function (e) {
+            e.preventDefault();
+            const modal = new bootstrap.Modal(document.getElementById('modalCuentaNav'));
+            modal.show();
+        });
+    </script>
 
     <script>
         const form = document.getElementById('formContacto');
