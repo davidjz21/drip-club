@@ -43,6 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const botonesCategoriasPrincipales = document.querySelectorAll('#categorias button[data-bs-toggle="pill"]');
   botonesCategoriasPrincipales.forEach(boton => {
     boton.addEventListener('click', () => {
+      const targetId = boton.getAttribute('data-bs-target');
+      // Garantizar que ningún otro tab-pane principal quede visible al mismo tiempo
+      document.querySelectorAll('.tab-pane#hombres, .tab-pane#mujeres, .tab-pane#infantil, .tab-pane#accesorios').forEach(pane => {
+        if (`#${pane.id}` !== targetId) {
+          pane.classList.remove('show', 'active');
+        }
+      });
+
       const seccionCatalogo = document.getElementById('catalogo');
       if (seccionCatalogo) {
         seccionCatalogo.scrollIntoView({ behavior: 'smooth' });
