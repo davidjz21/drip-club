@@ -213,3 +213,29 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .card-title {
   background-color: #25d366;
   border-color: #25d366;
 }
+
+
+
+/* =====================================================
+   SECCIÓN OFERTAS
+   ===================================================== */
+
+#ofertas .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#ofertas .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+}
+
+#ofertas .text-decoration-line-through {
+  font-size: 0.9rem;
+}
+
+#ofertas .badge.bg-danger {
+  font-family: var(--font-cuerpo);
+  font-size: 0.75rem;
+}
+
+
