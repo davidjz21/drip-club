@@ -89,3 +89,75 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarCuentaRegresiva();
   setInterval(actualizarCuentaRegresiva, 1000);
 });
+
+
+// ======================================================
+// SECCIÓN DE OFERTAS
+// ======================================================
+
+const navOfertas = document.getElementById('navOfertas');
+const seccionOfertas = document.getElementById('ofertas');
+const productosOfertas = document.getElementById('productosOfertas');
+
+navOfertas.addEventListener('click', function () {
+
+  // Limpiar las ofertas antes de volver a generarlas
+  productosOfertas.innerHTML = '';
+
+  // Buscar todos los productos marcados como oferta
+  const productosConOferta =
+    document.querySelectorAll('[data-oferta="true"]');
+
+  productosConOferta.forEach(producto => {
+
+    // Crear una copia del producto
+    const copia = producto.cloneNode(true);
+
+    // Buscar el precio original
+    const precioElemento =
+      copia.querySelector('.fw-bold.mb-3');
+
+    // Convertir "S/ 159.90" en el número 159.90
+    const precioNormal = parseFloat(
+      precioElemento.textContent.replace('S/', '').trim()
+    );
+
+    // Obtener el precio de oferta
+    const precioOferta =
+      parseFloat(producto.dataset.precioOferta);
+
+    // Calcular porcentaje de descuento
+    const descuento = Math.round(
+      ((precioNormal - precioOferta) / precioNormal) * 100
+    );
+
+    // Mostrar precio anterior + precio nuevo + porcentaje
+    precioElemento.innerHTML = `
+      <span class="text-muted text-decoration-line-through me-2">
+        S/ ${precioNormal.toFixed(2)}
+      </span>
+
+      <span class="text-danger fs-5">
+        S/ ${precioOferta.toFixed(2)}
+      </span>
+
+      <span class="badge bg-danger ms-2">
+        -${descuento}%
+      </span>
+    `;
+
+    // Colocar la copia dentro de Ofertas
+    productosOfertas.appendChild(copia);
+  });
+
+  // Mostrar la sección Ofertas
+  seccionOfertas.classList.remove('d-none');
+
+  // Bajar automáticamente hacia Ofertas
+  seccionOfertas.scrollIntoView({
+    behavior: 'smooth'
+  });
+
+});
+
+
