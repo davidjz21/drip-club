@@ -179,16 +179,18 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .card-title {
   }
 }
 
-/* Estilos de la pagina de contacto, beneficios y sedes */
+/* Estilos de la pagina de contacto, beneficios, sedes y vacantes */
 .card-contacto,
 .card-beneficio,
-.card-sede {
+.card-sede,
+.card-vacante {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-contacto:hover,
 .card-beneficio:hover,
-.card-sede:hover {
+.card-sede:hover,
+.card-vacante:hover {
   transform: translateY(-5px);
   box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
 }
