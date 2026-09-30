@@ -27,7 +27,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../../index.html#ofertas" id="navOfertas">
-                            <i class="fa-solid fa-tag me-1"></i>
                             Ofertas
                         </a>
                     </li>
@@ -52,9 +51,9 @@
                         </a>
                     </li>
                 </ul>
-                <button class="btn btn-outline-light ms-lg-3" type="button">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    Carrito
+                <button class="btn btn-outline-light ms-lg-3" type="button" id="btnAbrirCarrito"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito">
+                    <i class="fa-solid fa-cart-shopping me-1"></i> Carrito
                 </button>
             </div>
         </div>
@@ -314,6 +313,72 @@
             modal.show();
         });
     </script>
+
+    <!-- ===== OFFCANVAS: CARRITO DE COMPRAS ===== -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold m-0" id="offcanvasCarritoLabel">
+                Carrito de Compras
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="offcanvas-body d-flex flex-column p-3">
+            <!-- Lista dinamica de items del carrito -->
+            <div id="contenedorItemsCarrito" class="flex-grow-1 overflow-y-auto pe-1">
+                <!-- Renderizado dinamicamente con JavaScript -->
+            </div>
+
+            <!-- Resumen y acciones del carrito -->
+            <div id="resumenCarrito" class="border-top pt-3 mt-auto d-none">
+                <div class="d-flex justify-content-between text-muted mb-2">
+                    <span>Subtotal</span>
+                    <span class="fw-semibold text-dark" id="cartSubtotal">S/ 0.00</span>
+                </div>
+                <div class="d-flex justify-content-between text-muted mb-2">
+                    <span>Envío</span>
+                    <span class="text-dark fw-semibold">Gratis</span>
+                </div>
+                <hr class="my-2">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold">Total</span>
+                    <span class="fs-5 fw-bold text-dark" id="cartTotal">S/ 0.00</span>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-dark w-100 py-2 fw-semibold" id="btnFinalizarCompra">
+                        Finalizar Compra
+                    </button>
+                    <button class="btn btn-outline-dark btn-sm w-100 py-1" id="btnVaciarCarrito">
+                        Vaciar Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: SIMULACION DE COMPRA EXITOSA ===== -->
+    <div class="modal fade" id="modalCompraExitosa" tabindex="-1" aria-labelledby="modalCompraExitosaLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow text-center p-4 rounded-3">
+                <div class="modal-body">
+                    <div class="mx-auto mb-3 text-dark" style="font-size: 2.5rem;">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Compra exitosa</h5>
+                    <p class="text-muted small mb-4">
+                        Tus productos han sido procesados correctamente.
+                    </p>
+                    <button type="button" class="btn btn-dark w-100 py-2 fw-semibold" data-bs-dismiss="modal">
+                        Continuar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/script.js"></script>
 </body>
 
 </html>

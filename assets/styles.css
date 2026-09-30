@@ -33,10 +33,13 @@
 :root {
   --color-text: #0F0F11;
   --color-bg: #F4F5F7;
-  --color-primary: #FF5500;       /* Naranja vibrante para llamados a la acción */
-  --color-primary-hover: #E04B00; /* Naranja más oscuro al pasar el mouse */
+  --color-primary: #FF5500;
+  /* Naranja vibrante para llamados a la acción */
+  --color-primary-hover: #E04B00;
+  /* Naranja más oscuro al pasar el mouse */
   --color-secondary: #495057;
-  --color-dark: #0A0A0C;          /* Negro asfalto premium */
+  --color-dark: #0A0A0C;
+  /* Negro asfalto premium */
   --color-white: #FFFFFF;
 }
 
@@ -89,7 +92,10 @@ footer.bg-dark,
 
 /* Acentos, insignias y textos de oferta */
 .text-warning,
-#cuentaDias, #cuentaHoras, #cuentaMinutos, #cuentaSegundos {
+#cuentaDias,
+#cuentaHoras,
+#cuentaMinutos,
+#cuentaSegundos {
   color: var(--color-primary) !important;
 }
 
@@ -99,7 +105,14 @@ footer.bg-dark,
 }
 
 /* Encabezados, Logo de marca y Títulos de producto */
-h1, h2, h3, h4, h5, h6, .navbar-brand, .card-title {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand,
+.card-title {
   font-family: var(--font-titulos);
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -265,4 +278,30 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .card-title {
   font-size: 0.75rem;
 }
 
+/* CARRITO DE COMPRAS */
 
+#offcanvasCarrito {
+  width: 380px;
+  max-width: 90vw;
+}
+
+#contenedorItemsCarrito::-webkit-scrollbar {
+  width: 5px;
+}
+
+#contenedorItemsCarrito::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#contenedorItemsCarrito::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 4px;
+}
+
+#contenedorItemsCarrito::-webkit-scrollbar-thumb:hover {
+  background: #bbb;
+}
+
+.cart-item {
+  transition: opacity 0.2s ease;
+}

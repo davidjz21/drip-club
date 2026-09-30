@@ -2,65 +2,64 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestras Sedes | Drip Club</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../styles.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuestras Sedes | Drip Club</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../styles.css" rel="stylesheet">
 
-    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="../../index.html">
-                <img src="../image/logo.png" alt="Logo Drip Club" height="45" class="d-inline-block">
-                Drip Club
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="../../index.html">
+        <img src="../image/logo.png" alt="Logo Drip Club" height="45" class="d-inline-block">
+        Drip Club
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+        aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="../../index.html">Catálogo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../index.html#ofertas" id="navOfertas">
+              Ofertas
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
-                aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menuPrincipal">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../index.html">Catálogo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../index.html#ofertas" id="navOfertas">
-                            <i class="fa-solid fa-tag me-1"></i>
-                            Ofertas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="sobreNosotros.html">Sobre nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contacto.html">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="sedes.html">Nuestras Sedes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="trabajaNosotros.html">Trabaja con nosotros</a>
-                    </li>
-                    <!-- Item Cuenta: abre el modal de login al hacer clic -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="navCuenta" data-bs-toggle="modal" data-bs-target="#modalCuenta">
-                            <i class="fa-solid fa-user me-1"></i>
-                            Cuenta
-                        </a>
-                    </li>
-                </ul>
-                <button class="btn btn-outline-light ms-lg-3" type="button">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    Carrito
-                </button>
-            </div>
-        </div>
-    </nav>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sobreNosotros.html">Sobre nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contacto.html">Contacto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="sedes.html">Nuestras Sedes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="trabajaNosotros.html">Trabaja con nosotros</a>
+          </li>
+          <!-- Item Cuenta: abre el modal de login al hacer clic -->
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="navCuenta" data-bs-toggle="modal" data-bs-target="#modalCuenta">
+              <i class="fa-solid fa-user me-1"></i>
+              Cuenta
+            </a>
+          </li>
+        </ul>
+        <button class="btn btn-outline-light ms-lg-3" type="button" id="btnAbrirCarrito" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito">
+          <i class="fa-solid fa-cart-shopping me-1"></i> Carrito
+        </button>
+      </div>
+    </div>
+  </nav>
 
   <!-- ===== BANNER ===== -->
   <section class="py-5 bg-white border-bottom text-center">
@@ -88,8 +87,10 @@
               </div>
               <div>
                 <h5 class="fw-bold mb-1">Sede Miraflores</h5>
-                <p class="mb-1 text-muted small"><i class="fa-solid fa-location-dot me-1 text-primary"></i> Av. Larco 345, Miraflores, Lima</p>
-                <p class="mb-0 text-muted small"><i class="fa-solid fa-clock me-1 text-primary"></i> Lun - Sáb, 10:00 am - 8:00 pm</p>
+                <p class="mb-1 text-muted small"><i class="fa-solid fa-location-dot me-1 text-primary"></i> Av. Larco
+                  345, Miraflores, Lima</p>
+                <p class="mb-0 text-muted small"><i class="fa-solid fa-clock me-1 text-primary"></i> Lun - Sáb, 10:00 am
+                  - 8:00 pm</p>
               </div>
             </div>
           </div>
@@ -102,8 +103,10 @@
               </div>
               <div>
                 <h5 class="fw-bold mb-1">Sede San Isidro</h5>
-                <p class="mb-1 text-muted small"><i class="fa-solid fa-location-dot me-1 text-primary"></i> Av. Conquistadores 210, San Isidro, Lima</p>
-                <p class="mb-0 text-muted small"><i class="fa-solid fa-clock me-1 text-primary"></i> Lun - Sáb, 10:00 am - 8:00 pm</p>
+                <p class="mb-1 text-muted small"><i class="fa-solid fa-location-dot me-1 text-primary"></i> Av.
+                  Conquistadores 210, San Isidro, Lima</p>
+                <p class="mb-0 text-muted small"><i class="fa-solid fa-clock me-1 text-primary"></i> Lun - Sáb, 10:00 am
+                  - 8:00 pm</p>
               </div>
             </div>
           </div>
@@ -116,8 +119,10 @@
               </div>
               <div>
                 <h5 class="fw-bold mb-1">Sede Surco</h5>
-                <p class="mb-1 text-muted small"><i class="fa-solid fa-location-dot me-1 text-primary"></i> Av. El Polo 670, Santiago de Surco, Lima</p>
-                <p class="mb-0 text-muted small"><i class="fa-solid fa-clock me-1 text-primary"></i> Lun - Dom, 11:00 am - 9:00 pm</p>
+                <p class="mb-1 text-muted small"><i class="fa-solid fa-location-dot me-1 text-primary"></i> Av. El Polo
+                  670, Santiago de Surco, Lima</p>
+                <p class="mb-0 text-muted small"><i class="fa-solid fa-clock me-1 text-primary"></i> Lun - Dom, 11:00 am
+                  - 9:00 pm</p>
               </div>
             </div>
           </div>
@@ -128,10 +133,8 @@
       <!-- Columna derecha: mapa -->
       <div class="col-lg-7">
         <div class="ratio ratio-4x3 rounded-4 shadow-sm overflow-hidden h-100 border bg-white">
-          <iframe
-            src="https://www.google.com/maps?q=Lima,Peru&output=embed"
-            style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe src="https://www.google.com/maps?q=Lima,Peru&output=embed" style="border:0;" allowfullscreen=""
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
 
@@ -139,7 +142,7 @@
   </main>
 
 
-   <!-- ===== MODAL DE CUENTA (login / registro) ===== -->
+  <!-- ===== MODAL DE CUENTA (login / registro) ===== -->
   <!-- Un solo modal con dos "vistas" (loginView y registroView).
        Alternamos cuál se ve con la clase d-none (display: none) usando JS simple. -->
   <div class="modal fade" id="modalCuenta" tabindex="-1" aria-hidden="true">
@@ -251,6 +254,70 @@
       tituloModal.textContent = 'Inicia sesión para continuar';
     });
   </script>
+
+  <!-- ===== OFFCANVAS: CARRITO DE COMPRAS ===== -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title fw-bold m-0" id="offcanvasCarritoLabel">
+        Carrito de Compras
+      </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+
+    <div class="offcanvas-body d-flex flex-column p-3">
+      <!-- Lista dinamica de items del carrito -->
+      <div id="contenedorItemsCarrito" class="flex-grow-1 overflow-y-auto pe-1">
+        <!-- Renderizado dinámicamente con JavaScript -->
+      </div>
+
+      <!-- Resumen y acciones del carrito -->
+      <div id="resumenCarrito" class="border-top pt-3 mt-auto d-none">
+        <div class="d-flex justify-content-between text-muted mb-2">
+          <span>Subtotal</span>
+          <span class="fw-semibold text-dark" id="cartSubtotal">S/ 0.00</span>
+        </div>
+        <div class="d-flex justify-content-between text-muted mb-2">
+          <span>Envío</span>
+          <span class="text-dark fw-semibold">Gratis</span>
+        </div>
+        <hr class="my-2">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="fw-bold">Total</span>
+          <span class="fs-5 fw-bold text-dark" id="cartTotal">S/ 0.00</span>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-dark w-100 py-2 fw-semibold" id="btnFinalizarCompra">
+            Finalizar Compra
+          </button>
+          <button class="btn btn-outline-dark btn-sm w-100 py-1" id="btnVaciarCarrito">
+            Vaciar Carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: SIMULACION DE COMPRA EXITOSA ===== -->
+  <div class="modal fade" id="modalCompraExitosa" tabindex="-1" aria-labelledby="modalCompraExitosaLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow text-center p-4 rounded-3">
+        <div class="modal-body">
+          <div class="mx-auto mb-3 text-dark" style="font-size: 2.5rem;">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h5 class="fw-bold mb-2">Compra exitosa</h5>
+          <p class="text-muted small mb-4">
+            Tus productos han sido procesados correctamente.
+          </p>
+          <button type="button" class="btn btn-dark w-100 py-2 fw-semibold" data-bs-dismiss="modal">
+            Continuar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 
