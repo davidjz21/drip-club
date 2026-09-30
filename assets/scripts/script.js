@@ -430,23 +430,23 @@ document.addEventListener('click', (e) => {
     return;
   }
 
-  // 6. Simular Finalizar Compra
+  // 6. Finalizar Compra: Redirigir a la página de facturación y pago
   const btnFinalizar = e.target.closest('#btnFinalizarCompra');
   if (btnFinalizar) {
+    if (carrito.length === 0) {
+      alert('Tu carrito está vacío. Agrega prendas para continuar.');
+      return;
+    }
+
     const offcanvasEl = document.getElementById('offcanvasCarrito');
     if (offcanvasEl) {
       const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
       if (bsOffcanvas) bsOffcanvas.hide();
     }
 
-    carrito = [];
-    guardarYActualizarCarrito();
-
-    const modalCompraEl = document.getElementById('modalCompraExitosa');
-    if (modalCompraEl) {
-      const modalBootstrap = new bootstrap.Modal(modalCompraEl);
-      modalBootstrap.show();
-    }
+    // Detectar ubicacion actual para la ruta de facturacion.html
+    const enPaginas = window.location.pathname.includes('/assets/pages/') || window.location.href.includes('/assets/pages/');
+    window.location.href = enPaginas ? 'facturacion.html' : 'assets/pages/facturacion.html';
     return;
   }
 });

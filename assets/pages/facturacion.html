@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturación y Pago | Drip Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-light">
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="../../index.html">
+                <img src="../image/logo.png" alt="Logo Drip Club" height="45" class="d-inline-block">
+                Drip Club</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Catálogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html#ofertas" id="navOfertas">
+                            Ofertas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobreNosotros.html">Sobre nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sedes.html">Nuestras Sedes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="trabajaNosotros.html">Trabaja con nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cuenta.html" id="navCuenta">
+                            <i class="fa-solid fa-user me-1"></i> Cuenta
+                        </a>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-light ms-lg-3" type="button" id="btnAbrirCarrito"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito">
+                    <i class="fa-solid fa-cart-shopping me-1"></i> Carrito
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HEADER DEL CHECKOUT ===== -->
+    <header class="py-4 bg-white border-bottom">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2 small">
+                    <li class="breadcrumb-item"><a href="../../index.html"
+                            class="text-muted text-decoration-none">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="#" id="breadcrumbCarrito"
+                            class="text-muted text-decoration-none">Carrito</a></li>
+                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Facturación y Pago</li>
+                </ol>
+            </nav>
+            <h1 class="h3 fw-bold mb-0">Detalles de Facturación y Envío</h1>
+        </div>
+    </header>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <main class="container py-5">
+        <form id="formFacturacion" class="needs-validation" novalidate>
+            <div class="row g-5">
+
+                <!-- COLUMNA IZQUIERDA: FORMULARIOS -->
+                <div class="col-lg-7">
+                    <div class="card border-0 shadow-sm p-4 rounded-3 mb-4 bg-white">
+                        <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                            <span class="badge bg-dark rounded-circle text-white p-2"
+                                style="width: 28px; height: 28px; font-size: 0.8rem; line-height: 1;">1</span>
+                            Información de Contacto
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="nombreFacturacion" class="form-label small fw-semibold">Nombres</label>
+                                <input type="text" class="form-control" id="nombreFacturacion" placeholder="Ej. Carlos"
+                                    required>
+                                <div class="invalid-feedback">Por favor ingresa tus nombres.</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="apellidoFacturacion" class="form-label small fw-semibold">Apellidos</label>
+                                <input type="text" class="form-control" id="apellidoFacturacion"
+                                    placeholder="Ej. Rodríguez" required>
+                                <div class="invalid-feedback">Por favor ingresa tus apellidos.</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="correoFacturacion" class="form-label small fw-semibold">Correo
+                                    electrónico</label>
+                                <input type="email" class="form-control" id="correoFacturacion"
+                                    placeholder="tucorreo@ejemplo.com" required>
+                                <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="telefonoFacturacion" class="form-label small fw-semibold">Teléfono /
+                                    WhatsApp</label>
+                                <input type="tel" class="form-control" id="telefonoFacturacion"
+                                    placeholder="987 654 321" required>
+                                <div class="invalid-feedback">Ingresa un número telefónico.</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="tipoDocFacturacion" class="form-label small fw-semibold">Documento de
+                                    Identidad</label>
+                                <select class="form-select" id="tipoDocFacturacion" required>
+                                    <option value="DNI" selected>DNI</option>
+                                    <option value="CE">Carnet de Extranjería</option>
+                                    <option value="RUC">RUC</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="numDocFacturacion" class="form-label small fw-semibold">Número de
+                                    Documento</label>
+                                <input type="text" class="form-control" id="numDocFacturacion"
+                                    placeholder="Número de documento" required>
+                                <div class="invalid-feedback">Ingresa tu número de documento.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 2: DIRECCIÓN DE ENVÍO -->
+                    <div class="card border-0 shadow-sm p-4 rounded-3 mb-4 bg-white">
+                        <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                            <span class="badge bg-dark rounded-circle text-white p-2"
+                                style="width: 28px; height: 28px; font-size: 0.8rem; line-height: 1;">2</span>
+                            Dirección de Entrega
+                        </h5>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="regionFacturacion" class="form-label small fw-semibold">Departamento /
+                                    Región</label>
+                                <select class="form-select" id="regionFacturacion" required>
+                                    <option value="" disabled selected>Selecciona tu departamento</option>
+                                    <option value="Lima">Lima</option>
+                                    <option value="Arequipa">Arequipa</option>
+                                    <option value="Cusco">Cusco</option>
+                                    <option value="La Libertad">La Libertad</option>
+                                    <option value="Piura">Piura</option>
+                                    <option value="Lambayeque">Lambayeque</option>
+                                    <option value="Junín">Junín</option>
+                                    <option value="Ancash">Áncash</option>
+                                    <option value="Ica">Ica</option>
+                                    <option value="Otro">Otro departamento</option>
+                                </select>
+                                <div class="invalid-feedback">Selecciona un departamento.</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="ciudadFacturacion" class="form-label small fw-semibold">Ciudad /
+                                    Distrito</label>
+                                <input type="text" class="form-control" id="ciudadFacturacion"
+                                    placeholder="Ej. Miraflores" required>
+                                <div class="invalid-feedback">Ingresa tu ciudad o distrito.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="direccionFacturacion" class="form-label small fw-semibold">Dirección
+                                    exacta</label>
+                                <input type="text" class="form-control" id="direccionFacturacion"
+                                    placeholder="Av., Calle, Jr. y número exterior / interior" required>
+                                <div class="invalid-feedback">Ingresa tu dirección de entrega.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="referenciaFacturacion" class="form-label small fw-semibold">Referencia
+                                    (opcional)</label>
+                                <input type="text" class="form-control" id="referenciaFacturacion"
+                                    placeholder="Frente al parque, al lado de la tienda...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- METODO DE PAGO -->
+                    <div class="card border-0 shadow-sm p-4 rounded-3 mb-4 bg-white">
+                        <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                            <span class="badge bg-dark rounded-circle text-white p-2"
+                                style="width: 28px; height: 28px; font-size: 0.8rem; line-height: 1;">3</span>
+                            Método de Pago
+                        </h5>
+                        <p class="text-muted small mb-3">Selecciona la forma en que prefieres realizar tu pago:</p>
+
+                        <div class="d-flex flex-column gap-3">
+
+                            <div class="border rounded-3 p-3 metodo-pago-box">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="metodoPago" id="pagoTarjeta"
+                                        value="tarjeta" checked>
+                                    <label
+                                        class="form-check-label fw-semibold w-100 cursor-pointer d-flex justify-content-between align-items-center"
+                                        for="pagoTarjeta">
+                                        <span><i class="fa-solid fa-credit-card me-2"></i> Tarjeta de Débito /
+                                            Crédito</span>
+                                        <span class="text-muted small">Visa, Mastercard, Amex</span>
+                                    </label>
+                                </div>
+                                <div id="detallesTarjeta" class="mt-3 pt-3 border-top">
+                                    <div class="row g-2">
+                                        <div class="col-12">
+                                            <input type="text" class="form-control form-control-sm"
+                                                placeholder="Número de tarjeta (0000 0000 0000 0000)" maxlength="19">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm" placeholder="MM/AA"
+                                                maxlength="5">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm" placeholder="CVV"
+                                                maxlength="4">
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="text" class="form-control form-control-sm"
+                                                placeholder="Nombre como figura en la tarjeta">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="border rounded-3 p-3 metodo-pago-box">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="metodoPago" id="pagoYape"
+                                        value="yape">
+                                    <label
+                                        class="form-check-label fw-semibold w-100 cursor-pointer d-flex justify-content-between align-items-center"
+                                        for="pagoYape">
+                                        <span><i class="fa-solid fa-mobile-screen-button me-2"></i> Yape / Plin</span>
+                                        <span class="text-muted small">Billeteras móviles</span>
+                                    </label>
+                                </div>
+                                <div id="detallesYape" class="mt-3 pt-3 border-top d-none">
+                                    <p class="small text-muted mb-2">Transfiere el monto total al siguiente número:</p>
+                                    <div class="p-2 bg-light rounded text-center mb-2">
+                                        <span class="fw-bold fs-6">987 654 321</span><br>
+                                        <small class="text-muted">Titular: Drip Club Perú S.A.C.</small>
+                                    </div>
+                                    <small class="text-muted d-block">Una vez confirmado el pedido, podrás adjuntar tu
+                                        constancia o enviarla vía WhatsApp.</small>
+                                </div>
+                            </div>
+
+                            <div class="border rounded-3 p-3 metodo-pago-box">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="metodoPago"
+                                        id="pagoTransferencia" value="transferencia">
+                                    <label
+                                        class="form-check-label fw-semibold w-100 cursor-pointer d-flex justify-content-between align-items-center"
+                                        for="pagoTransferencia">
+                                        <span><i class="fa-solid fa-building-columns me-2"></i> Transferencia
+                                            Bancaria</span>
+                                        <span class="text-muted small">BCP, BBVA, Interbank</span>
+                                    </label>
+                                </div>
+                                <div id="detallesTransferencia" class="mt-3 pt-3 border-top d-none">
+                                    <div class="small text-muted">
+                                        <p class="mb-1"><strong>BCP Corriente Soles:</strong> 193-98765432-0-88</p>
+                                        <p class="mb-1"><strong>CCI:</strong> 002-193-009876543208-88</p>
+                                        <p class="mb-0"><strong>Beneficiario:</strong> Drip Club Perú S.A.C.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border rounded-3 p-3 metodo-pago-box">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="metodoPago"
+                                        id="pagoContraentrega" value="contraentrega">
+                                    <label
+                                        class="form-check-label fw-semibold w-100 cursor-pointer d-flex justify-content-between align-items-center"
+                                        for="pagoContraentrega">
+                                        <span><i class="fa-solid fa-hand-holding-dollar me-2"></i> Pago Contra
+                                            Entrega</span>
+                                        <span class="text-muted small">Efectivo o POS al recibir</span>
+                                    </label>
+                                </div>
+                                <div id="detallesContraentrega" class="mt-3 pt-3 border-top d-none">
+                                    <small class="text-muted">Paga cómodamente al repartidor cuando llegue a tu
+                                        domicilio en efectivo o tarjeta.</small>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RESUMEN DEL PEDIDO -->
+                <div class="col-lg-5">
+                    <div class="card border-0 shadow-sm p-4 rounded-3 bg-white sticky-top" style="top: 90px;">
+                        <h5 class="fw-bold mb-3 border-bottom pb-2">Resumen de Compra</h5>
+
+                        <!-- Contenedor dinámico de items en checkout -->
+                        <div id="listaItemsCheckout" class="overflow-y-auto mb-3 pe-1" style="max-height: 320px;">
+                            <!-- Renderizado desde script -->
+                        </div>
+
+                        <!-- Cálculos -->
+                        <div class="border-top pt-3">
+                            <div class="d-flex justify-content-between text-muted mb-2">
+                                <span>Subtotal</span>
+                                <span class="fw-semibold text-dark" id="checkoutSubtotal">S/ 0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted mb-2">
+                                <span>Envío estimado</span>
+                                <span class="text-dark fw-semibold">Gratis</span>
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <span class="fs-5 fw-bold">Total a pagar</span>
+                                <span class="fs-4 fw-bold text-dark" id="checkoutTotal">S/ 0.00</span>
+                            </div>
+
+                            <button type="submit" class="btn btn-dark w-100 py-3 fw-bold fs-6 shadow-sm"
+                                id="btnConfirmarPedido">
+                                Realizar Pedido
+                            </button>
+
+                            <p class="text-center text-muted small mt-3 mb-0">
+                                <i class="fa-solid fa-shield-halved me-1"></i> Transacción segura y protegida
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </main>
+
+    <!-- ===== CARRITO DE COMPRAS ===== -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold m-0" id="offcanvasCarritoLabel">
+                Carrito de Compras
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="offcanvas-body d-flex flex-column p-3">
+            <div id="contenedorItemsCarrito" class="flex-grow-1 overflow-y-auto pe-1"></div>
+
+            <div id="resumenCarrito" class="border-top pt-3 mt-auto d-none">
+                <div class="d-flex justify-content-between text-muted mb-2">
+                    <span>Subtotal</span>
+                    <span class="fw-semibold text-dark" id="cartSubtotal">S/ 0.00</span>
+                </div>
+                <div class="d-flex justify-content-between text-muted mb-2">
+                    <span>Envío</span>
+                    <span class="text-dark fw-semibold">Gratis</span>
+                </div>
+                <hr class="my-2">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold">Total</span>
+                    <span class="fs-5 fw-bold text-dark" id="cartTotal">S/ 0.00</span>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-dark w-100 py-2 fw-semibold" id="btnFinalizarCompra">
+                        Finalizar Compra
+                    </button>
+                    <button class="btn btn-outline-dark btn-sm w-100 py-1" id="btnVaciarCarrito">
+                        Vaciar Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COMPRA EXITOSA ===== -->
+    <div class="modal fade" id="modalCompraExitosa" tabindex="-1" aria-labelledby="modalCompraExitosaLabel"
+        aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow text-center p-4 rounded-3">
+                <div class="modal-body">
+                    <div class="mx-auto mb-3 text-dark" style="font-size: 2.5rem;">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Compra exitosa</h5>
+                    <p class="text-muted small mb-2">
+                        Tus productos han sido procesados correctamente.
+                    </p>
+                    <p class="small text-muted mb-4">
+                        Número de orden: <strong id="codigoOrdenSimulada" class="text-dark">#DC-72819</strong>
+                    </p>
+                    <a href="../../index.html" class="btn btn-dark w-100 py-2 fw-semibold">
+                        Volver a la Tienda
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <p class="mb-0">&copy; 2026 Drip Club. Todos los derechos reservados.</p>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-white fs-3"
+                    title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="text-white fs-3"
+                    title="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-white fs-3"
+                    title="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/51999999999" target="_blank" rel="noopener noreferrer" class="text-white fs-3"
+                    title="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../scripts/script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const listaItemsCheckout = document.getElementById('listaItemsCheckout');
+            const checkoutSubtotal = document.getElementById('checkoutSubtotal');
+            const checkoutTotal = document.getElementById('checkoutTotal');
+            const formFacturacion = document.getElementById('formFacturacion');
+            const breadcrumbCarrito = document.getElementById('breadcrumbCarrito');
+
+            // Abrir el carrito si hacen clic en el breadcrumb
+            if (breadcrumbCarrito) {
+                breadcrumbCarrito.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    abrirOffcanvasCarrito();
+                });
+            }
+
+            // Alternar detalles del metodo de pago seleccionado
+            const radiosPago = document.querySelectorAll('input[name="metodoPago"]');
+            radiosPago.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    document.getElementById('detallesTarjeta').classList.toggle('d-none', radio.value !== 'tarjeta');
+                    document.getElementById('detallesYape').classList.toggle('d-none', radio.value !== 'yape');
+                    document.getElementById('detallesTransferencia').classList.toggle('d-none', radio.value !== 'transferencia');
+                    document.getElementById('detallesContraentrega').classList.toggle('d-none', radio.value !== 'contraentrega');
+                });
+            });
+
+            // Funcion para renderizar el resumen en la columna derecha
+            function renderizarCheckoutResumen() {
+                if (!listaItemsCheckout) return;
+
+                if (carrito.length === 0) {
+                    listaItemsCheckout.innerHTML = `
+                        <div class="text-center py-4">
+                            <p class="text-muted small mb-3">No hay productos en el carrito.</p>
+                            <a href="../../index.html" class="btn btn-outline-dark btn-sm">Ver Catálogo</a>
+                        </div>
+                    `;
+                    if (checkoutSubtotal) checkoutSubtotal.textContent = 'S/ 0.00';
+                    if (checkoutTotal) checkoutTotal.textContent = 'S/ 0.00';
+                    const btnConfirmar = document.getElementById('btnConfirmarPedido');
+                    if (btnConfirmar) btnConfirmar.disabled = true;
+                    return;
+                }
+
+                let html = '';
+                carrito.forEach(item => {
+                    const subtotal = (item.precio * item.cantidad).toFixed(2);
+                    html += `
+                        <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="${resolverRutaImagen(item.imagen)}" class="rounded-1 object-fit-cover" style="height: 50px; width: 50px;" alt="${item.titulo}">
+                                <div>
+                                    <h6 class="mb-0 small fw-semibold text-truncate" style="max-width: 170px;">${item.titulo}</h6>
+                                    <small class="text-muted">Cant: ${item.cantidad} &bull; S/ ${item.precio.toFixed(2)}</small>
+                                </div>
+                            </div>
+                            <span class="fw-bold small">S/ ${subtotal}</span>
+                        </div>
+                    `;
+                });
+
+                listaItemsCheckout.innerHTML = html;
+                const total = carrito.reduce((acc, i) => acc + (i.precio * i.cantidad), 0).toFixed(2);
+                if (checkoutSubtotal) checkoutSubtotal.textContent = `S/ ${total}`;
+                if (checkoutTotal) checkoutTotal.textContent = `S/ ${total}`;
+            }
+
+            renderizarCheckoutResumen();
+
+            // Escuchar cambios en el carrito para refrescar tambien este resumen
+            window.addEventListener('storage', renderizarCheckoutResumen);
+
+            // Manejo del submit de facturacion
+            if (formFacturacion) {
+                formFacturacion.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if (!formFacturacion.checkValidity()) {
+                        e.stopPropagation();
+                        formFacturacion.classList.add('was-validated');
+                        return;
+                    }
+
+                    if (carrito.length === 0) {
+                        alert('Tu carrito está vacío. Agrega productos antes de realizar el pedido.');
+                        return;
+                    }
+
+                    // Generar codigo de orden simulada
+                    const cod = '#DC-' + Math.floor(10000 + Math.random() * 90000);
+                    const elCod = document.getElementById('codigoOrdenSimulada');
+                    if (elCod) elCod.textContent = cod;
+
+                    // Vaciar carrito
+                    carrito = [];
+                    guardarYActualizarCarrito();
+                    renderizarCheckoutResumen();
+
+                    // Mostrar modal de compra exitosa
+                    const modalEl = document.getElementById('modalCompraExitosa');
+                    if (modalEl) {
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
