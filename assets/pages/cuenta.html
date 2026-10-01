@@ -265,6 +265,126 @@
             </div>
         </div>
     </div>
+    <!-- ===== MI CUENTA: paneles, perfil, direcciones y cerrar sesión ===== -->
+<script>
+    (function () {
+        const K_SESION = 'dripclub_sesion_iniciada';
+        const K_ACTUAL = 'dripclub_usuario_actual';
+        const K_USUARIOS = 'dripclub_usuarios';
+
+        function leerUsuarios() {
+            try { return JSON.parse(localStorage.getItem(K_USUARIOS)) || []; } catch (err) { return []; }
+        }
+        function guardarUsuarios(lista) {
+            try { localStorage.setItem(K_USUARIOS, JSON.stringify(lista)); } catch (err) { }
+        }
+        function cerrarSesion() {
+            localStorage.removeItem(K_SESION);
+            localStorage.removeItem(K_ACTUAL);
+            window.location.href = '../../index.html';
+        }
+
+        // Usuario con la sesión activa (si no existe, se cierra la sesión)
+        const usuarios = leerUsuarios();
+        const usuario = usuarios.find(u => u.correo === localStorage.getItem(K_ACTUAL));
+        if (!usuario) { cerrarSesion(); return; }
+        usuario.direcciones = usuario.direcciones || [];
+
+        // ---- Menú lateral: mostrar el panel elegido ----
+        const botonesMenu = document.querySelectorAll('#menuCuenta [data-panel]');
+        botonesMenu.forEach(function (boton) {
+            boton.addEventListener('click', function () {
+                botonesMenu.forEach(b => b.classList.remove('active'));
+                boton.classList.add('active');
+                document.querySelectorAll('.panelCuenta').forEach(p => p.classList.add('d-none'));
+                document.getElementById(boton.dataset.panel).classList.remove('d-none');
+            });
+        });
+
+        // ---- Cerrar sesión ----
+        document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
+
+        // ---- Perfil: cargar y guardar datos ----
+        const inpNombre = document.getElementById('perfilNombre');
+        const inpCorreo = document.getElementById('perfilCorreo');
+        const inpTelefono = document.getElementById('perfilTelefono');
+        const avisoGuardado = document.getElementById('avisoPerfilGuardado');
+
+        inpNombre.value = usuario.nombre || '';
+        inpCorreo.value = usuario.correo || '';
+        inpTelefono.value = usuario.telefono || '';
+
+        document.getElementById('formPerfil').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const nuevoCorreo = inpCorreo.value.trim().toLowerCase();
+            if (!nuevoCorreo) {
+                alert('El correo no puede estar vacío.');
+                return;
+            }
+            if (nuevoCorreo !== usuario.correo && usuarios.some(u => u.correo === nuevoCorreo)) {
+                alert('Ese correo ya pertenece a otra cuenta.');
+                return;
+            }
+            usuario.nombre = inpNombre.value.trim();
+            usuario.correo = nuevoCorreo;
+            usuario.telefono = inpTelefono.value.trim();
+            guardarUsuarios(usuarios);
+            localStorage.setItem(K_ACTUAL, usuario.correo);
+            inpCorreo.value = usuario.correo;
+
+            avisoGuardado.classList.remove('d-none');
+            setTimeout(function () { avisoGuardado.classList.add('d-none'); }, 3000);
+        });
+
+        // ---- Direcciones: agregar, listar y eliminar ----
+        const formDireccion = document.getElementById('formDireccion');
+        const inpDireccion = document.getElementById('nuevaDireccion');
+        const listaDirecciones = document.getElementById('listaDirecciones');
+
+        function renderizarDirecciones() {
+            listaDirecciones.innerHTML = '';
+            if (usuario.direcciones.length === 0) {
+                const vacio = document.createElement('div');
+                vacio.className = 'text-center text-muted py-4';
+                vacio.textContent = 'Aún no tienes direcciones guardadas.';
+                listaDirecciones.appendChild(vacio);
+                return;
+            }
+            const grupo = document.createElement('div');
+            grupo.className = 'list-group';
+            usuario.direcciones.forEach(function (dir, i) {
+                const fila = document.createElement('div');
+                fila.className = 'list-group-item d-flex justify-content-between align-items-center';
+                const texto = document.createElement('span');
+                texto.textContent = '📍 ' + dir;
+                const btnEliminar = document.createElement('button');
+                btnEliminar.type = 'button';
+                btnEliminar.className = 'btn btn-sm btn-outline-danger';
+                btnEliminar.textContent = 'Eliminar';
+                btnEliminar.addEventListener('click', function () {
+                    usuario.direcciones.splice(i, 1);
+                    guardarUsuarios(usuarios);
+                    renderizarDirecciones();
+                });
+                fila.append(texto, btnEliminar);
+                grupo.appendChild(fila);
+            });
+            listaDirecciones.appendChild(grupo);
+        }
+
+        formDireccion.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const direccion = inpDireccion.value.trim();
+            if (!direccion) return;
+            usuario.direcciones.push(direccion);
+            guardarUsuarios(usuarios);
+            inpDireccion.value = '';
+            renderizarDirecciones();
+        });
+
+        renderizarDirecciones();
+    })();
+</script>
 </body>
 
 </html>

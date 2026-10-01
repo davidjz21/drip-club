@@ -2352,7 +2352,93 @@
       tituloModal.textContent = 'Inicia sesión para continuar';
     });
   </script>
+<!-- ===== SESIÓN DRIP CLUB: login, registro y acceso a Mi cuenta ===== -->
+<script>
+    (function () {
+        const K_SESION = 'dripclub_sesion_iniciada';
+        const K_ACTUAL = 'dripclub_usuario_actual';
+        const K_USUARIOS = 'dripclub_usuarios';
 
+        // Ruta a cuenta.html según estemos en la raíz (index.html) o en assets/pages/
+        const enPaginas = window.location.pathname.includes('/assets/pages/') || window.location.href.includes('/assets/pages/');
+        const URL_CUENTA = enPaginas ? 'cuenta.html' : 'assets/pages/cuenta.html';
+
+        function guardarUsuarios(lista) {
+            try { localStorage.setItem(K_USUARIOS, JSON.stringify(lista)); } catch (err) { }
+        }
+
+        // Lee los usuarios y se asegura de que exista la cuenta de prueba
+        function leerUsuarios() {
+            let lista = [];
+            try { lista = JSON.parse(localStorage.getItem(K_USUARIOS)) || []; } catch (err) { lista = []; }
+            if (!lista.some(u => u.correo === 'dripclub@gmail.com')) {
+                lista.push({ nombre: 'Drip Club', correo: 'dripclub@gmail.com', password: 'admin', telefono: '', direcciones: [] });
+                guardarUsuarios(lista);
+            }
+            return lista;
+        }
+
+        function haySesion() {
+            try { return localStorage.getItem(K_SESION) === 'true'; } catch (err) { return false; }
+        }
+
+        function iniciarSesion(correo) {
+            try {
+                localStorage.setItem(K_SESION, 'true');
+                localStorage.setItem(K_ACTUAL, correo);
+            } catch (err) { }
+            window.location.href = URL_CUENTA;
+        }
+
+        // Muestra un mensaje de error dentro del formulario (sin tocar tu HTML)
+        function mostrarError(form, mensaje) {
+            let aviso = form.querySelector('.aviso-sesion');
+            if (!aviso) {
+                aviso = document.createElement('div');
+                aviso.className = 'alert alert-danger py-2 aviso-sesion';
+                form.prepend(aviso);
+            }
+            aviso.textContent = mensaje;
+        }
+
+        // Envío de los formularios de login y registro (funciona con #modalCuenta y #modalCuentaNav)
+        document.addEventListener('submit', function (e) {
+            const form = e.target;
+            const esRegistro = form.closest('#registroView');
+            const esLogin = form.closest('#loginView, #modalCuentaNav');
+            if (!esRegistro && !esLogin) return;
+            e.preventDefault();
+
+            const correo = form.querySelector('input[type="email"]').value.trim().toLowerCase();
+            const password = form.querySelector('input[type="password"]').value;
+            const usuarios = leerUsuarios();
+
+            if (esRegistro) {
+                const nombre = form.querySelector('input[type="text"]').value.trim();
+                if (!nombre || !correo || !password) return mostrarError(form, 'Completa todos los campos.');
+                if (usuarios.some(u => u.correo === correo)) return mostrarError(form, 'Ese correo ya está registrado.');
+                usuarios.push({ nombre: nombre, correo: correo, password: password, telefono: '', direcciones: [] });
+                guardarUsuarios(usuarios);
+                iniciarSesion(correo);
+                return;
+            }
+
+            if (!usuarios.some(u => u.correo === correo && u.password === password)) {
+                return mostrarError(form, 'Correo o contraseña incorrectos.');
+            }
+            iniciarSesion(correo);
+        });
+
+        // Si ya hay sesión, el botón "Cuenta" del navbar lleva a cuenta.html en vez de abrir el modal
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('#navCuenta') && haySesion()) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                window.location.href = URL_CUENTA;
+            }
+        }, true);
+    })();
+</script>
 </body>
 
 </html>
