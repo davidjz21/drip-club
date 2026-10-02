@@ -18,6 +18,10 @@
   --font-cuerpo: 'Inter', sans-serif;
 }
 
+html{
+  scroll-padding-top: 90px;
+}
+
 
 /* --- OPCIÓN 3: CLEAN & MODERN  --- */
 
@@ -175,20 +179,20 @@ h6,
 
 .imagen-carrousel {
   width: 100%;
-  height: clamp(250px, 55vh, 420px);
+  height: clamp(380px, 65vh, 600px);
   display: block;
 }
 
 /* Ajustes específicos para laptops y pantallas medianas */
 @media (max-width: 1200px) and (max-height: 800px) {
   .imagen-carrousel {
-    height: 290px;
+    height: 360px;
   }
 }
 
 @media (max-width: 768px) {
   .imagen-carrousel {
-    height: 260px;
+    height: 320px;
   }
 }
 
