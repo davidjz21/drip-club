@@ -288,7 +288,7 @@ function renderizarCarritoUI() {
     contenedorItems.innerHTML = `
       <div class="text-center py-5 my-auto">
         <p class="text-muted mb-3">Tu carrito está vacío.</p>
-        <a href="${enlaceCatalogo}" class="btn btn-outline-dark btn-sm px-4" data-bs-dismiss="offcanvas">
+        <a href="${enlaceCatalogo}" class="btn btn-outline-dark btn-sm px-4">
           Explorar Catálogo
         </a>
       </div>
