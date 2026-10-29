@@ -16,11 +16,11 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
-    private Long id_categoria;
+    private Long idCategoria;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "nombre", nullable = false, unique = true, length = 50)
     private String nombre;
 
-    @Column(nullable = false)
-    private boolean activo;
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
 }

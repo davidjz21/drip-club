@@ -1,5 +1,7 @@
 package com.dripclub.api.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,39 +14,37 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "productos")
-public class Productos {
+@Table(name = "producto")
+public class Producto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
-    private Long id_producto;
+    private Long idProducto;
 
-    @Column(name = "nombre", nullable = false, length = 20)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 500)
     private String descripcion;
 
-    @Column(name = "precio", nullable = false, scale = 2)
-    private Double precio;
+    @Column(name = "precio", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio;
 
-    @Column(name = "precio_oferta", scale = 2)
-    private Double precio_oferta;
+    @Column(name = "precio_oferta", precision = 10, scale = 2)
+    private BigDecimal precioOferta;
 
-    @Column(name = "imagen", length = 500)
+    @Column(name = "imagen", length = 255)
     private String imagen;
 
     @Column(name = "stock", nullable = false)
-    private int stock;
+    private int stock = 0;
 
     @Column(name = "activo", nullable = false)
-    private boolean activo;
+    private boolean activo = true;
 
-    @ManyToOne
-    @JoinColumn(name = "id_categoria", nullable = false)
-    private Categoria categoria;
-
-    @ManyToOne
+    // La categoria se obtiene via subcategoria.categoria
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_subcategoria", nullable = false)
     private Subcategoria subcategoria;
 }
