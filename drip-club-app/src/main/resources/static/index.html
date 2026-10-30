@@ -2350,93 +2350,113 @@
       tituloModal.textContent = 'Inicia sesión para continuar';
     });
   </script>
-<!-- ===== SESIÓN DRIP CLUB: login, registro y acceso a Mi cuenta ===== -->
-<script>
+  <!-- ===== login, registro y acceso a Mi cuenta ===== -->
+  <script>
     (function () {
-        const K_SESION = 'dripclub_sesion_iniciada';
-        const K_ACTUAL = 'dripclub_usuario_actual';
-        const K_USUARIOS = 'dripclub_usuarios';
+      const K_SESION = 'dripclub_sesion_iniciada';
+      const K_USUARIO = 'dripclub_usuario';
 
-        // Ruta a cuenta.html según estemos en la raíz (index.html) o en assets/pages/
-        const enPaginas = window.location.pathname.includes('/assets/pages/') || window.location.href.includes('/assets/pages/');
-        const URL_CUENTA = enPaginas ? 'cuenta.html' : 'assets/pages/cuenta.html';
+      const enPaginas = window.location.pathname.includes('/assets/pages/') ||
+        window.location.href.includes('/assets/pages/');
+      const URL_CUENTA = enPaginas ? 'cuenta.html' : 'assets/pages/cuenta.html';
 
-        function guardarUsuarios(lista) {
-            try { localStorage.setItem(K_USUARIOS, JSON.stringify(lista)); } catch (err) { }
+      function haySesion() {
+        return localStorage.getItem(K_SESION) === 'true' && localStorage.getItem(K_USUARIO) !== null;
+      }
+
+      function iniciarSesionLocal(usuario) {
+        localStorage.setItem(K_SESION, 'true');
+        localStorage.setItem(K_USUARIO, JSON.stringify(usuario));
+        window.location.href = URL_CUENTA;
+      }
+
+      function mostrarError(form, mensaje) {
+        let aviso = form.querySelector('.aviso-sesion');
+        if (!aviso) {
+          aviso = document.createElement('div');
+          aviso.className = 'alert alert-danger py-2 aviso-sesion';
+          form.prepend(aviso);
         }
+        aviso.textContent = mensaje;
+      }
 
-        // Lee los usuarios y se asegura de que exista la cuenta de prueba
-        function leerUsuarios() {
-            let lista = [];
-            try { lista = JSON.parse(localStorage.getItem(K_USUARIOS)) || []; } catch (err) { lista = []; }
-            if (!lista.some(u => u.correo === 'dripclub@gmail.com')) {
-                lista.push({ nombre: 'Drip Club', correo: 'dripclub@gmail.com', password: 'admin', telefono: '', direcciones: [] });
-                guardarUsuarios(lista);
-            }
-            return lista;
-        }
+      document.addEventListener('submit', async function (e) {
+        const form = e.target;
+        const esRegistro = form.closest('#registroView');
+        const esLogin = form.closest('#loginView, #modalCuentaNav');
+        if (!esRegistro && !esLogin) return;
+        e.preventDefault();
 
-        function haySesion() {
-            try { return localStorage.getItem(K_SESION) === 'true'; } catch (err) { return false; }
-        }
+        // Limpiar aviso anterior                                                                               
+        const avisoPrevio = form.querySelector('.aviso-sesion');
+        if (avisoPrevio) avisoPrevio.remove();
 
-        function iniciarSesion(correo) {
-            try {
-                localStorage.setItem(K_SESION, 'true');
-                localStorage.setItem(K_ACTUAL, correo);
-            } catch (err) { }
-            window.location.href = URL_CUENTA;
-        }
+        const correo = form.querySelector('input[type="email"]').value.trim().toLowerCase();
+        const contrasena = form.querySelector('input[type="password"]').value;
+                                                       
+        if (esRegistro) {
+          const nombre = form.querySelector('input[type="text"]').value.trim();
+          if (!nombre || !correo || !contrasena) {
+            return mostrarError(form, 'Por favor completa todos los campos.');
+          }
 
-        // Muestra un mensaje de error dentro del formulario (sin tocar tu HTML)
-        function mostrarError(form, mensaje) {
-            let aviso = form.querySelector('.aviso-sesion');
-            if (!aviso) {
-                aviso = document.createElement('div');
-                aviso.className = 'alert alert-danger py-2 aviso-sesion';
-                form.prepend(aviso);
-            }
-            aviso.textContent = mensaje;
-        }
+          try {
+            const resp = await fetch('/api/usuarios', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ nombre, correo, contrasena })
+            });
 
-        // Envío de los formularios de login y registro (funciona con #modalCuenta y #modalCuentaNav)
-        document.addEventListener('submit', function (e) {
-            const form = e.target;
-            const esRegistro = form.closest('#registroView');
-            const esLogin = form.closest('#loginView, #modalCuentaNav');
-            if (!esRegistro && !esLogin) return;
-            e.preventDefault();
-
-            const correo = form.querySelector('input[type="email"]').value.trim().toLowerCase();
-            const password = form.querySelector('input[type="password"]').value;
-            const usuarios = leerUsuarios();
-
-            if (esRegistro) {
-                const nombre = form.querySelector('input[type="text"]').value.trim();
-                if (!nombre || !correo || !password) return mostrarError(form, 'Completa todos los campos.');
-                if (usuarios.some(u => u.correo === correo)) return mostrarError(form, 'Ese correo ya está registrado.');
-                usuarios.push({ nombre: nombre, correo: correo, password: password, telefono: '', direcciones: [] });
-                guardarUsuarios(usuarios);
-                iniciarSesion(correo);
-                return;
+            if (!resp.ok) {
+              const err = await resp.json().catch(() => ({}));
+              const msg = err.correo || err.mensaje || 'Error al registrar el usuario o el correo ya existe.';
+              return mostrarError(form, msg);
             }
 
-            if (!usuarios.some(u => u.correo === correo && u.password === password)) {
-                return mostrarError(form, 'Correo o contraseña incorrectos.');
-            }
-            iniciarSesion(correo);
-        });
+            const nuevoUsuario = await resp.json();
+            iniciarSesionLocal(nuevoUsuario);
+          } catch (err) {
+            mostrarError(form, 'No se pudo conectar con el servidor.');
+          }
+          return;
+        }
 
-        // Si ya hay sesión, el botón "Cuenta" del navbar lleva a cuenta.html en vez de abrir el modal
-        document.addEventListener('click', function (e) {
-            if (e.target.closest('#navCuenta') && haySesion()) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                window.location.href = URL_CUENTA;
+        // ---- LOGIN REAL (POST /api/usuarios/login) ----                                                      
+        if (esLogin) {
+          if (!correo || !contrasena) {
+            return mostrarError(form, 'Ingresa correo y contraseña.');
+          }
+
+          try {
+            const resp = await fetch('/api/usuarios/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ correo, contrasena })
+            });
+
+            if (!resp.ok) {
+              const err = await resp.json().catch(() => ({}));
+              return mostrarError(form, err.mensaje || 'Correo o contraseña incorrectos.');
             }
-        }, true);
-    })();
-</script>
+
+            const usuario = await resp.json();
+            iniciarSesionLocal(usuario);
+          } catch (err) {
+            mostrarError(form, 'Error al conectar con el servidor.');
+          }
+        }
+      });
+
+      // Si tiene sesion activa, el boton Cuenta del navbar va a cuenta.html                         
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('#navCuenta') && haySesion()) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          window.location.href = URL_CUENTA;
+        }
+      }, true);
+    })(); 
+  </script>
 </body>
 
 </html>

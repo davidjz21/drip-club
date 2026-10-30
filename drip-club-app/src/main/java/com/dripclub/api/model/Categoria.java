@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -18,6 +20,8 @@ public class Categoria {
     @Column(name = "id_categoria")
     private Long idCategoria;
 
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 50)
     @Column(name = "nombre", nullable = false, unique = true, length = 50)
     private String nombre;
 

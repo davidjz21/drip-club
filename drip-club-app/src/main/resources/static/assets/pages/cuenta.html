@@ -8,13 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../styles.css" rel="stylesheet">
 
-    <!-- Guardia de acceso: si no hay sesión iniciada, regresa al inicio.
-         Va en el <head> (antes de pintar el body) para evitar el "flash"
-         de contenido a alguien que no inició sesión. -->
     <script>
-        if (localStorage.getItem('dripclub_sesion_iniciada') !== 'true') {
+        if (localStorage.getItem('dripclub_sesion_iniciada') !== 'true' ||
+            !localStorage.getItem('dripclub_usuario')) {
             window.location.href = '../../index.html';
-        }
+        }                                                                                                           
     </script>
 </head>
 
@@ -76,7 +74,6 @@
             <div class="container py-2">
                 <div class="row g-4">
 
-                    <!-- ===== Menú lateral de la cuenta ===== -->
                     <div class="col-lg-4">
                         <div class="list-group shadow-sm rounded-4 overflow-hidden" id="menuCuenta">
                             <button type="button" class="list-group-item list-group-item-action active py-3"
@@ -103,11 +100,9 @@
                         </div>
                     </div>
 
-                    <!-- ===== Panel de contenido según la opción elegida ===== -->
                     <div class="col-lg-8">
                         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
 
-                            <!-- ---- Panel: Perfil ---- -->
                             <div id="panelPerfil" class="panelCuenta">
                                 <h4 class="fw-bold mb-4">👤 Mi perfil</h4>
                                 <form id="formPerfil">
@@ -133,7 +128,6 @@
                                 </form>
                             </div>
 
-                            <!-- ---- Panel: Mis pedidos ---- -->
                             <div id="panelPedidos" class="panelCuenta d-none">
                                 <h4 class="fw-bold mb-4">📦 Mis pedidos</h4>
                                 <div class="text-center text-muted py-4">
@@ -143,7 +137,6 @@
                                 </div>
                             </div>
 
-                            <!-- ---- Panel: Favoritos ---- -->
                             <div id="panelFavoritos" class="panelCuenta d-none">
                                 <h4 class="fw-bold mb-4">❤️ Favoritos</h4>
                                 <div class="text-center text-muted py-4">
@@ -153,7 +146,6 @@
                                 </div>
                             </div>
 
-                            <!-- ---- Panel: Direcciones ---- -->
                             <div id="panelDirecciones" class="panelCuenta d-none">
                                 <h4 class="fw-bold mb-4">📍 Mis direcciones</h4>
 
@@ -174,7 +166,6 @@
         </section>
     </main>
 
-    <!-- ===== FOOTER ===== -->
     <footer class="bg-dark text-white py-4 mt-auto">
         <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
             <p class="mb-0">&copy; 2026 Drip Club. Todos los derechos reservados.</p>
@@ -202,7 +193,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../scripts/script.js"></script>
 
-    <!-- ===== OFFCANVAS: CARRITO DE COMPRAS ===== -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
         <div class="offcanvas-header border-bottom">
             <h5 class="offcanvas-title fw-bold m-0" id="offcanvasCarritoLabel">
@@ -212,12 +202,9 @@
         </div>
 
         <div class="offcanvas-body d-flex flex-column p-3">
-            <!-- Lista dinamica de items del carrito -->
             <div id="contenedorItemsCarrito" class="flex-grow-1 overflow-y-auto pe-1">
-                <!-- Renderizado dinámicamente con JavaScript -->
             </div>
 
-            <!-- Resumen y acciones del carrito -->
             <div id="resumenCarrito" class="border-top pt-3 mt-auto d-none">
                 <div class="d-flex justify-content-between text-muted mb-2">
                     <span>Subtotal</span>
@@ -245,7 +232,6 @@
         </div>
     </div>
 
-    <!-- ===== MODAL: SIMULACION DE COMPRA EXITOSA ===== -->
     <div class="modal fade" id="modalCompraExitosa" tabindex="-1" aria-labelledby="modalCompraExitosaLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -265,126 +251,172 @@
             </div>
         </div>
     </div>
-    <!-- ===== MI CUENTA: paneles, perfil, direcciones y cerrar sesión ===== -->
-<script>
-    (function () {
-        const K_SESION = 'dripclub_sesion_iniciada';
-        const K_ACTUAL = 'dripclub_usuario_actual';
-        const K_USUARIOS = 'dripclub_usuarios';
 
-        function leerUsuarios() {
-            try { return JSON.parse(localStorage.getItem(K_USUARIOS)) || []; } catch (err) { return []; }
-        }
-        function guardarUsuarios(lista) {
-            try { localStorage.setItem(K_USUARIOS, JSON.stringify(lista)); } catch (err) { }
-        }
-        function cerrarSesion() {
-            localStorage.removeItem(K_SESION);
-            localStorage.removeItem(K_ACTUAL);
-            window.location.href = '../../index.html';
-        }
+    <script>
+        (async function () {
+            const K_SESION = 'dripclub_sesion_iniciada';
+            const K_USUARIO = 'dripclub_usuario';
 
-        // Usuario con la sesión activa (si no existe, se cierra la sesión)
-        const usuarios = leerUsuarios();
-        const usuario = usuarios.find(u => u.correo === localStorage.getItem(K_ACTUAL));
-        if (!usuario) { cerrarSesion(); return; }
-        usuario.direcciones = usuario.direcciones || [];
+            function cerrarSesion() {
+                localStorage.removeItem(K_SESION);
+                localStorage.removeItem(K_USUARIO);
+                window.location.href = '../../index.html';
+            }
 
-        // ---- Menú lateral: mostrar el panel elegido ----
-        const botonesMenu = document.querySelectorAll('#menuCuenta [data-panel]');
-        botonesMenu.forEach(function (boton) {
-            boton.addEventListener('click', function () {
-                botonesMenu.forEach(b => b.classList.remove('active'));
-                boton.classList.add('active');
-                document.querySelectorAll('.panelCuenta').forEach(p => p.classList.add('d-none'));
-                document.getElementById(boton.dataset.panel).classList.remove('d-none');
-            });
-        });
-
-        // ---- Cerrar sesión ----
-        document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
-
-        // ---- Perfil: cargar y guardar datos ----
-        const inpNombre = document.getElementById('perfilNombre');
-        const inpCorreo = document.getElementById('perfilCorreo');
-        const inpTelefono = document.getElementById('perfilTelefono');
-        const avisoGuardado = document.getElementById('avisoPerfilGuardado');
-
-        inpNombre.value = usuario.nombre || '';
-        inpCorreo.value = usuario.correo || '';
-        inpTelefono.value = usuario.telefono || '';
-
-        document.getElementById('formPerfil').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const nuevoCorreo = inpCorreo.value.trim().toLowerCase();
-            if (!nuevoCorreo) {
-                alert('El correo no puede estar vacío.');
+            const usuarioStorage = JSON.parse(localStorage.getItem(K_USUARIO) || 'null');
+            if (!usuarioStorage || !usuarioStorage.idUsuario) {
+                cerrarSesion();
                 return;
             }
-            if (nuevoCorreo !== usuario.correo && usuarios.some(u => u.correo === nuevoCorreo)) {
-                alert('Ese correo ya pertenece a otra cuenta.');
-                return;
+
+            // Obtener datos del usuario desde el backend                        
+            let usuario = usuarioStorage;
+            try {
+                const resp = await fetch(`/api/usuarios/${usuarioStorage.idUsuario}`);
+                if (resp.ok) {
+                    usuario = await resp.json();
+                    localStorage.setItem(K_USUARIO, JSON.stringify(usuario));
+                } else if (resp.status === 404) {
+                    cerrarSesion();
+                    return;
+                }
+            } catch (e) {
+                console.warn('Usando datos en caché por error de conexión');
             }
-            usuario.nombre = inpNombre.value.trim();
-            usuario.correo = nuevoCorreo;
-            usuario.telefono = inpTelefono.value.trim();
-            guardarUsuarios(usuarios);
-            localStorage.setItem(K_ACTUAL, usuario.correo);
-            inpCorreo.value = usuario.correo;
 
-            avisoGuardado.classList.remove('d-none');
-            setTimeout(function () { avisoGuardado.classList.add('d-none'); }, 3000);
-        });
-
-        // ---- Direcciones: agregar, listar y eliminar ----
-        const formDireccion = document.getElementById('formDireccion');
-        const inpDireccion = document.getElementById('nuevaDireccion');
-        const listaDirecciones = document.getElementById('listaDirecciones');
-
-        function renderizarDirecciones() {
-            listaDirecciones.innerHTML = '';
-            if (usuario.direcciones.length === 0) {
-                const vacio = document.createElement('div');
-                vacio.className = 'text-center text-muted py-4';
-                vacio.textContent = 'Aún no tienes direcciones guardadas.';
-                listaDirecciones.appendChild(vacio);
-                return;
-            }
-            const grupo = document.createElement('div');
-            grupo.className = 'list-group';
-            usuario.direcciones.forEach(function (dir, i) {
-                const fila = document.createElement('div');
-                fila.className = 'list-group-item d-flex justify-content-between align-items-center';
-                const texto = document.createElement('span');
-                texto.textContent = '📍 ' + dir;
-                const btnEliminar = document.createElement('button');
-                btnEliminar.type = 'button';
-                btnEliminar.className = 'btn btn-sm btn-outline-danger';
-                btnEliminar.textContent = 'Eliminar';
-                btnEliminar.addEventListener('click', function () {
-                    usuario.direcciones.splice(i, 1);
-                    guardarUsuarios(usuarios);
-                    renderizarDirecciones();
+            // Control de pestañas del menu lateral                                                                  
+            const botonesMenu = document.querySelectorAll('#menuCuenta [data-panel]');
+            botonesMenu.forEach(function (boton) {
+                boton.addEventListener('click', function () {
+                    botonesMenu.forEach(b => b.classList.remove('active'));
+                    boton.classList.add('active');
+                    document.querySelectorAll('.panelCuenta').forEach(p => p.classList.add('d-none'));
+                    document.getElementById(boton.dataset.panel).classList.remove('d-none');
                 });
-                fila.append(texto, btnEliminar);
-                grupo.appendChild(fila);
             });
-            listaDirecciones.appendChild(grupo);
-        }
 
-        formDireccion.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const direccion = inpDireccion.value.trim();
-            if (!direccion) return;
-            usuario.direcciones.push(direccion);
-            guardarUsuarios(usuarios);
-            inpDireccion.value = '';
-            renderizarDirecciones();
-        });
+            document.getElementById('btnCerrarSesion').addEventListener('click', cerrarSesion);
 
-        renderizarDirecciones();
-    })();
-</script>
+            // Formulario de Perfil                                 
+            const inpNombre = document.getElementById('perfilNombre');
+            const inpCorreo = document.getElementById('perfilCorreo');
+            const inpTelefono = document.getElementById('perfilTelefono');
+            const avisoGuardado = document.getElementById('avisoPerfilGuardado');
+
+            inpNombre.value = usuario.nombre || '';
+            inpCorreo.value = usuario.correo || '';
+            inpTelefono.value = usuario.telefono || '';
+
+            document.getElementById('formPerfil').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const nombre = inpNombre.value.trim();
+                const correo = inpCorreo.value.trim().toLowerCase();
+                const telefono = inpTelefono.value.trim();
+
+                if (!nombre || !correo) {
+                    alert('Nombre y correo son obligatorios.');
+                    return;
+                }
+
+                try {
+                    const resp = await fetch(`/api/usuarios/${usuario.idUsuario}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ nombre, correo, telefono })
+                    });
+
+                    if (!resp.ok) {
+                        alert('No se pudo actualizar el perfil. Revisa los datos.');
+                        return;
+                    }
+
+                    usuario = await resp.json();
+                    localStorage.setItem(K_USUARIO, JSON.stringify(usuario));
+
+                    avisoGuardado.classList.remove('d-none');
+                    setTimeout(() => avisoGuardado.classList.add('d-none'), 3000);
+                } catch (err) {
+                    alert('Error de conexión al guardar cambios.');
+                }
+            });
+
+            // Listar, Agregar y Eliminar mediante la API                                               
+            const formDireccion = document.getElementById('formDireccion');
+            const inpDireccion = document.getElementById('nuevaDireccion');
+            const listaDirecciones = document.getElementById('listaDirecciones');
+
+            async function cargarDirecciones() {
+                listaDirecciones.innerHTML = '<div class="text-center text-muted py-3">Cargando direcciones...</div>';
+                try {
+                    const resp = await fetch(`/api/direcciones/usuario/${usuario.idUsuario}`);
+                    const direcciones = resp.ok ? await resp.json() : [];
+
+                    listaDirecciones.innerHTML = '';
+                    if (direcciones.length === 0) {
+                        listaDirecciones.innerHTML = '<div class="text-center text-muted py-4">Aún no tienes direcciones guardadas.</div > ';
+                        return;
+                    }
+
+                    const grupo = document.createElement('div');
+                    grupo.className = 'list-group';
+                    direcciones.forEach(function (dir) {
+                        const fila = document.createElement('div');
+                        fila.className = 'list-group-item d-flex justify-content-between align-items-center';
+                        fila.innerHTML = `<span>📍 ${dir.direccion}</span>`;
+
+                        const btnEliminar = document.createElement('button');
+                        btnEliminar.type = 'button';
+                        btnEliminar.className = 'btn btn-sm btn-outline-danger';
+                        btnEliminar.textContent = 'Eliminar';
+                        btnEliminar.addEventListener('click', async function () {
+                            const delResp = await fetch(`/api/direcciones/${dir.idDireccion}`, { method: 'DELETE' });
+                            if (delResp.ok) {
+                                cargarDirecciones();
+                            } else {
+                                alert('No se pudo eliminar la dirección.');
+                            }
+                        });
+
+                        fila.appendChild(btnEliminar);
+                        grupo.appendChild(fila);
+                    });
+                    listaDirecciones.appendChild(grupo);
+                } catch (e) {
+                    listaDirecciones.innerHTML = '<div class="text-danger py-2">Error al cargar las direcciones.</div>';
+                }
+            }
+
+            // Agregar nueva direccion                                                      
+            formDireccion.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const direccionTexto = inpDireccion.value.trim();
+                if (!direccionTexto) return;
+
+                try {
+                    const resp = await fetch('/api/direcciones', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            direccion: direccionTexto,
+                            usuario: { idUsuario: usuario.idUsuario }
+                        })
+                    });
+
+                    if (resp.ok) {
+                        inpDireccion.value = '';
+                        cargarDirecciones();
+                    } else {
+                        alert('No se pudo guardar la dirección.');
+                    }
+                } catch (err) {
+                    alert('Error de conexión con el servidor.');
+                }
+            });
+
+            // Carga inicial de direcciones al abrir pagina
+            cargarDirecciones();
+        })();
+    </script>
 </body>
 
 </html>

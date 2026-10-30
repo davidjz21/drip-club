@@ -1,6 +1,8 @@
 package com.dripclub.api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -13,9 +15,11 @@ public class Direccion {
     @Column(name = "id_direccion")
     private Long idDireccion;
 
+    @NotBlank(message = "La direccion es obligatoria")
     @Column(name = "direccion", nullable = false, length = 200)
     private String direccion;
 
+    @NotNull(message = "Debe asignar un usuario")
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
