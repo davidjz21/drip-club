@@ -33,6 +33,8 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Usuario> crear(@Valid @RequestBody Usuario usuario) {
         usuario.setIdUsuario(null);
+        usuario.setRol("CLIENTE");
+        usuario.setActivo(true);
         Usuario nuevo = usuarioService.guardar(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }

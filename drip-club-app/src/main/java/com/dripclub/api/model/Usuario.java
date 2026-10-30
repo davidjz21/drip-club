@@ -1,5 +1,7 @@
 package com.dripclub.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,11 +26,12 @@ public class Usuario {
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @NotBlank(message = "El correo es obligatorio")                                                                 
+    @NotBlank(message = "El correo es obligatorio")
     @Email(message = "Debe ser un correo valido")
     @Column(name = "correo", nullable = false, unique = true, length = 100)
     private String correo;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "La contraseña es obligatoria")
     @Column(name = "contrasena", nullable = false, length = 255)
     private String contrasena;

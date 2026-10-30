@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "subcategorias")
+@Table(name = "subcategoria")
 public class Subcategoria {
 
     @Id
