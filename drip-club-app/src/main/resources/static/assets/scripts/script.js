@@ -10,21 +10,15 @@ function irACategoria(categoriaId) {
     tabBootstrap.show();
   }
 
-  // 2. Si la categoría tiene subcategoría de polos por defecto, la activamos también
-  let subcategoriaBoton = null;
-  if (categoriaId === 'hombres') {
-    subcategoriaBoton = document.querySelector('button[data-bs-target="#hombre-polos"]');
-  } else if (categoriaId === 'mujeres') {
-    subcategoriaBoton = document.querySelector('button[data-bs-target="#mujer-polos"]');
-  } else if (categoriaId === 'infantil') {
-    subcategoriaBoton = document.querySelector('button[data-bs-target="#infantil-polos"]');
-  } else if (categoriaId === 'accesorios') {
-    subcategoriaBoton = document.querySelector('button[data-bs-target="#accesorios-gorras"]');
-  }
+  // 2. Activar la primera subcategoría disponible de esa categoría.
+  // Los botones se generan dinámicamente según lo que devuelve la API.
+  const panelCategoria = document.getElementById(categoriaId);
+  const subcategoriaBoton = panelCategoria
+    ? panelCategoria.querySelector('[data-bs-toggle="pill"][data-bs-target]')
+    : null;
 
   if (subcategoriaBoton) {
-    const tabSub = new bootstrap.Tab(subcategoriaBoton);
-    tabSub.show();
+    bootstrap.Tab.getOrCreateInstance(subcategoriaBoton).show();
   }
 
   // 3. Desplazamiento suave hacia el catálogo
@@ -464,3 +458,237 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/* ==========================================================
+   CATÁLOGO DINÁMICO: productos y filtros desde Spring Boot
+   Endpoint: GET /api/productos
+   ========================================================== */
+
+function normalizarTextoCatalogo(valor) {
+  return String(valor || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
+    .toLowerCase();
+}
+
+function escaparHTMLCatalogo(valor) {
+  return String(valor ?? '').replace(/[&<>"']/g, caracter => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[caracter]);
+}
+
+function obtenerIdCategoriaCatalogo(nombre) {
+  const texto = normalizarTextoCatalogo(nombre);
+
+  if (texto.includes('hombre') && !texto.includes('mujer')) return 'hombres';
+  if (texto.includes('mujer')) return 'mujeres';
+  if (texto.includes('infantil') || texto.includes('nino') || texto.includes('nina')) return 'infantil';
+  if (texto.includes('accesorio')) return 'accesorios';
+
+  return texto.replace(/[^a-z0-9]+/g, '-') || 'otros';
+}
+
+function obtenerProductosCatalogo(productos) {
+  return productos.filter(producto => {
+    // Si el backend no envía "activo", se considera disponible.
+    return producto.activo === undefined || producto.activo === null || producto.activo === true;
+  });
+}
+
+function crearTarjetaProducto(producto) {
+  const nombre = escaparHTMLCatalogo(producto.nombre || 'Producto Drip Club');
+  const descripcion = escaparHTMLCatalogo(producto.descripcion || 'Estilo urbano');
+  const imagenOriginal = producto.imagen || '';
+  const imagen = escaparHTMLCatalogo(resolverRutaImagen(imagenOriginal));
+  const precio = Number(producto.precio || 0);
+  const precioOferta = Number(producto.precioOferta || 0);
+  const tieneOferta = precioOferta > 0 && precioOferta < precio;
+  const precioMostrar = tieneOferta ? precioOferta : precio;
+  const id = escaparHTMLCatalogo(producto.idProducto ?? '');
+  const sinStock = Number(producto.stock ?? 1) <= 0;
+
+  const precioHTML = tieneOferta
+    ? `<p class="fw-bold mb-3">
+         <span class="text-muted text-decoration-line-through me-2">S/ ${precio.toFixed(2)}</span>
+         <span class="text-danger">S/ ${precioOferta.toFixed(2)}</span>
+       </p>`
+    : `<p class="fw-bold mb-3">S/ ${precio.toFixed(2)}</p>`;
+
+  return `
+    <div class="col-12 col-sm-6 col-md-4 producto"
+         data-producto-id="${id}"
+         ${tieneOferta ? `data-oferta="true" data-precio-oferta="${precioOferta.toFixed(2)}"` : ''}>
+      <div class="card h-100 shadow-sm">
+        <img src="${imagen}" class="card-img-top imagen-producto"
+             alt="${nombre}" loading="lazy"
+             onerror="this.onerror=null;this.src='assets/image/logo.png';">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">${nombre}</h5>
+          <p class="card-text text-muted mb-1">${descripcion}</p>
+          ${precioHTML}
+          <button class="btn btn-dark mt-auto btn-agregar-carrito"
+                  type="button" ${sinStock ? 'disabled' : ''}>
+            ${sinStock ? 'Sin stock' : 'Agregar al carrito'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderizarCatalogoDesdeAPI(productos) {
+  const contenedor = document.getElementById('contenidoCategorias');
+  const estado = document.getElementById('estadoCatalogo');
+  if (!contenedor) return;
+
+  const disponibles = obtenerProductosCatalogo(productos);
+  const agrupados = new Map();
+
+  disponibles.forEach(producto => {
+    const categoriaNombre = producto.subcategoria?.categoria?.nombre || 'Otros';
+    const subcategoriaNombre = producto.subcategoria?.nombre || 'General';
+    const categoriaId = obtenerIdCategoriaCatalogo(categoriaNombre);
+
+    if (!agrupados.has(categoriaId)) {
+      agrupados.set(categoriaId, {
+        nombre: categoriaNombre,
+        subcategorias: new Map()
+      });
+    }
+
+    const grupo = agrupados.get(categoriaId);
+    if (!grupo.subcategorias.has(subcategoriaNombre)) {
+      grupo.subcategorias.set(subcategoriaNombre, []);
+    }
+    grupo.subcategorias.get(subcategoriaNombre).push(producto);
+  });
+
+  if (estado) estado.remove();
+
+  if (disponibles.length === 0) {
+    contenedor.innerHTML = `
+      <div class="alert alert-info text-center">
+        No hay productos activos para mostrar.
+      </div>`;
+    return;
+  }
+
+  const ordenCategorias = ['hombres', 'mujeres', 'infantil', 'accesorios'];
+  const categoriasOrdenadas = Array.from(agrupados.entries()).sort((a, b) => {
+    const ia = ordenCategorias.indexOf(a[0]);
+    const ib = ordenCategorias.indexOf(b[0]);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
+
+  let html = '';
+  let indiceCategoria = 0;
+
+  categoriasOrdenadas.forEach(([categoriaId, grupo]) => {
+    const subcategorias = Array.from(grupo.subcategorias.entries());
+    const nombreCategoria = escaparHTMLCatalogo(grupo.nombre);
+    const esPrimeraCategoria = indiceCategoria === 0;
+
+    html += `
+      <section class="tab-pane fade ${esPrimeraCategoria ? 'show active' : ''}"
+               id="${escaparHTMLCatalogo(categoriaId)}">
+        <div class="text-center mb-4">
+          <span class="badge bg-dark px-3 py-2 text-uppercase mb-2 rounded-pill">
+            Colección ${nombreCategoria}
+          </span>
+          <h2 class="fw-bold display-5 mb-1">Catálogo ${nombreCategoria}</h2>
+          <p class="text-muted small">Explora nuestros productos disponibles</p>
+        </div>
+
+        <div class="nav nav-pills justify-content-center gap-2 flex-wrap mb-4"
+             role="tablist">
+          ${subcategorias.map(([nombreSubcategoria], indice) => {
+            const subId = `subcat-${categoriaId}-${indice}`;
+            return `
+              <button class="btn btn-outline-dark ${indice === 0 ? 'active' : ''}"
+                      data-bs-toggle="pill"
+                      data-bs-target="#${subId}"
+                      type="button" role="tab">
+                ${escaparHTMLCatalogo(nombreSubcategoria)}
+              </button>`;
+          }).join('')}
+        </div>
+
+        <div class="tab-content">
+          ${subcategorias.map(([nombreSubcategoria, listaProductos], indice) => {
+            const subId = `subcat-${categoriaId}-${indice}`;
+            return `
+              <div class="tab-pane fade ${indice === 0 ? 'show active' : ''}"
+                   id="${subId}" role="tabpanel">
+                <div class="mb-4">
+                  <div class="text-start mb-2">
+                    <a href="#menu-categorias"
+                       class="btn btn-outline-dark btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                      <i class="fa-solid fa-arrow-up me-2"></i> Volver al menú
+                    </a>
+                  </div>
+                  <div class="text-center">
+                    <h2 class="fw-bold display-6 mb-1">${escaparHTMLCatalogo(nombreSubcategoria)}</h2>
+                    <div class="bg-primary mx-auto rounded-pill" style="width: 50px; height: 3px;"></div>
+                  </div>
+                </div>
+                <div class="row g-4">
+                  ${listaProductos.map(crearTarjetaProducto).join('')}
+                </div>
+              </div>`;
+          }).join('')}
+        </div>
+      </section>`;
+    indiceCategoria++;
+  });
+
+  contenedor.innerHTML = html;
+
+  // Si la base de datos no contiene alguna de las cuatro categorías principales,
+  // su botón del menú se oculta para evitar una pestaña vacía.
+  document.querySelectorAll('#categorias [data-bs-target]').forEach(boton => {
+    const id = boton.getAttribute('data-bs-target').replace('#', '');
+    boton.classList.toggle('d-none', !agrupados.has(id));
+  });
+}
+
+async function cargarProductosDesdeAPI() {
+  const contenedor = document.getElementById('contenidoCategorias');
+  if (!contenedor) return;
+
+  try {
+    const respuesta = await fetch('/api/productos', {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (!respuesta.ok) {
+      throw new Error(`La API respondió con estado ${respuesta.status}`);
+    }
+
+    const productos = await respuesta.json();
+    if (!Array.isArray(productos)) {
+      throw new Error('La respuesta de /api/productos no es una lista.');
+    }
+
+    renderizarCatalogoDesdeAPI(productos);
+  } catch (error) {
+    console.error('Error al cargar el catálogo:', error);
+    contenedor.innerHTML = `
+      <div class="alert alert-danger text-center">
+        <strong>No se pudo cargar el catálogo.</strong>
+        <p class="mb-0 mt-1">Verifica que Spring Boot esté ejecutándose y que
+        <code>/api/productos</code> esté disponible.</p>
+        <button class="btn btn-outline-danger btn-sm mt-3"
+                type="button" onclick="cargarProductosDesdeAPI()">
+          Reintentar
+        </button>
+      </div>`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', cargarProductosDesdeAPI);
