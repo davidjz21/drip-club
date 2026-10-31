@@ -1,0 +1,303 @@
+/* ==========================================================================
+   DRIP CLUB · PANEL DE ADMINISTRACIÓN
+   Paleta: Negro Asfalto (#0A0A0C) + Naranja Ácido (#FF5500)
+   Todos los selectores del admin están aislados; no afecta a la tienda.
+   ========================================================================== */
+
+:root {
+  --adm-dark: #0A0A0C;
+  --adm-dark-soft: #17171B;
+  --adm-accent: #FF5500;
+  --adm-accent-hover: #E04B00;
+  --adm-bg: #F4F5F7;
+  --adm-text: #0F0F11;
+  --adm-sidebar-w: 260px;
+  --adm-header-h: 64px;
+  --adm-font-titulos: 'Bebas Neue', sans-serif;
+  --adm-font-cuerpo: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--adm-font-cuerpo);
+  background-color: var(--adm-bg);
+  color: var(--adm-text);
+}
+
+.text-accent {
+  color: var(--adm-accent);
+}
+
+/* ---------- Botón de acento ---------- */
+.btn-accent {
+  background-color: var(--adm-accent);
+  border-color: var(--adm-accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-accent:hover,
+.btn-accent:focus,
+.btn-accent:active {
+  background-color: var(--adm-accent-hover) !important;
+  border-color: var(--adm-accent-hover) !important;
+  color: #fff !important;
+}
+
+.btn-accent:disabled {
+  background-color: var(--adm-accent);
+  border-color: var(--adm-accent);
+  opacity: .6;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--adm-accent);
+  box-shadow: 0 0 0 .2rem rgba(255, 85, 0, .2);
+}
+
+.form-check-input:checked {
+  background-color: var(--adm-accent);
+  border-color: var(--adm-accent);
+}
+
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+.admin-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--adm-sidebar-w);
+  background-color: var(--adm-dark);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  z-index: 1040;
+  transition: transform .25s ease;
+}
+
+.sidebar-brand {
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.brand-mark {
+  display: block;
+  font-family: var(--adm-font-titulos);
+  font-size: 2rem;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.brand-sub {
+  color: rgba(255, 255, 255, .5);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+  overflow-y: auto;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  padding: .8rem 1.5rem;
+  color: rgba(255, 255, 255, .72);
+  text-decoration: none;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+
+.sidebar-link i {
+  width: 1.2rem;
+  text-align: center;
+}
+
+.sidebar-link:hover {
+  background-color: var(--adm-dark-soft);
+  color: #fff;
+}
+
+.sidebar-link.active {
+  background-color: var(--adm-dark-soft);
+  color: var(--adm-accent);
+  border-left-color: var(--adm-accent);
+}
+
+.sidebar-footer {
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  padding: .75rem 0;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+/* ==========================================================================
+   CONTENIDO PRINCIPAL
+   ========================================================================== */
+.admin-main {
+  margin-left: var(--adm-sidebar-w);
+  min-height: 100vh;
+}
+
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  height: var(--adm-header-h);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.75rem;
+  background-color: #fff;
+  border-bottom: 1px solid #e3e5e8;
+}
+
+.admin-title {
+  margin: 0;
+  font-family: var(--adm-font-titulos);
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+  color: var(--adm-dark);
+}
+
+.admin-content {
+  padding: 1.75rem;
+}
+
+.module-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+
+/* ---------- Tarjetas y tablas ---------- */
+.admin-card {
+  border: 0;
+  border-radius: .75rem;
+  box-shadow: 0 1px 3px rgba(10, 10, 12, .08);
+  overflow: hidden;
+}
+
+.admin-card .table thead th {
+  background-color: var(--adm-dark);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-bottom: 0;
+  padding: .85rem 1rem;
+}
+
+.admin-card .table tbody td {
+  padding: .8rem 1rem;
+}
+
+.thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: .5rem;
+  background-color: #e9ecef;
+  border: 1px solid #dee2e6;
+}
+
+.thumb-lg {
+  width: 84px;
+  height: 84px;
+}
+
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #adb5bd;
+}
+
+.precio-tachado {
+  color: #6c757d;
+  text-decoration: line-through;
+}
+
+.precio-oferta {
+  color: var(--adm-accent);
+  font-weight: 700;
+}
+
+.estado-vacio,
+.estado-carga,
+.estado-error {
+  text-align: center;
+  padding: 2.5rem 1rem !important;
+  color: #6c757d;
+}
+
+.estado-error {
+  color: #b02a37;
+}
+
+/* ---------- Badges ---------- */
+.badge-activo {
+  background-color: rgba(25, 135, 84, .12);
+  color: #146c43;
+}
+
+.badge-inactivo {
+  background-color: rgba(108, 117, 125, .15);
+  color: #495057;
+}
+
+.badge-rol {
+  background-color: var(--adm-dark);
+  color: #fff;
+}
+
+.badge-rol.rol-cliente {
+  background-color: #e9ecef;
+  color: #343a40;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop.show {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 1035;
+  }
+
+  .admin-main {
+    margin-left: 0;
+  }
+
+  .admin-header,
+  .admin-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de Administración | Drip Club</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-brand">
+      <span class="brand-mark">DRIP<span class="text-accent">CLUB</span></span>
+      <small class="brand-sub">Panel de administración</small>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Módulos del panel">
+      <a href="#productos" class="sidebar-link active" data-view="productos">
+        <i class="fa-solid fa-shirt"></i><span>Productos</span>
+      </a>
+      <a href="#categorias" class="sidebar-link" data-view="categorias">
+        <i class="fa-solid fa-layer-group"></i><span>Categorías</span>
+      </a>
+      <a href="#subcategorias" class="sidebar-link" data-view="subcategorias">
+        <i class="fa-solid fa-tags"></i><span>Subcategorías</span>
+      </a>
+      <a href="#usuarios" class="sidebar-link" data-view="usuarios">
+        <i class="fa-solid fa-users"></i><span>Usuarios</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../index.html" class="sidebar-link">
+        <i class="fa-solid fa-arrow-left"></i><span>Volver a la Tienda</span>
+      </a>
+    </div>
+  </aside>
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- ===================== CONTENIDO ===================== -->
+  <div class="admin-main">
+
+    <header class="admin-header">
+      <button type="button" class="btn btn-link text-dark p-0 d-lg-none" id="btnToggleSidebar"
+        aria-label="Abrir menú">
+        <i class="fa-solid fa-bars fa-lg"></i>
+      </button>
+      <h1 class="admin-title" id="headerTitulo">Productos</h1>
+      <button type="button" class="btn btn-outline-dark btn-sm ms-auto" id="btnRecargar">
+        <i class="fa-solid fa-rotate me-1"></i><span class="d-none d-sm-inline">Actualizar</span>
+      </button>
+    </header>
+
+    <main class="admin-content">
+
+      <!-- ---------- PRODUCTOS ---------- -->
+      <section id="view-productos" data-module="productos">
+        <div class="module-toolbar">
+          <p class="text-secondary mb-0">Gestiona el catálogo que ve la tienda.</p>
+          <button type="button" class="btn btn-accent" id="btnNuevoProducto">
+            <i class="fa-solid fa-plus me-1"></i>Nuevo producto
+          </button>
+        </div>
+        <div class="card admin-card">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Imagen</th>
+                  <th>Producto</th>
+                  <th>Subcategoría</th>
+                  <th class="text-end">Precio</th>
+                  <th class="text-end">Oferta</th>
+                  <th class="text-center">Stock</th>
+                  <th class="text-center">Estado</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyProductos"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- CATEGORÍAS ---------- -->
+      <section id="view-categorias" data-module="categorias" class="d-none">
+        <div class="module-toolbar">
+          <p class="text-secondary mb-0">Categorías principales de la tienda.</p>
+        </div>
+        <div class="card admin-card">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">ID</th>
+                  <th>Nombre</th>
+                  <th class="text-center">Estado</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyCategorias"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- SUBCATEGORÍAS ---------- -->
+      <section id="view-subcategorias" data-module="subcategorias" class="d-none">
+        <div class="module-toolbar">
+          <p class="text-secondary mb-0">Subcategorías y la categoría a la que pertenecen.</p>
+        </div>
+        <div class="card admin-card">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">ID</th>
+                  <th>Nombre</th>
+                  <th>Categoría padre</th>
+                  <th class="text-center">Estado</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbodySubcategorias"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- USUARIOS ---------- -->
+      <section id="view-usuarios" data-module="usuarios" class="d-none">
+        <div class="module-toolbar">
+          <p class="text-secondary mb-0">Cuentas registradas en la tienda.</p>
+        </div>
+        <div class="card admin-card">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">ID</th>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th class="text-center">Rol</th>
+                  <th class="text-center">Estado</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyUsuarios"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================== MODAL PRODUCTO ===================== -->
+  <div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="modalProductoTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <form class="modal-content" id="formProducto" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title fs-4" id="modalProductoTitulo">Nuevo producto</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger d-none" id="productoAlerta" role="alert"></div>
+          <input type="hidden" id="prodId">
+
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label for="prodNombre" class="form-label">Nombre *</label>
+              <input type="text" class="form-control" id="prodNombre" maxlength="100" required>
+              <div class="invalid-feedback">El nombre es obligatorio.</div>
+            </div>
+            <div class="col-md-4">
+              <label for="prodStock" class="form-label">Stock *</label>
+              <input type="number" class="form-control" id="prodStock" min="0" step="1" value="0" required>
+              <div class="invalid-feedback">Ingresa un stock de 0 o más.</div>
+            </div>
+
+            <div class="col-12">
+              <label for="prodDescripcion" class="form-label">Descripción</label>
+              <textarea class="form-control" id="prodDescripcion" rows="2" maxlength="500"></textarea>
+            </div>
+
+            <div class="col-md-6">
+              <label for="prodPrecio" class="form-label">Precio (S/) *</label>
+              <input type="number" class="form-control" id="prodPrecio" min="0.01" step="0.01" required>
+              <div class="invalid-feedback">El precio debe ser mayor a 0.</div>
+            </div>
+            <div class="col-md-6">
+              <label for="prodOferta" class="form-label">Precio de oferta (S/)</label>
+              <input type="number" class="form-control" id="prodOferta" min="0.01" step="0.01">
+              <div class="invalid-feedback" id="prodOfertaError">La oferta debe ser menor al precio.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="prodSubcategoria" class="form-label">Subcategoría *</label>
+              <select class="form-select" id="prodSubcategoria" required>
+                <option value="">Cargando...</option>
+              </select>
+              <div class="invalid-feedback">Selecciona una subcategoría.</div>
+            </div>
+            <div class="col-md-6">
+              <label for="prodImagen" class="form-label">Imagen (ruta o URL)</label>
+              <input type="text" class="form-control" id="prodImagen" maxlength="255"
+                placeholder="assets/image/polo-negro.jpg">
+            </div>
+
+            <div class="col-12 d-flex align-items-center gap-3">
+              <img id="prodImagenPreview" class="thumb thumb-lg d-none" alt="Vista previa">
+              <div class="form-check form-switch ms-auto">
+                <input class="form-check-input" type="checkbox" role="switch" id="prodActivo" checked>
+                <label class="form-check-label" for="prodActivo">Producto activo</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-accent" id="btnGuardarProducto">
+            <span class="spinner-border spinner-border-sm me-1 d-none" aria-hidden="true"></span>Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL CONFIRMACIÓN ===================== -->
+  <div class="modal fade" id="modalConfirmar" tabindex="-1" aria-labelledby="confirmarTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="confirmarTitulo">Confirmar</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" id="confirmarMensaje"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="btnConfirmarAccion">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TOASTS ===================== -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContenedor"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="admin.js"></script>
+</body>
+
+</html>
