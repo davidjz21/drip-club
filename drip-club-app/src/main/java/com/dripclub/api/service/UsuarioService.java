@@ -9,4 +9,6 @@ public interface UsuarioService {
     Usuario obtenerPorCorreo(String correo);
     Usuario guardar(Usuario usuario);
     void eliminar(Long id);
+    Usuario cambiarRol(Long id, String rol);
+    Usuario cambiarActivo(Long id, boolean activo);
 }

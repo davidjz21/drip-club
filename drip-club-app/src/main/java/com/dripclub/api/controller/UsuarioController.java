@@ -39,6 +39,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
+    /** Actualiza datos personales. No acepta rol ni activo (los ignora). */
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @RequestBody Usuario datos) {
         Usuario existente = usuarioService.obtenerPorId(id);
@@ -49,11 +50,26 @@ public class UsuarioController {
         existente.setCorreo(datos.getCorreo());
         existente.setTelefono(datos.getTelefono());
 
-        // Si envia contraseña vacia conserva actual
+        // Si envia contrasena vacia conserva la actual
         if (datos.getContrasena() != null && !datos.getContrasena().isBlank()) {
             existente.setContrasena(datos.getContrasena());
         }
         Usuario actualizado = usuarioService.guardar(existente);
+        return ResponseEntity.ok(actualizado);
+    }
+
+    /** Solo para el panel admin: cambia el rol del usuario. */
+    @PutMapping("/{id}/rol")
+    public ResponseEntity<Usuario> cambiarRol(@PathVariable Long id, @RequestBody String rol) {
+        Usuario actualizado = usuarioService.cambiarRol(id, rol.replace("\"", "").trim());
+        return ResponseEntity.ok(actualizado);
+    }
+
+    /** Solo para el panel admin: activa o desactiva un usuario. */
+    @PutMapping("/{id}/activo")
+    public ResponseEntity<Usuario> cambiarActivo(@PathVariable Long id, @RequestBody String activo) {
+        boolean valor = Boolean.parseBoolean(activo.replace("\"", "").trim());
+        Usuario actualizado = usuarioService.cambiarActivo(id, valor);
         return ResponseEntity.ok(actualizado);
     }
 
@@ -73,15 +89,14 @@ public class UsuarioController {
         String contrasena = credenciales.get("contrasena");
 
         if (correo == null || contrasena == null) {
-            return ResponseEntity.badRequest().body(java.util.Map.of("mensaje", "Correo y contraseña requeridos"));
+            return ResponseEntity.badRequest().body(java.util.Map.of("mensaje", "Correo y contrasena requeridos"));
         }
 
         Usuario usuario = usuarioService.obtenerPorCorreo(correo.trim().toLowerCase());
         if (usuario == null || !usuario.isActivo() || !usuario.getContrasena().equals(contrasena)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(java.util.Map.of("mensaje", "Correo o contraseña incorrectos"));
+                    .body(java.util.Map.of("mensaje", "Correo o contrasena incorrectos"));
         }
         return ResponseEntity.ok(usuario);
     }
-
 }
