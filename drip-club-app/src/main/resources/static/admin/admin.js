@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    DRIP CLUB - PANEL DE ADMINISTRACION (SPA)
    JavaScript nativo (fetch + async/await). Sin dependencias salvo Bootstrap.
 
@@ -340,14 +340,142 @@
     const lista = ordenarPorId(state.datos.subcategorias, 'idSubcategoria');
     if (!lista.length) return pintarEstadoTabla('subcategorias', 'vacio');
 
-    $('#tbodySubcategorias').innerHTML = lista.map((s) => `
-      <tr>
-        <td>${s.idSubcategoria}</td>
-        <td class="fw-semibold">${escaparHTML(s.nombre)}</td>
-        <td>${s.categoria ? escaparHTML(s.categoria.nombre) : '<span class="text-muted">-</span>'}</td>
-        <td class="text-center">${badgeEstado(s.activo)}</td>
-        <td class="text-end">${botonDesactivar('subcategorias', s.idSubcategoria, s.activo)}</td>
-      </tr>`).join('');
+    $('#tbodySubcategorias').innerHTML = lista.map((s) => {
+      const btnEditar = `<button type="button" class="btn btn-sm btn-outline-dark me-1"
+          data-action="editar-subcategoria" data-id="${s.idSubcategoria}" title="Editar">
+          <i class="fa-solid fa-pen"></i></button>`;
+
+      let btnAccion;
+      if (s.activo) {
+        btnAccion = `<button type="button" class="btn btn-sm btn-outline-danger" data-action="eliminar"
+            data-modulo="subcategorias" data-id="${s.idSubcategoria}" title="Desactivar">
+            <i class="fa-solid fa-trash"></i></button>`;
+      } else {
+        btnAccion = `<button type="button" class="btn btn-sm btn-outline-success"
+            data-action="reactivar-subcategoria" data-id="${s.idSubcategoria}" title="Reactivar">
+            <i class="fa-solid fa-circle-check"></i> Reactivar</button>`;
+      }
+
+      return `
+        <tr>
+          <td>${s.idSubcategoria}</td>
+          <td class="fw-semibold">${escaparHTML(s.nombre)}</td>
+          <td>${s.categoria ? escaparHTML(s.categoria.nombre) : '<span class="text-muted">-</span>'}</td>
+          <td class="text-center">${badgeEstado(s.activo)}</td>
+          <td class="text-end text-nowrap">${btnEditar}${btnAccion}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  /* ------------------------------------------------------------------------
+     MODULO SUBCATEGORIAS: modal crear / editar / reactivar
+     ------------------------------------------------------------------------ */
+  function alertaSubcat(mensaje) {
+    const el = $('#subcategoriaAlerta');
+    el.textContent = mensaje || '';
+    el.classList.toggle('d-none', !mensaje);
+  }
+
+  async function poblarCategoriasEnModal(seleccionada = null) {
+    const sel = $('#subcatCategoria');
+    sel.disabled = true;
+    sel.innerHTML = '<option value="">Cargando...</option>';
+    try {
+      // Usa las categorias ya cargadas en state; si no hay, las pide
+      let cats = state.datos.categorias;
+      if (!cats.length) cats = await apiGetLista(API.categorias);
+      const activas = cats.filter((c) => c.activo || c.idCategoria === seleccionada);
+      sel.innerHTML = '<option value="">Selecciona una categoria...</option>' +
+        activas.map((c) =>
+          `<option value="${c.idCategoria}" ${c.idCategoria === seleccionada ? 'selected' : ''}>${escaparHTML(c.nombre)}</option>`
+        ).join('');
+      sel.disabled = false;
+    } catch (err) {
+      sel.innerHTML = '<option value="">No se pudieron cargar</option>';
+      alertaSubcat(`No se pudieron cargar las categorias: ${err.message}`);
+    }
+  }
+
+  async function abrirModalSubcategoria(id = null) {
+    const f = $('#formSubcategoria');
+    f.reset();
+    f.classList.remove('was-validated');
+    alertaSubcat('');
+
+    const sub = id != null
+      ? state.datos.subcategorias.find((s) => String(s.idSubcategoria) === String(id))
+      : null;
+
+    $('#modalSubcategoriaTitulo').textContent = sub
+      ? `Editar subcategoria #${sub.idSubcategoria}`
+      : 'Nueva subcategoria';
+    $('#subcatId').value = sub ? sub.idSubcategoria : '';
+    $('#subcatNombre').value = sub?.nombre ?? '';
+    $('#subcatActivo').checked = sub ? !!sub.activo : true;
+
+    bootstrap.Modal.getOrCreateInstance($('#modalSubcategoria')).show();
+    await poblarCategoriasEnModal(sub?.categoria?.idCategoria ?? null);
+  }
+
+  async function guardarSubcategoria(evento) {
+    evento.preventDefault();
+    alertaSubcat('');
+
+    const f = $('#formSubcategoria');
+    f.classList.add('was-validated');
+    if (!f.checkValidity()) return;
+
+    const id = $('#subcatId').value;
+    const btn = $('#btnGuardarSubcategoria');
+    const spinner = btn.querySelector('.spinner-border');
+    btn.disabled = true;
+    spinner.classList.remove('d-none');
+
+    const payload = {
+      nombre: $('#subcatNombre').value.trim(),
+      activo: $('#subcatActivo').checked,
+      categoria: { idCategoria: Number($('#subcatCategoria').value) }
+    };
+
+    try {
+      await apiFetch(id ? `${API.subcategorias}/${id}` : API.subcategorias, {
+        method: id ? 'PUT' : 'POST',
+        body: payload
+      });
+      bootstrap.Modal.getInstance($('#modalSubcategoria'))?.hide();
+      mostrarToast(id ? 'Subcategoria actualizada correctamente.' : 'Subcategoria creada correctamente.');
+      await cargarModulo('subcategorias');
+    } catch (err) {
+      alertaSubcat(err.message);
+    } finally {
+      btn.disabled = false;
+      spinner.classList.add('d-none');
+    }
+  }
+
+  async function reactivarSubcategoria(id) {
+    const sub = state.datos.subcategorias.find((s) => String(s.idSubcategoria) === String(id));
+    if (!sub) return;
+    const ok = await confirmar({
+      titulo: 'Reactivar subcategoria',
+      mensaje: `Reactivar la subcategoria "${sub.nombre}"?`,
+      textoBoton: 'Reactivar'
+    });
+    if (!ok) return;
+    try {
+      await apiFetch(`${API.subcategorias}/${id}`, {
+        method: 'PUT',
+        body: {
+          nombre: sub.nombre,
+          activo: true,
+          categoria: { idCategoria: sub.categoria?.idCategoria }
+        }
+      });
+      mostrarToast('Subcategoria reactivada correctamente.');
+      await cargarModulo('subcategorias');
+    } catch (err) {
+      mostrarToast(`No se pudo reactivar: ${err.message}`, 'danger');
+    }
   }
 
   function renderUsuarios() {
@@ -730,6 +858,8 @@
         case 'toggle-activo':
           toggleActivoUsuario(btn.dataset.id, btn.dataset.activo === 'true');
           break;
+        case 'editar-subcategoria': abrirModalSubcategoria(btn.dataset.id); break;
+        case 'reactivar-subcategoria': reactivarSubcategoria(btn.dataset.id); break;
       }
     });
 
@@ -752,6 +882,8 @@
     }, true);
 
     $('#btnNuevoProducto').addEventListener('click', () => abrirModalProducto());
+    $('#btnNuevaSubcategoria').addEventListener('click', () => abrirModalSubcategoria());
+    $('#formSubcategoria').addEventListener('submit', guardarSubcategoria);
     $('#btnCerrarSesion').addEventListener('click', (e) => { e.preventDefault(); cerrarSesion(); });
     $('#btnRecargar').addEventListener('click', () => cargarModulo(state.vista));
     $('#formProducto').addEventListener('submit', guardarProducto);

@@ -496,8 +496,14 @@ function obtenerIdCategoriaCatalogo(nombre) {
 
 function obtenerProductosCatalogo(productos) {
   return productos.filter(producto => {
-    // Si el backend no envía "activo", se considera disponible.
-    return producto.activo === undefined || producto.activo === null || producto.activo === true;
+    // El producto debe estar activo
+    const prodActivo = producto.activo === undefined || producto.activo === null || producto.activo === true;
+    // La subcategoría debe estar activa (si tiene asignada una)
+    const subcatActiva = !producto.subcategoria || producto.subcategoria.activo === undefined || producto.subcategoria.activo === null || producto.subcategoria.activo === true;
+    // La categoría principal debe estar activa (si tiene asignada una)
+    const catActiva = !producto.subcategoria?.categoria || producto.subcategoria.categoria.activo === undefined || producto.subcategoria.categoria.activo === null || producto.subcategoria.categoria.activo === true;
+
+    return prodActivo && subcatActiva && catActiva;
   });
 }
 

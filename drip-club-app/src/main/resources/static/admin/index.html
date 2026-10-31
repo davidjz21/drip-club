@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Panel de Administración | Drip Club</title>
+  <title>Panel de Administracion | Drip Club</title>
 
-  <!-- Guard de acceso: solo sesión con rol ADMIN (misma clave que guarda auth-login.js) -->
+  <!-- Guard de acceso: solo sesion con rol ADMIN (misma clave que guarda auth-login.js) -->
   <script>
     (function () {
       try {
@@ -29,18 +29,18 @@
   <aside class="admin-sidebar" id="adminSidebar">
     <div class="sidebar-brand">
       <span class="brand-mark">DRIP<span class="text-accent">CLUB</span></span>
-      <small class="brand-sub">Panel de administración</small>
+      <small class="brand-sub">Panel de administracion</small>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Módulos del panel">
+    <nav class="sidebar-nav" aria-label="Modulos del panel">
       <a href="#productos" class="sidebar-link active" data-view="productos">
         <i class="fa-solid fa-shirt"></i><span>Productos</span>
       </a>
       <a href="#categorias" class="sidebar-link" data-view="categorias">
-        <i class="fa-solid fa-layer-group"></i><span>Categorías</span>
+        <i class="fa-solid fa-layer-group"></i><span>Categorias</span>
       </a>
       <a href="#subcategorias" class="sidebar-link" data-view="subcategorias">
-        <i class="fa-solid fa-tags"></i><span>Subcategorías</span>
+        <i class="fa-solid fa-tags"></i><span>Subcategorias</span>
       </a>
       <a href="#usuarios" class="sidebar-link" data-view="usuarios">
         <i class="fa-solid fa-users"></i><span>Usuarios</span>
@@ -55,7 +55,7 @@
         <i class="fa-solid fa-arrow-left"></i><span>Volver a la Tienda</span>
       </a>
       <a href="#" class="sidebar-link" id="btnCerrarSesion">
-        <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span>
+        <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesion</span>
       </a>
     </div>
   </aside>
@@ -66,7 +66,7 @@
 
     <header class="admin-header">
       <button type="button" class="btn btn-link text-dark p-0 d-lg-none" id="btnToggleSidebar"
-        aria-label="Abrir menú">
+        aria-label="Abrir menu">
         <i class="fa-solid fa-bars fa-lg"></i>
       </button>
       <h1 class="admin-title" id="headerTitulo">Productos</h1>
@@ -80,7 +80,7 @@
       <!-- ---------- PRODUCTOS ---------- -->
       <section id="view-productos" data-module="productos">
         <div class="module-toolbar">
-          <p class="text-secondary mb-0">Gestiona el catálogo que ve la tienda.</p>
+          <p class="text-secondary mb-0">Gestiona el catalogo que ve la tienda.</p>
           <button type="button" class="btn btn-accent" id="btnNuevoProducto">
             <i class="fa-solid fa-plus me-1"></i>Nuevo producto
           </button>
@@ -92,7 +92,7 @@
                 <tr>
                   <th>Imagen</th>
                   <th>Producto</th>
-                  <th>Subcategoría</th>
+                  <th>Subcategoria</th>
                   <th class="text-end">Precio</th>
                   <th class="text-end">Oferta</th>
                   <th class="text-center">Stock</th>
@@ -106,10 +106,10 @@
         </div>
       </section>
 
-      <!-- ---------- CATEGORÍAS ---------- -->
+      <!-- ---------- CATEGORIAS ---------- -->
       <section id="view-categorias" data-module="categorias" class="d-none">
         <div class="module-toolbar">
-          <p class="text-secondary mb-0">Categorías principales de la tienda.</p>
+          <p class="text-secondary mb-0">Categorias principales de la tienda.</p>
         </div>
         <div class="card admin-card">
           <div class="table-responsive">
@@ -128,10 +128,13 @@
         </div>
       </section>
 
-      <!-- ---------- SUBCATEGORÍAS ---------- -->
+      <!-- ---------- SUBCATEGORIAS ---------- -->
       <section id="view-subcategorias" data-module="subcategorias" class="d-none">
         <div class="module-toolbar">
-          <p class="text-secondary mb-0">Subcategorías y la categoría a la que pertenecen.</p>
+          <p class="text-secondary mb-0">Subcategorias y la categoria a la que pertenecen.</p>
+          <button type="button" class="btn btn-accent" id="btnNuevaSubcategoria">
+            <i class="fa-solid fa-plus me-1"></i>Nueva subcategoria
+          </button>
         </div>
         <div class="card admin-card">
           <div class="table-responsive">
@@ -140,7 +143,7 @@
                 <tr>
                   <th style="width: 90px;">ID</th>
                   <th>Nombre</th>
-                  <th>Categoría padre</th>
+                  <th>Categoria padre</th>
                   <th class="text-center">Estado</th>
                   <th class="text-end">Acciones</th>
                 </tr>
@@ -164,7 +167,7 @@
                   <th style="width: 90px;">ID</th>
                   <th>Nombre</th>
                   <th>Correo</th>
-                  <th>Teléfono</th>
+                  <th>Telefono</th>
                   <th class="text-center">Rol</th>
                   <th class="text-center">Estado</th>
                   <th class="text-end">Acciones</th>
@@ -179,14 +182,14 @@
       <!-- ---------- PEDIDOS ---------- -->
       <section id="view-pedidos" data-module="pedidos" class="d-none">
         <div class="module-toolbar">
-          <p class="text-secondary mb-0">Pedidos registrados, del más reciente al más antiguo.</p>
+          <p class="text-secondary mb-0">Pedidos registrados, del mas reciente al mas antiguo.</p>
         </div>
         <div class="card admin-card">
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead>
                 <tr>
-                  <th style="width: 80px;">N°</th>
+                  <th style="width: 80px;">N</th>
                   <th>Fecha</th>
                   <th>Cliente</th>
                   <th>Pago</th>
@@ -225,11 +228,11 @@
             <div class="col-md-4">
               <label for="prodStock" class="form-label">Stock *</label>
               <input type="number" class="form-control" id="prodStock" min="0" step="1" value="0" required>
-              <div class="invalid-feedback">Ingresa un stock de 0 o más.</div>
+              <div class="invalid-feedback">Ingresa un stock de 0 o mas.</div>
             </div>
 
             <div class="col-12">
-              <label for="prodDescripcion" class="form-label">Descripción</label>
+              <label for="prodDescripcion" class="form-label">Descripcion</label>
               <textarea class="form-control" id="prodDescripcion" rows="2" maxlength="500"></textarea>
             </div>
 
@@ -245,11 +248,11 @@
             </div>
 
             <div class="col-md-6">
-              <label for="prodSubcategoria" class="form-label">Subcategoría *</label>
+              <label for="prodSubcategoria" class="form-label">Subcategoria *</label>
               <select class="form-select" id="prodSubcategoria" required>
                 <option value="">Cargando...</option>
               </select>
-              <div class="invalid-feedback">Selecciona una subcategoría.</div>
+              <div class="invalid-feedback">Selecciona una subcategoria.</div>
             </div>
             <div class="col-md-6">
               <label for="prodImagen" class="form-label">Imagen (ruta o URL)</label>
@@ -276,6 +279,51 @@
     </div>
   </div>
 
+  <!-- ===================== MODAL SUBCATEGORIA ===================== -->
+  <div class="modal fade" id="modalSubcategoria" tabindex="-1" aria-labelledby="modalSubcategoriaTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" id="formSubcategoria" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title fs-4" id="modalSubcategoriaTitulo">Nueva subcategoria</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger d-none" id="subcategoriaAlerta" role="alert"></div>
+          <input type="hidden" id="subcatId">
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="subcatNombre" class="form-label">Nombre *</label>
+              <input type="text" class="form-control" id="subcatNombre" maxlength="100" required>
+              <div class="invalid-feedback">El nombre es obligatorio.</div>
+            </div>
+
+            <div class="col-12">
+              <label for="subcatCategoria" class="form-label">Categoria *</label>
+              <select class="form-select" id="subcatCategoria" required>
+                <option value="">Cargando...</option>
+              </select>
+              <div class="invalid-feedback">Selecciona una categoria.</div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="subcatActivo" checked>
+                <label class="form-check-label" for="subcatActivo">Subcategoria activa</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-accent" id="btnGuardarSubcategoria">
+            <span class="spinner-border spinner-border-sm me-1 d-none" aria-hidden="true"></span>Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- ===================== MODAL DETALLE DE PEDIDO ===================== -->
   <div class="modal fade" id="modalPedido" tabindex="-1" aria-labelledby="modalPedidoTitulo" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -289,7 +337,7 @@
     </div>
   </div>
 
-  <!-- ===================== MODAL CONFIRMACIÓN ===================== -->
+  <!-- ===================== MODAL CONFIRMACION ===================== -->
   <div class="modal fade" id="modalConfirmar" tabindex="-1" aria-labelledby="confirmarTitulo" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
