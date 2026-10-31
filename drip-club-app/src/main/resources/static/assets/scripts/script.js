@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Función para navegar desde el carrusel directamente a una categoría específica
  * @param {string} categoriaId - 'hombres', 'mujeres' o 'infantil'
  */
@@ -355,8 +355,9 @@ document.addEventListener('click', (e) => {
     const imagen = imgElemento ? imgElemento.getAttribute('src') : '';
     const detalle = detalleElemento ? detalleElemento.textContent.trim() : '';
 
-    // ID único basado en titulo e imagen para admitir multiples productos diferentes
-    const idProducto = (titulo + '-' + imagen).toLowerCase().replace(/[^a-z0-9]/g, '-');
+    const idReal = card.closest('.producto')?.dataset.productoId;
+    if (!idReal) return;
+    const idProducto = String(idReal);
 
     const itemExistente = carrito.find(item => item.id === idProducto);
     if (itemExistente) {

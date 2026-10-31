@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -33,5 +34,12 @@ public class GlobalExceptionHandler {
             respuesta.put("mensaje", "Los datos entran en conflicto con registros existentes");
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(respuesta);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Map<String, String>> manejarResponseStatus(ResponseStatusException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("mensaje", ex.getReason());
+        return ResponseEntity.status(ex.getStatusCode()).body(respuesta);
     }
 }

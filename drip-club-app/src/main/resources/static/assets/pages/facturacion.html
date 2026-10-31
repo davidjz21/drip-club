@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -502,35 +502,58 @@
 
             // Manejo del submit de facturacion
             if (formFacturacion) {
-                formFacturacion.addEventListener('submit', (e) => {
+                formFacturacion.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     if (!formFacturacion.checkValidity()) {
-                        e.stopPropagation();
                         formFacturacion.classList.add('was-validated');
                         return;
                     }
-
-                    if (carrito.length === 0) {
-                        alert('Tu carrito está vacío. Agrega productos antes de realizar el pedido.');
+                    if (!carrito.length) { alert('Tu carrito está vacío'); return; }
+                    const usuario = JSON.parse(localStorage.getItem('dripclub_usuario') || 'null');
+                    if (!usuario?.idUsuario) { alert('Inicia sesión antes de comprar'); return; }
+                    // Los IDs del carrito deben ser IDs numéricos de productos en PostgreSQL.
+                    if (carrito.some(i => !Number.isSafeInteger(Number(i.id)) || Number(i.id) <= 0)) {
+                        alert('El carrito todavía usa identificadores de demostración. Conecta primero los productos a /api/productos.');
                         return;
                     }
-
-                    // Generar codigo de orden simulada
-                    const cod = '#DC-' + Math.floor(10000 + Math.random() * 90000);
-                    const elCod = document.getElementById('codigoOrdenSimulada');
-                    if (elCod) elCod.textContent = cod;
-
-                    // Vaciar carrito
-                    carrito = [];
-                    guardarYActualizarCarrito();
-                    renderizarCheckoutResumen();
-
-                    // Mostrar modal de compra exitosa
-                    const modalEl = document.getElementById('modalCompraExitosa');
-                    if (modalEl) {
-                        const modal = new bootstrap.Modal(modalEl);
-                        modal.show();
-                    }
+                    const valor = id => document.getElementById(id)?.value?.trim() || '';
+                    const payload = {
+                        usuarioId: usuario.idUsuario,
+                        direccionId: null,
+                        metodoPago: document.querySelector('input[name="metodoPago"]:checked')?.value,
+                        clienteNombres: valor('nombreFacturacion'),
+                        clienteApellidos: valor('apellidoFacturacion'),
+                        clienteCorreo: valor('correoFacturacion'),
+                        clienteTelefono: valor('telefonoFacturacion'),
+                        clienteTipoDocumento: valor('tipoDocFacturacion'),
+                        clienteNumeroDocumento: valor('numDocFacturacion'),
+                        entregaDepartamento: valor('regionFacturacion'),
+                        entregaCiudad: valor('ciudadFacturacion'),
+                        entregaDireccion: valor('direccionFacturacion'),
+                        entregaReferencia: valor('referenciaFacturacion'),
+                        detalles: carrito.map(i => ({productoId: Number(i.id), cantidad: Number(i.cantidad)}))
+                    };
+                    const boton = document.getElementById('btnConfirmarPedido');
+                    if (boton) boton.disabled = true;
+                    try {
+                        const respuesta = await fetch('/api/pedidos', {
+                            method: 'POST', headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(payload)
+                        });
+                        if (!respuesta.ok) {
+                            const error = await respuesta.json().catch(() => ({}));
+                            throw new Error(error.detail || error.message || error.mensaje || 'No se pudo registrar el pedido');
+                        }
+                        const pedido = await respuesta.json();
+                        document.getElementById('codigoOrdenSimulada').textContent = '#DC-' + pedido.idPedido;
+                        carrito = [];
+                        guardarYActualizarCarrito();
+                        renderizarCheckoutResumen();
+                        const modalEl = document.getElementById('modalCompraExitosa');
+                        if (modalEl) new bootstrap.Modal(modalEl).show();
+                    } catch (error) {
+                        alert(error.message);
+                    } finally { if (boton) boton.disabled = false; }
                 });
             }
         });
