@@ -1,7 +1,10 @@
 package com.dripclub.api.service.impl;
 
+import com.dripclub.api.dto.DetallePedidoDTO;
 import com.dripclub.api.dto.DetallePedidoRequest;
+import com.dripclub.api.dto.PedidoDetalleDTO;
 import com.dripclub.api.dto.PedidoRequest;
+import com.dripclub.api.dto.PedidoResumenDTO;
 import com.dripclub.api.model.*;
 import com.dripclub.api.repository.*;
 import com.dripclub.api.service.PedidoService;
@@ -11,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoServiceImpl implements PedidoService {
@@ -33,23 +37,88 @@ public class PedidoServiceImpl implements PedidoService {
 	public Pedido obtenerPorId(Long id) { return pedidos.findById(id)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado")); }
 
+	
+
+	@Override @Transactional(readOnly = true)
+	public List<PedidoResumenDTO> listar() {
+		return pedidos.findAllByOrderByFechaDesc().stream()
+				.map(this::toResumen)
+				.collect(Collectors.toList());
+	}
+
+	@Override @Transactional(readOnly = true)
+	public PedidoDetalleDTO obtenerDetalle(Long id) {
+		Optional<Pedido> opt = pedidos.findById(id);
+		if (opt.isEmpty()) return null;
+		Pedido p = opt.get();
+		List<DetallePedidoDTO> items = detalles.findByPedidoIdPedido(id).stream()
+				.map(d -> new DetallePedidoDTO(
+						d.getIdDetalle(),
+						d.getProducto().getIdProducto(),
+						d.getProducto().getNombre(),
+						d.getCantidad(),
+						d.getPrecioUnitario(),
+						d.getPrecioUnitario().multiply(BigDecimal.valueOf(d.getCantidad()))
+				))
+				.collect(Collectors.toList());
+		return new PedidoDetalleDTO(
+				p.getIdPedido(),
+				p.getFecha(),
+				p.getTotal(),
+				p.getEstado(),
+				p.getMetodoPago(),
+				p.getUsuario() != null ? p.getUsuario().getIdUsuario() : null,
+				p.getClienteNombres() + " " + p.getClienteApellidos(),
+				p.getClienteCorreo(),
+				p.getClienteTelefono(),
+				p.getClienteTipoDocumento() + ": " + p.getClienteNumeroDocumento(),
+				p.getEntregaDepartamento(),
+				p.getEntregaCiudad(),
+				p.getEntregaDireccion(),
+				p.getEntregaReferencia(),
+				items
+		);
+	}
+
+	@Override @Transactional(readOnly = true)
+	public List<PedidoResumenDTO> listarPorUsuario(Long idUsuario) {
+		return pedidos.findByUsuarioIdUsuarioOrderByFechaDesc(idUsuario).stream()
+				.map(this::toResumen)
+				.collect(Collectors.toList());
+	}
+
+	private PedidoResumenDTO toResumen(Pedido p) {
+		return new PedidoResumenDTO(
+				p.getIdPedido(),
+				p.getFecha(),
+				p.getTotal(),
+				p.getEstado(),
+				p.getMetodoPago(),
+				p.getUsuario() != null ? p.getUsuario().getIdUsuario() : null,
+				p.getClienteNombres() + " " + p.getClienteApellidos(),
+				p.getClienteCorreo()
+		);
+	}
+
+	// ── Metodos existentes (sin cambios) ────────────────────────────────────
+
 	@Override @Transactional
 	public Pedido cambiarEstado(Long id, String estado) {
 		Pedido pedido = obtenerPorId(id);
 		if (estado == null || !Set.of("PENDIENTE", "PAGADO", "ENVIADO", "ENTREGADO", "CANCELADO").contains(estado))
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Estado no permitido");
 		if ("CANCELADO".equals(pedido.getEstado()) || "ENTREGADO".equals(pedido.getEstado()))
-			throw new ResponseStatusException(HttpStatus.CONFLICT, "El pedido ya está cerrado");
-		// Cancelar requiere política de devolución de inventario; no se habilita aquí.
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "El pedido ya esta cerrado");
+		// Cancelar requiere politica de devolucion de inventario; no se habilita aqui.
 		if ("CANCELADO".equals(estado))
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cancelación pendiente de implementar devolución de stock");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cancelacion pendiente de implementar devolucion de stock");
 		pedido.setEstado(estado);
 		return pedidos.save(pedido);
 	}
 
 	private static void requerido(String valor, String campo, int max) {
 		if (valor == null || valor.isBlank() || valor.length() > max)
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Campo inválido: " + campo);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Campo invalido: " + campo);
 	}
 
 	@Override @Transactional
@@ -58,7 +127,7 @@ public class PedidoServiceImpl implements PedidoService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario y productos son obligatorios");
 		requerido(r.metodoPago(), "metodoPago", 20);
 		if (!Set.of("tarjeta", "yape", "transferencia", "contraentrega").contains(r.metodoPago()))
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Método de pago inválido");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Metodo de pago invalido");
 		requerido(r.clienteNombres(), "clienteNombres", 100);
 		requerido(r.clienteApellidos(), "clienteApellidos", 100);
 		requerido(r.clienteCorreo(), "clienteCorreo", 100);
@@ -76,16 +145,16 @@ public class PedidoServiceImpl implements PedidoService {
 		if (!usuario.isActivo()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario inactivo");
 		if (r.direccionId() != null) {
 			Direccion direccion = direcciones.findById(r.direccionId()).orElseThrow(() ->
-					new ResponseStatusException(HttpStatus.NOT_FOUND, "Dirección no encontrada"));
+					new ResponseStatusException(HttpStatus.NOT_FOUND, "Direccion no encontrada"));
 			if (!direccion.getUsuario().getIdUsuario().equals(usuario.getIdUsuario()))
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La dirección no pertenece al usuario");
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La direccion no pertenece al usuario");
 		}
 
 		// Agrupar duplicados y bloquear productos en orden fijo para reducir deadlocks.
 		Map<Long, Integer> cantidades = new TreeMap<>();
 		for (DetallePedidoRequest d : r.detalles()) {
 			if (d == null || d.productoId() == null || d.cantidad() == null || d.cantidad() <= 0)
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Producto o cantidad inválidos");
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Producto o cantidad invalidos");
 			int acumulada;
 			try {
 				int anterior = cantidades.getOrDefault(d.productoId(), 0);
@@ -105,13 +174,13 @@ public class PedidoServiceImpl implements PedidoService {
 				throw new ResponseStatusException(HttpStatus.CONFLICT, "Sin stock suficiente: " + p.getNombre());
 			BigDecimal precio = p.getPrecioOferta() != null ? p.getPrecioOferta() : p.getPrecio();
 			if (precio == null || precio.signum() <= 0)
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Precio inválido");
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Precio invalido");
 			total = total.add(precio.multiply(BigDecimal.valueOf(entry.getValue())));
 			p.setStock(p.getStock() - entry.getValue());
 			lineas.add(new Linea(p, entry.getValue(), precio));
 		}
 		if (total.precision() - total.scale() > 8)
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Total excede el máximo permitido");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Total excede el maximo permitido");
 		Pedido pedido = new Pedido();
 		pedido.setUsuario(usuario); pedido.setTotal(total); pedido.setEstado("PENDIENTE");
 		pedido.setMetodoPago(r.metodoPago());
@@ -127,7 +196,7 @@ public class PedidoServiceImpl implements PedidoService {
 			d.setCantidad(linea.cantidad()); d.setPrecioUnitario(linea.precio());
 			detalles.save(d);
 		}
-		// Cambios de stock se guardan en la misma transacción.
+		// Cambios de stock se guardan en la misma transaccion.
 		return pedido;
 	}
 }

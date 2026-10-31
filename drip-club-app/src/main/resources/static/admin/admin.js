@@ -19,15 +19,16 @@
     productos: '/api/productos',
     categorias: '/api/categorias',
     subcategorias: '/api/subcategorias',
-    usuarios: '/api/usuarios'
+    usuarios: '/api/usuarios',
+    pedidos: '/api/pedidos'
   };
 
   const K_USUARIO = 'dripclub_usuario'; // misma clave que usa la tienda (cuenta.html)
 
   const state = {
     vista: 'productos',
-    datos: { productos: [], categorias: [], subcategorias: [], usuarios: [] },
-    cargado: { productos: false, categorias: false, subcategorias: false, usuarios: false }
+    datos: { productos: [], categorias: [], subcategorias: [], usuarios: [], pedidos: [] },
+    cargado: { productos: false, categorias: false, subcategorias: false, usuarios: false, pedidos: false }
   };
 
   // Configuración de cada módulo: título del header, tbody, nº de columnas y render.
@@ -35,7 +36,8 @@
     productos: { titulo: 'Productos', tbody: 'tbodyProductos', columnas: 8, render: renderProductos },
     categorias: { titulo: 'Categorías', tbody: 'tbodyCategorias', columnas: 4, render: renderCategorias },
     subcategorias: { titulo: 'Subcategorías', tbody: 'tbodySubcategorias', columnas: 5, render: renderSubcategorias },
-    usuarios: { titulo: 'Usuarios', tbody: 'tbodyUsuarios', columnas: 7, render: renderUsuarios }
+    usuarios: { titulo: 'Usuarios', tbody: 'tbodyUsuarios', columnas: 7, render: renderUsuarios },
+    pedidos: { titulo: 'Pedidos', tbody: 'tbodyPedidos', columnas: 7, render: renderPedidos }
   };
 
   // Textos para el modal de confirmación de cada eliminación.
@@ -353,6 +355,92 @@
     }).join('');
   }
 
+  const CLASE_ESTADO_PEDIDO = {
+    PENDIENTE: 'warning', PAGADO: 'info', ENVIADO: 'primary', ENTREGADO: 'success', CANCELADO: 'danger'
+  };
+
+  function badgePedido(estado) {
+    const clase = CLASE_ESTADO_PEDIDO[String(estado).toUpperCase()] || 'secondary';
+    return `<span class="badge text-bg-${clase}">${escaparHTML(estado)}</span>`;
+  }
+
+  function formatearFecha(iso) {
+    const d = new Date(iso);
+    return isNaN(d) ? '—' : d.toLocaleString('es-PE', { dateStyle: 'short', timeStyle: 'short' });
+  }
+
+  // La API ya entrega los pedidos ordenados por fecha descendente.
+  function renderPedidos() {
+    const lista = state.datos.pedidos;
+    if (!lista.length) return pintarEstadoTabla('pedidos', 'vacio');
+
+    $('#tbodyPedidos').innerHTML = lista.map((p) => `
+      <tr>
+        <td class="fw-semibold">#${p.idPedido}</td>
+        <td>${formatearFecha(p.fecha)}</td>
+        <td><div class="fw-semibold">${escaparHTML(p.cliente)}</div>
+            <small class="text-muted">${escaparHTML(p.clienteCorreo)}</small></td>
+        <td>${escaparHTML(p.metodoPago)}</td>
+        <td class="text-end fw-semibold">${formatearPrecio(p.total)}</td>
+        <td class="text-center">${badgePedido(p.estado)}</td>
+        <td class="text-end">
+          <button type="button" class="btn btn-sm btn-outline-dark" data-action="ver-pedido"
+                  data-id="${p.idPedido}" title="Ver detalle"><i class="fa-solid fa-eye"></i></button>
+        </td>
+      </tr>`).join('');
+  }
+
+  async function verPedido(id) {
+    const cont = $('#pedidoDetalleContenido');
+    $('#modalPedidoTitulo').textContent = `Pedido #${id}`;
+    cont.innerHTML = '<div class="text-center text-muted py-4"><span class="spinner-border spinner-border-sm me-2"></span>Cargando...</div>';
+    bootstrap.Modal.getOrCreateInstance($('#modalPedido')).show();
+
+    try {
+      const p = await apiFetch(`${API.pedidos}/${id}`);
+      const filas = (p.items || []).map((i) => `
+        <tr>
+          <td>${escaparHTML(i.producto)}</td>
+          <td class="text-center">${i.cantidad}</td>
+          <td class="text-end">${formatearPrecio(i.precioUnitario)}</td>
+          <td class="text-end">${formatearPrecio(i.subtotal)}</td>
+        </tr>`).join('');
+
+      cont.innerHTML = `
+        <div class="row g-3 mb-3">
+          <div class="col-md-6"><small class="text-muted d-block">Cliente</small>
+            ${escaparHTML(p.cliente)}<br><small>${escaparHTML(p.clienteDocumento)} · ${escaparHTML(p.clienteTelefono)}</small><br>
+            <small>${escaparHTML(p.clienteCorreo)}</small></div>
+          <div class="col-md-6"><small class="text-muted d-block">Entrega</small>
+            ${escaparHTML(p.entregaDireccion)}<br>
+            <small>${escaparHTML(p.entregaCiudad)}, ${escaparHTML(p.entregaDepartamento)}</small>
+            ${p.entregaReferencia ? `<br><small class="text-muted">Ref.: ${escaparHTML(p.entregaReferencia)}</small>` : ''}</div>
+          <div class="col-md-6"><small class="text-muted d-block">Fecha</small>${formatearFecha(p.fecha)}</div>
+          <div class="col-md-3"><small class="text-muted d-block">Pago</small>${escaparHTML(p.metodoPago)}</div>
+          <div class="col-md-3"><small class="text-muted d-block">Estado</small>${badgePedido(p.estado)}</div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead><tr><th>Producto</th><th class="text-center">Cant.</th>
+              <th class="text-end">P. unit.</th><th class="text-end">Subtotal</th></tr></thead>
+            <tbody>${filas || '<tr><td colspan="4" class="text-center text-muted">Sin ítems.</td></tr>'}</tbody>
+            <tfoot><tr><th colspan="3" class="text-end">Total</th>
+              <th class="text-end">${formatearPrecio(p.total)}</th></tr></tfoot>
+          </table>
+        </div>`;
+    } catch (err) {
+      cont.innerHTML = `<div class="alert alert-danger mb-0">${escaparHTML(err.message)}</div>`;
+    }
+  }
+
+  function cerrarSesion() {
+    try {
+      localStorage.removeItem('dripclub_sesion_iniciada');
+      localStorage.removeItem(K_USUARIO);
+    } catch (err) { /* almacenamiento no disponible */ }
+    location.replace('../index.html');
+  }
+
   /* ------------------------------------------------------------------------
      8. ELIMINACIÓN (DELETE) GENÉRICA
      ------------------------------------------------------------------------ */
@@ -531,6 +619,7 @@
       switch (btn.dataset.action) {
         case 'editar-producto': abrirModalProducto(btn.dataset.id); break;
         case 'eliminar': eliminarRegistro(btn.dataset.modulo, btn.dataset.id); break;
+        case 'ver-pedido': verPedido(btn.dataset.id); break;
         case 'recargar': cargarModulo(state.vista); break;
       }
     });
@@ -547,6 +636,7 @@
     }, true);
 
     $('#btnNuevoProducto').addEventListener('click', () => abrirModalProducto());
+    $('#btnCerrarSesion').addEventListener('click', (e) => { e.preventDefault(); cerrarSesion(); });
     $('#btnRecargar').addEventListener('click', () => cargarModulo(state.vista));
     $('#formProducto').addEventListener('submit', guardarProducto);
     $('#prodImagen').addEventListener('input', actualizarPreviewImagen);
