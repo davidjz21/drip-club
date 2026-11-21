@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -9,10 +9,16 @@
     <link href="../styles.css" rel="stylesheet">
 
     <script>
-        if (localStorage.getItem('dripclub_sesion_iniciada') !== 'true' ||
-            !localStorage.getItem('dripclub_usuario')) {
-            window.location.href = '../../index.html';
-        }                                                                                                           
+        (async function () {
+            try {
+                const resp = await fetch('/api/auth/me');
+                if (!resp.ok) throw new Error('No autenticado');
+            } catch (e) {
+                localStorage.removeItem('dripclub_sesion_iniciada');
+                localStorage.removeItem('dripclub_usuario');
+                window.location.replace('../../index.html');
+            }
+        })();
     </script>
 </head>
 
@@ -257,7 +263,10 @@
             const K_SESION = 'dripclub_sesion_iniciada';
             const K_USUARIO = 'dripclub_usuario';
 
-            function cerrarSesion() {
+            async function cerrarSesion() {
+                try {
+                    await fetch('/api/auth/logout', { method: 'POST' });
+                } catch (e) { }
                 localStorage.removeItem(K_SESION);
                 localStorage.removeItem(K_USUARIO);
                 window.location.href = '../../index.html';

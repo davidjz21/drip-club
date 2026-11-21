@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -575,22 +575,41 @@
               return mostrarError(form, msg);
             }
 
-            const nuevoUsuario = await resp.json();
-            iniciarSesionLocal(nuevoUsuario);
+            // Iniciar sesión inmediatamente con los datos recién registrados
+            const respLogin = await fetch('/api/auth/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ correo, contrasena })
+            });
+
+            if (!respLogin.ok) {
+              const err = await respLogin.json().catch(() => ({}));
+              return mostrarError(form, err.mensaje || 'Registro exitoso, pero ocurrió un error al iniciar sesión.');
+            }
+
+            const dataLogin = await respLogin.json();
+            localStorage.setItem(K_SESION, 'true');
+            localStorage.setItem(K_USUARIO, JSON.stringify({
+              idUsuario: dataLogin.idUsuario,
+              nombre: dataLogin.nombre,
+              correo: dataLogin.correo,
+              rol: dataLogin.rol
+            }));
+            window.location.href = dataLogin.redirectUrl || URL_CUENTA;
           } catch (err) {
             mostrarError(form, 'No se pudo conectar con el servidor.');
           }
           return;
         }
 
-        // ---- LOGIN REAL (POST /api/usuarios/login) ----                                                      
+        // ---- LOGIN CON SPRING SECURITY (POST /api/auth/login) ----
         if (esLogin) {
           if (!correo || !contrasena) {
             return mostrarError(form, 'Ingresa correo y contraseña.');
           }
 
           try {
-            const resp = await fetch('/api/usuarios/login', {
+            const resp = await fetch('/api/auth/login', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ correo, contrasena })
@@ -602,7 +621,14 @@
             }
 
             const usuario = await resp.json();
-            iniciarSesionLocal(usuario);
+            localStorage.setItem(K_SESION, 'true');
+            localStorage.setItem(K_USUARIO, JSON.stringify({
+              idUsuario: usuario.idUsuario,
+              nombre: usuario.nombre,
+              correo: usuario.correo,
+              rol: usuario.rol
+            }));
+            window.location.href = usuario.redirectUrl || URL_CUENTA;
           } catch (err) {
             mostrarError(form, 'Error al conectar con el servidor.');
           }
@@ -619,7 +645,7 @@
       }, true);
     })(); 
   </script>
-  <script src="assets/scripts/auth-login.js"></script>
+
 </body>
 
 </html>

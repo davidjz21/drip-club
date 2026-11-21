@@ -1,11 +1,18 @@
 package com.dripclub.api.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import com.dripclub.api.model.Usuario;
+import com.dripclub.api.security.UsuarioPrincipal;
 import com.dripclub.api.service.UsuarioService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<Usuario> listar() {
@@ -22,7 +30,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id, Authentication authentication) {
+        if (esClienteNoAutorizado(id, authentication)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tienes permiso"));
+        }
+
         Usuario usuario = usuarioService.obtenerPorId(id);
         if (usuario == null) {
             return ResponseEntity.notFound().build();
@@ -35,13 +48,23 @@ public class UsuarioController {
         usuario.setIdUsuario(null);
         usuario.setRol("CLIENTE");
         usuario.setActivo(true);
+        if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
+            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        }
         Usuario nuevo = usuarioService.guardar(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
     /** Actualiza datos personales. No acepta rol ni activo (los ignora). */
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @RequestBody Usuario datos) {
+    public ResponseEntity<?> actualizar(@PathVariable Long id,
+                                        @RequestBody Usuario datos,
+                                        Authentication authentication) {
+        if (esClienteNoAutorizado(id, authentication)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tienes permiso"));
+        }
+
         Usuario existente = usuarioService.obtenerPorId(id);
         if (existente == null) {
             return ResponseEntity.notFound().build();
@@ -50,9 +73,9 @@ public class UsuarioController {
         existente.setCorreo(datos.getCorreo());
         existente.setTelefono(datos.getTelefono());
 
-        // Si envia contrasena vacia conserva la actual
+        // Si envía contraseña no vacía, se codifica con BCrypt. Si no, conserva la existente sin rehashear.
         if (datos.getContrasena() != null && !datos.getContrasena().isBlank()) {
-            existente.setContrasena(datos.getContrasena());
+            existente.setContrasena(passwordEncoder.encode(datos.getContrasena()));
         }
         Usuario actualizado = usuarioService.guardar(existente);
         return ResponseEntity.ok(actualizado);
@@ -83,20 +106,13 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody java.util.Map<String, String> credenciales) {
-        String correo = credenciales.get("correo");
-        String contrasena = credenciales.get("contrasena");
-
-        if (correo == null || contrasena == null) {
-            return ResponseEntity.badRequest().body(java.util.Map.of("mensaje", "Correo y contrasena requeridos"));
+    private boolean esClienteNoAutorizado(Long targetId, Authentication authentication) {
+        if (authentication != null && authentication.getPrincipal() instanceof UsuarioPrincipal principal) {
+            String rol = principal.getRol() != null ? principal.getRol().toUpperCase() : "CLIENTE";
+            if ("CLIENTE".equals(rol)) {
+                return !principal.getIdUsuario().equals(targetId);
+            }
         }
-
-        Usuario usuario = usuarioService.obtenerPorCorreo(correo.trim().toLowerCase());
-        if (usuario == null || !usuario.isActivo() || !usuario.getContrasena().equals(contrasena)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(java.util.Map.of("mensaje", "Correo o contrasena incorrectos"));
-        }
-        return ResponseEntity.ok(usuario);
+        return false;
     }
 }

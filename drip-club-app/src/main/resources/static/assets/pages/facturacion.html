@@ -541,6 +541,10 @@
                             body: JSON.stringify(payload)
                         });
                         if (!respuesta.ok) {
+                            if (respuesta.status === 401) {
+                                alert('Debes iniciar sesión para comprar');
+                                return;
+                            }
                             const error = await respuesta.json().catch(() => ({}));
                             throw new Error(error.detail || error.message || error.mensaje || 'No se pudo registrar el pedido');
                         }

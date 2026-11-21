@@ -1,17 +1,9 @@
 /* ==========================================================================
-   DRIP CLUB · LOGIN DEL MODAL → POST /api/auth/login
-   Se carga en index.html con:  <script src="assets/scripts/auth-login.js"></script>
-
-   Intercepta (fase de captura) el submit del formulario de login del modal
-   antes que el script inline existente, que llamaba a /api/usuarios/login.
-   El formulario de registro NO se toca.
+   DRIP CLUB - LOGIN DEL MODAL - POST /api/auth/login
+   JavaScript nativo para autenticación contra Spring Security
    ========================================================================== */
 (function () {
   'use strict';
-
-  // true  → solo ADMIN puede entrar por el modal (requerimiento del equipo).
-  // false → ADMIN va al panel y los clientes siguen entrando a Mi cuenta como antes.
-  const LOGIN_SOLO_ADMIN = false;
 
   const K_SESION = 'dripclub_sesion_iniciada';
   const K_USUARIO = 'dripclub_usuario';
@@ -28,11 +20,10 @@
     aviso.textContent = mensaje;
   }
 
-  /** Errores de validación llegan como { campo: mensaje }; el resto como { mensaje }. */
   function extraerMensaje(cuerpo, porDefecto) {
     if (cuerpo && typeof cuerpo === 'object') {
       const textos = Object.values(cuerpo).filter((v) => typeof v === 'string');
-      if (textos.length) return textos.join(' · ');
+      if (textos.length) return textos.join(' - ');
     }
     return porDefecto;
   }
@@ -40,41 +31,40 @@
   document.addEventListener('submit', async function (e) {
     const form = e.target;
     if (!(form instanceof HTMLFormElement)) return;
-    if (form.closest('#registroView')) return;                 // registro: lo maneja el script existente
-    if (!form.closest('#loginView, #modalCuentaNav')) return;  // otro formulario de la página
+    if (form.closest('#registroView')) return;
+    if (!form.closest('#loginView, #modalCuentaNav')) return;
 
     e.preventDefault();
-    e.stopImmediatePropagation();                              // evita el handler antiguo de login
+    e.stopImmediatePropagation();
 
     form.querySelector('.aviso-sesion')?.remove();
 
-    const correo = form.querySelector('input[type="email"]').value.trim().toLowerCase();
-    const contrasena = form.querySelector('input[type="password"]').value;
+    const correoInput = form.querySelector('input[type="email"]');
+    const passInput = form.querySelector('input[type="password"]');
+    const correo = correoInput ? correoInput.value.trim().toLowerCase() : '';
+    const contrasena = passInput ? passInput.value : '';
     if (!correo || !contrasena) return mostrarError(form, 'Ingresa correo y contraseña.');
 
     const boton = form.querySelector('button[type="submit"]');
     if (boton) boton.disabled = true;
 
     try {
-      const url = LOGIN_SOLO_ADMIN ? '/api/auth/login' : '/api/usuarios/login';
-      const resp = await fetch(url, {
+      const resp = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ correo, contrasena })
       });
 
       let cuerpo = null;
-      try { cuerpo = await resp.json(); } catch (err) { /* sin cuerpo JSON */ }
+      try { cuerpo = await resp.json(); } catch (err) { }
 
       if (!resp.ok) {
-        // 400 validación · 401 credenciales · 403 no es ADMIN → se muestra en el modal y no se avanza
-        return mostrarError(form, extraerMensaje(cuerpo, 'No se pudo iniciar sesión.'));
+        return mostrarError(form, extraerMensaje(cuerpo, 'Correo o contraseña incorrectos.'));
       }
       if (!cuerpo || cuerpo.idUsuario == null) {
         return mostrarError(form, 'La respuesta del servidor no es válida.');
       }
 
-      const esAdmin = String(cuerpo.rol).toUpperCase() === 'ADMIN';
       localStorage.setItem(K_SESION, 'true');
       localStorage.setItem(K_USUARIO, JSON.stringify({
         idUsuario: cuerpo.idUsuario,
@@ -82,7 +72,7 @@
         correo: cuerpo.correo,
         rol: cuerpo.rol
       }));
-      window.location.href = esAdmin ? (cuerpo.redirectUrl || URL_PANEL_ADMIN) : URL_CUENTA;
+      window.location.href = cuerpo.redirectUrl || (String(cuerpo.rol).toUpperCase() === 'CLIENTE' ? URL_CUENTA : URL_PANEL_ADMIN);
     } catch (err) {
       mostrarError(form, 'No se pudo conectar con el servidor.');
     } finally {

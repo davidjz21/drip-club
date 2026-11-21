@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -6,13 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel de Administracion | Drip Club</title>
 
-  <!-- Guard de acceso: solo sesion con rol ADMIN (misma clave que guarda auth-login.js) -->
+  <!-- Guard de acceso: validacion con servidor (Spring Security /api/auth/me) -->
   <script>
-    (function () {
+    document.documentElement.style.visibility = 'hidden';
+    (async function () {
       try {
-        var u = JSON.parse(localStorage.getItem('dripclub_usuario') || 'null');
-        if (!u || String(u.rol).toUpperCase() !== 'ADMIN') location.replace('../index.html');
-      } catch (e) { location.replace('../index.html'); }
+        const resp = await fetch('/api/auth/me');
+        if (!resp.ok) throw new Error('No autenticado');
+        const u = await resp.json();
+        const rol = (u.rol || '').toUpperCase();
+        if (rol !== 'ADMIN' && rol !== 'EMPLEADO') {
+          throw new Error('Rol no autorizado');
+        }
+        localStorage.setItem('dripclub_sesion_iniciada', 'true');
+        localStorage.setItem('dripclub_usuario', JSON.stringify({
+          idUsuario: u.idUsuario,
+          nombre: u.nombre,
+          correo: u.correo,
+          rol: u.rol
+        }));
+        document.documentElement.style.visibility = '';
+      } catch (e) {
+        localStorage.removeItem('dripclub_sesion_iniciada');
+        localStorage.removeItem('dripclub_usuario');
+        location.replace('../index.html');
+      }
     })();
   </script>
 

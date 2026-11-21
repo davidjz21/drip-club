@@ -207,6 +207,11 @@
      5. NAVEGACION SPA (d-none + hash)
      ------------------------------------------------------------------------ */
   function activarVista(nombre) {
+    const rol = obtenerRolUsuarioActual();
+    if (rol === 'EMPLEADO' && nombre === 'usuarios') {
+      window.location.hash = '#productos';
+      nombre = 'productos';
+    }
     if (!MODULOS[nombre]) nombre = 'productos';
     state.vista = nombre;
 
@@ -220,7 +225,12 @@
   }
 
   function vistaDesdeHash() {
-    return (location.hash || '').replace('#', '') || 'productos';
+    const vista = (location.hash || '').replace('#', '') || 'productos';
+    if (vista === 'usuarios' && obtenerRolUsuarioActual() === 'EMPLEADO') {
+      window.location.hash = '#productos';
+      return 'productos';
+    }
+    return vista;
   }
 
   function abrirSidebarMovil() {
@@ -844,6 +854,24 @@
   /* ------------------------------------------------------------------------
      10. EVENTOS
      ------------------------------------------------------------------------ */
+  function obtenerRolUsuarioActual() {
+    try {
+      const u = JSON.parse(localStorage.getItem(K_USUARIO) || 'null');
+      return u && u.rol ? String(u.rol).toUpperCase() : '';
+    } catch (err) {
+      return '';
+    }
+  }
+
+  function aplicarRestriccionesRol() {
+    const rol = obtenerRolUsuarioActual();
+    if (rol === 'EMPLEADO') {
+      const linkUsuarios = document.querySelector('.sidebar-link[data-view="usuarios"]');
+      if (linkUsuarios) linkUsuarios.classList.add('d-none');
+      const viewUsuarios = document.querySelector('#view-usuarios');
+      if (viewUsuarios) viewUsuarios.classList.add('d-none');
+    }
+  }
   function registrarEventos() {
     // Delegacion de eventos para las acciones de las tablas.
     document.addEventListener('click', (e) => {
@@ -899,7 +927,18 @@
   /* ------------------------------------------------------------------------
      11. ARRANQUE
      ------------------------------------------------------------------------ */
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const resp = await fetch('/api/auth/me');
+      if (resp.ok) {
+        const u = await resp.json();
+        if (u && u.rol) {
+          localStorage.setItem(K_USUARIO, JSON.stringify(u));
+        }
+      }
+    } catch (e) { }
+
+    aplicarRestriccionesRol();
     registrarEventos();
     activarVista(vistaDesdeHash());
   });
