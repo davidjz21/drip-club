@@ -31,7 +31,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id, Authentication authentication) {
-        if (esClienteNoAutorizado(id, authentication)) {
+        if (noAutorizadoParaUsuario(id, authentication)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("mensaje", "No tienes permiso"));
         }
@@ -48,6 +48,9 @@ public class UsuarioController {
         usuario.setIdUsuario(null);
         usuario.setRol("CLIENTE");
         usuario.setActivo(true);
+        if (usuario.getCorreo() != null) {
+            usuario.setCorreo(usuario.getCorreo().trim().toLowerCase());
+        }
         if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
             usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         }
@@ -60,9 +63,13 @@ public class UsuarioController {
     public ResponseEntity<?> actualizar(@PathVariable Long id,
                                         @RequestBody Usuario datos,
                                         Authentication authentication) {
-        if (esClienteNoAutorizado(id, authentication)) {
+        if (noAutorizadoParaUsuario(id, authentication)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("mensaje", "No tienes permiso"));
+        }
+
+        if (datos.getCorreo() == null || datos.getCorreo().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("mensaje", "El correo es obligatorio"));
         }
 
         Usuario existente = usuarioService.obtenerPorId(id);
@@ -70,7 +77,7 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
         existente.setNombre(datos.getNombre());
-        existente.setCorreo(datos.getCorreo());
+        existente.setCorreo(datos.getCorreo().trim().toLowerCase());
         existente.setTelefono(datos.getTelefono());
 
         // Si envía contraseña no vacía, se codifica con BCrypt. Si no, conserva la existente sin rehashear.
@@ -106,13 +113,14 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    private boolean esClienteNoAutorizado(Long targetId, Authentication authentication) {
+    private boolean noAutorizadoParaUsuario(Long targetId, Authentication authentication) {
         if (authentication != null && authentication.getPrincipal() instanceof UsuarioPrincipal principal) {
             String rol = principal.getRol() != null ? principal.getRol().toUpperCase() : "CLIENTE";
-            if ("CLIENTE".equals(rol)) {
-                return !principal.getIdUsuario().equals(targetId);
+            if ("ADMIN".equals(rol)) {
+                return false;
             }
+            return !principal.getIdUsuario().equals(targetId);
         }
-        return false;
+        return true;
     }
 }

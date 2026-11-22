@@ -45,7 +45,17 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> crear(@RequestBody PedidoRequest request) {
+    public ResponseEntity<?> crear(@RequestBody PedidoRequest request, Authentication authentication) {
+        if (authentication == null || !(authentication.getPrincipal() instanceof UsuarioPrincipal principal)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tienes permiso"));
+        }
+
+        if (request == null || request.usuarioId() == null || !request.usuarioId().equals(principal.getIdUsuario())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tienes permiso"));
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(service.crearPedido(request));
     }
 
